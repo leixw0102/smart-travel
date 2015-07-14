@@ -61,7 +61,7 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public void addSeller(SellerVo info) throws Exception {
-        sellerDao.addSeller(info);
+    public boolean addSeller(SellerVo info) throws Exception {
+        return sellerDao.addSeller(info);
     }
 }

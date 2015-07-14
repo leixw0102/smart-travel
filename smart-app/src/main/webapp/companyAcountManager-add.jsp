@@ -16,46 +16,34 @@
     System.out.println(types.size());
     %>
 <script>
-    $(document).ready(function () {
-        $("#btnConfirm").click(function () {
-            $('#documentForm').submitForm({
-                url: "/Document/SubmitDocumentCreate",
-                dataType: "text",
-                callback: function (data) {
-                    endFileUpload();
-                    data = eval("(" + data + ")");
-                    alert(data.Content);
-                    if (data.Result > 0) {
-                        location.href = data.Redirect;
-                    }
-                },
-                before: function () {
-                    startFileUpload();
-                    var errMsg = "";
-                }
-            }).submit();
-        });
 
+    function save(){
+        var methodType = 'Get';
+        $.ajax({
+            url: "<%=request.getContextPath()%>/1.0/seller/add",
+            type: methodType,
+            data: $('#companyInfo').serialize(),
+            success: function (result) {
+
+                if (result.code==0){
+//                    $('#add-conf').dialog('close');
+//                    $('#mcdg').datagrid('reload');
+                   window.
+                    alert("success");
+                }else{
+                    alert(result.message)
+//                    $.messager.show({
+//                        title: 'ERROR',
+//                        msg: "dfds"
+//                    });
+                }
+            }
+        });
     }
 	$(function(){
 		var w=$(".pad20")[0].clientWidth;
 		$(".body_main").width=w;
 	})
-    <%--function sub(){--%>
-        <%--$('#companyInfo').form('submit', {--%>
-            <%--url:'<%=request.getContextPath()%>/1.0/seller/add',--%>
-            <%--dataType : 'json',--%>
-            <%--onSubmit: function(){--%>
-                <%--var result = $stewardEditForm.form("validate");//表单验证--%>
-                <%--if(!result) {--%>
-                    <%--return false;--%>
-                <%--}--%>
-            <%--},--%>
-            <%--success:function(data){--%>
-                <%--alert("success");--%>
-            <%--}--%>
-        <%--})--%>
-    <%--}--%>
 </script>
 </head>
 <body class="pad20">
@@ -165,9 +153,10 @@
 				</li>
 			</ul>
 		</div>
-		<%--<input type="hidden" name="type" value="0"/>--%>
-		</form>
-		<div class="bt_icon bt_icon_b3 fr r240 pr bd0" onclick="javascript:$('#companyInfo').submit();window.top.close()"><div class="text c1 pdl0">确定</div></div>
+		<%--<input type="hidden" name="type" value="0"/> javascript:$('#companyInfo').submit()--%>
+
+		<div class="bt_icon bt_icon_b3 fr r240 pr bd0" onclick="save()"><div class="text c1 pdl0">确定</div></div>
+        </form>
 	</div>
 	</body>
 </html>

@@ -125,8 +125,8 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
     }
     @Transactional(readOnly = false,rollbackFor = Exception.class)
     @Override
-    public void addSeller(SellerVo info) throws Exception {
-        super.update("insert into user(username,password,roleType,servicefee_level,grade,createtime,contact_name,mark) values('"+info.getUserName()+"','"+info.getPwd()+"'," +
+    public boolean addSeller(SellerVo info) throws Exception {
+       return  super.update("insert into user(username,password,roleType,servicefee_level,grade,createtime,contact_name,mark) values('"+info.getUserName()+"','"+info.getPwd()+"'," +
                 "'"+get(Integer.parseInt(info.getType()))+"','"+info.getFree()+"','"+info.getGrade()+"',now(),'"+info.getContactName()+"','"+info.getRemark()+"'");
     }
 }

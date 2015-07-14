@@ -37,5 +37,5 @@ public interface SellerDao {
 
     Map<Integer,Map<Integer,String>> getTypes() throws Exception;
 
-    void addSeller(SellerVo info) throws Exception;
+    boolean addSeller(SellerVo info) throws Exception;
 }

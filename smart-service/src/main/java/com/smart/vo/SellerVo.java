@@ -17,6 +17,8 @@ package com.smart.vo;/*
  * under the License.
  */
 
+import com.google.common.base.Strings;
+
 import java.util.Date;
 
 /**
@@ -134,5 +136,9 @@ public class SellerVo {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public boolean verfiy() {
+        return Strings.isNullOrEmpty(this.getUserName())||Strings.isNullOrEmpty(this.getPwd())||!pwd.equals(pwd2) ||this.getGrade()==null || this.getFree()==null||this.getSellerName()==null ;
     }
 }

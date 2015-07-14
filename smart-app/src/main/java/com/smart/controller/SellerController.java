@@ -18,6 +18,7 @@ package com.smart.controller;/*
  */
 
 import com.smart.common.Page;
+import com.smart.common.ResponseMsg;
 import com.smart.model.SellerInfo;
 import com.smart.service.SellerService;
 import com.smart.vo.SellerVo;
@@ -59,11 +60,22 @@ public class SellerController extends BaseController{
         }
     }
     @RequestMapping("add")
-    public void addSeller(HttpServletRequest request,HttpServletResponse response,SellerVo info)  throws Exception{
+    @ResponseBody
+    public com.smart.common.ResponseBody addSeller(HttpServletRequest request,HttpServletResponse response,SellerVo info)  throws Exception{
         logger.info(info.toString());
-
-        sellerService.addSeller(info);
+        if(info.verfiy()){
+            return new ResponseMsg("1","参数不能为空或者2次密码输入不正确");
+        };
+        try{
+            if(sellerService.addSeller(info)){
+                return  new ResponseMsg();
+            };
+            return  new ResponseMsg("1","插入失败");
+        }catch (Exception e){
+            return new ResponseMsg("1","插入失败,"+e.getMessage());
+        }
 //        return"redirect:getAccountLists";
+
     }
     @RequestMapping("addPage")
     public String getAdd(HttpServletRequest request,HttpServletResponse response)  throws Exception{
