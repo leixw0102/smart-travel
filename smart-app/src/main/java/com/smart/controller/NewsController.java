@@ -64,5 +64,60 @@ public class NewsController extends BaseController {
         }
     }
 
+    @RequestMapping(value = "create")
+    @ResponseBody
+    public void newsCreate(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+        try {
+            // JSONObject obj = getJsonObject(request);
+            // String body = readRequestBody(request);
+
+
+            String title = request.getParameter("title");
+            String abs = request.getParameter("abs");
+            String content = request.getParameter("content");
+            //String uid = obj.getString("uid");
+            //String picture = obj.getString("picture");
+            //  logger.info(title + abs);
+            // LifeInfo id=lifeService.getId(userId);
+            List<NewsInfo> list= userService.userNewsList(1,10);
+            JSONObject result =	getSuccessJsonObject();
+            result.put("title", title);
+            result.put("abs", abs);
+            result.put("list", list);
+            //   result.put("list", list);
+            returnInfo(response, result,200);
+
+        } catch (Exception e) {
+            //   throw new ApiException(e);
+            returnInfo(response, getFailedJsonObject(1003, "内部错误"),200);
+        }
+    } @RequestMapping(value = "list")
+      @ResponseBody
+      public void newsList(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+        try {
+            // JSONObject obj = getJsonObject(request);
+            // String body = readRequestBody(request);
+
+
+            String title = request.getParameter("title");
+            String abs = request.getParameter("abs");
+            String content = request.getParameter("content");
+            //String uid = obj.getString("uid");
+            //String picture = obj.getString("picture");
+            //  logger.info(title + abs);
+            // LifeInfo id=lifeService.getId(userId);
+            List<NewsInfo> list= userService.userNewsList(1,10);
+            JSONObject result =	getSuccessJsonObject();
+            result.put("title", title);
+            result.put("abs", abs);
+            result.put("list", list);
+            //   result.put("list", list);
+            returnInfo(response, result,200);
+
+        } catch (Exception e) {
+            //   throw new ApiException(e);
+            returnInfo(response, getFailedJsonObject(1003, "内部错误"),200);
+        }
+    }
 
 }
