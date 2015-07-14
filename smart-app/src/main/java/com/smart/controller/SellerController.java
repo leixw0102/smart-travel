@@ -72,6 +72,7 @@ public class SellerController extends BaseController{
             };
             return  new ResponseMsg("1","插入失败");
         }catch (Exception e){
+            logger.error("error!",e);
             return new ResponseMsg("1","插入失败,"+e.getMessage());
         }
 //        return"redirect:getAccountLists";

@@ -109,14 +109,14 @@
 						<%--</li>--%>
 					</ul>
 				</li>
-				<%--<li class="pr9">--%>
-					<%--<ul>--%>
-						<%--<li class="text w60 fb c1">商户名称：</li>--%>
-						<%--<li class="value">--%>
-								<%--<input type="text" name="" class="w300 h27 inputStyle"/>--%>
-						<%--</li>--%>
-					<%--</ul>--%>
-				<%--</li>--%>
+				<li class="pr9">
+					<ul>
+						<li class="text w60 fb c1">商户名称：</li>
+						<li class="value">
+								<input type="text" name="sellerName" class="w300 h27 inputStyle"/>
+						</li>
+					</ul>
+				</li>
 				<li class="pr9">
 					<ul>
 						<li class="text w60 fb c1">联系人：</li>
