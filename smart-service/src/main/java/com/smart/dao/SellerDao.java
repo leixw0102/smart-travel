@@ -32,7 +32,7 @@ import java.util.Map;
  * Time: 17:13
  */
 public interface SellerDao {
-    public List<SellerInfo> getSeller(Integer pageNumber) throws Exception;
+    public List<SellerInfo> getSeller(Integer pageNumber,Integer pageSize) throws Exception;
     public Long count()throws Exception;
 
     Map<Integer,Map<Integer,String>> getTypes() throws Exception;

@@ -1,3 +1,6 @@
+<%@ page import="com.smart.model.UserInfo" %>
+<%@ page import="com.smart.common.Page" %>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,6 +15,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
+    <% Page<UserInfo> pag1= (Page<UserInfo>) request.getAttribute("msgs");%>
 <script>
 $(function(){
 	var w=$(".pad20")[0].clientWidth;
@@ -19,8 +23,10 @@ $(function(){
 })
 $(function(){
 var initPagination = function() {
-	var total_page = $("#hiddenresult div.result").length;
-	var total_page1 = $("#hiddenresult div.result1").length;
+	var total_page = '<%=pag1.getCount()%>';
+	var total_page1 = '<%=pag1.getCount()%>';
+//    var total_page = $("#hiddenresult div.result").length;
+//    var total_page1 = $("#hiddenresult div.result1").length;
 	// 创建分页
 	$("#pagination").pagination(total_page,{
 		callback: page_callback,
@@ -80,10 +86,33 @@ function popCompanyInfo(){
 						<td width="10%">商户类型</td>
 						<td width="20%" >商户名称</td>
                         <td width="10%" >联系人</td>
-                        <td width="10%" >账户VIP类型</td>
+                        <td width="10%" >服务费比例</td>
                         <td width="10%" >创建日期</td>
 						<td width="20%" class="borderright">备注</td>
 					</tr>
+                    <%
+                        int id =1;
+                     List<UserInfo> infos=pag1.getMessages();
+                       if(null == infos || infos.isEmpty()){
+
+                       }   else{
+                           for(UserInfo info : infos){
+                               ++id;
+                           %>
+                    <tr>
+                        <td ><%=id%></td>
+                        <td class="list-link"><%=info.getUserName()%></td>
+                        <td><%=info.getPwd()%></td>
+                        <td><%=info.getRole()%></td>
+                        <td >asdasdas1</td>
+                        <td >2121232332</td>
+                        <td>sadad</td>
+                        <td>2015-7-11</td>
+                        <td>assad</td>
+                    </tr>
+                    <%
+                            } }
+                    %>
 					<tr>
 						<td >1</td>
 						<td class="list-link">1332893423</td>

@@ -46,8 +46,8 @@ public class SellerController extends BaseController{
     private SellerService sellerService;
 
     @RequestMapping("getAccountLists")
-    public String getHome(HttpServletRequest request,HttpServletResponse response) throws Exception{
-        request.setAttribute("msgs",sellerService.getSellers(1));
+    public String getHome(HttpServletRequest request,HttpServletResponse response,@RequestParam Integer page) throws Exception{
+        request.setAttribute("msgs",sellerService.getSellers(page));
         return "companyAcountManager";
     }
     @RequestMapping("page")

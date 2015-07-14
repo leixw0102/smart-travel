@@ -62,7 +62,7 @@ function contentWH(){
 		<div class="items">
 			<ul class="menu-items">
 				<li class="no-level flgl"><a href="<%=request.getContextPath()%>/category-m.jsp" target="mainFrame"></a></li>
-				<li class="no-level companyAcount"><a href="<%=request.getContextPath()%>/1.0/seller/getAccountLists" target="mainFrame"></a></li>
+				<li class="no-level companyAcount"><a href="<%=request.getContextPath()%>/1.0/seller/getAccountLists?page=1" target="mainFrame"></a></li>
 				<li class="no-level yy-userAcount"><a href="javascript:void(0)" target="mainFrame"></a></li>
 				<li class="no-level finaAcount"><a href="javascript:void(0)" target="mainFrame"></a></li>
 			</ul>

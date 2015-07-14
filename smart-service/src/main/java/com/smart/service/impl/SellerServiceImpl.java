@@ -48,8 +48,10 @@ public class SellerServiceImpl implements SellerService {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
             }
         };
+        page.setPageNumber(pageNumber);
+        page.setPageSize(10);
         Long total = sellerDao.count();
-        List<SellerInfo> list = sellerDao.getSeller(pageNumber);
+        List<SellerInfo> list = sellerDao.getSeller(pageNumber,page.getPageSize());
         page.setCount(total);
         page.setMessages(list);
         return page;  //To change body of implemented methods use File | Settings | File Templates.
