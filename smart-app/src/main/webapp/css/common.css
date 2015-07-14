@@ -1,0 +1,175 @@
+﻿@charset "utf-8";
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, iframe {
+	padding:0;
+	margin:0;
+}
+body {
+	font:12px/20px Arial,"Microsoft YaHei","宋体",sans-serif;
+	color:#333;
+}
+a {
+	color:#333;
+	text-decoration:none;
+	cursor:pointer;
+    blr:expression(this.onFocus=this.blur());
+	outline: none;
+}
+a:hover {
+	color:#ff6600;
+/*	text-decoration:none;
+*/}
+h1, h2, h3, h4, h5, h6{
+	font:normal 14px "Microsoft YaHei", Arial,sans-serif;
+}
+font {
+	font-size:12px;
+}
+p {
+	line-height:1.5em;
+}
+ul, ol {
+    list-style: none outside none;
+}
+img {
+/*	display:block;*/
+	border:0;
+}
+font {
+	font-size:12px;
+}
+table {
+	border-collapse: collapse;
+	clear:both;
+}
+.noBorder {
+	border:none !important;
+}
+.nohandle { /*-- 去除链接小手指针 --*/
+	cursor:default;
+}
+.floatLeft {
+	float:left !important;
+}
+.floatRight {
+	float:right !important;
+}
+.setCenter { /*-- 设置元素居中对齐 --*/
+	clear: both;
+	float: none !important;
+	text-align: center;
+}
+.clearfix { /*-- 清除样式position: fix浮动 --*/
+	clear:both;
+}
+.clearfloat { /*-- 清除样式浮动 --*/
+	clear:both;
+	display:inline-block;
+}
+.clear:after {
+    clear: both;
+    content: " ";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.js_hidden { /*-- 供Javascript 隐藏层 --*/
+	display:none !important;
+}
+
+#wrapper{
+	width:900px;
+	height:auto;
+	overflow:hidden;
+	margin:0 auto;
+}
+#header,#container,#footer{ 
+	width:900px; 
+	height:auto; 
+	overflow:hidden;
+	float:left;
+}
+.fleft{
+	float: left;
+}
+.fright{
+	float: right;
+}
+.inp{
+	height: 20px;
+	border: 1px solid #AAAAAA;
+	border-radius: 3px;
+}
+.w{
+	width: 200px;
+}
+.marginr10{
+	margin-right:12px !important;
+}
+.marginr13{
+	margin-right: 13px;
+}
+.marginl20{
+	margin-left: 28px;
+}
+.marginb30{
+	margin-bottom: 30px !important;
+}
+.marginb20{
+	margin-bottom: 20px !important;
+}
+.margint30{
+	margin-top: 30px !important;
+}
+.marginl15{
+	margin-left: 15px;
+}
+.marginl50{
+	margin-left: 50px;
+}
+.marginl36{
+	margin-left: 36px;
+}
+.marginl59{
+	margin-left: 59px;
+}
+.pad20{
+	padding: 20px;
+}
+.marginr5{
+	margin-right: 5px;
+}
+.marginl10{
+	margin-left: 10px;
+}
+.w250{
+	width: 250px !important;
+}
+.marginr148{
+	margin-right: 148px;
+}
+.marginl95{
+	margin-left: 95px !important;
+}
+.red{
+	color: #FF0000;
+}
+.w140{
+	width: 160px;
+}
+.w325
+{
+    width:325px !important;}
+.pl50
+{
+ position:absolute;
+ left:50px;
+ }
+.w350
+{
+    width:350px !important;}
+  .w180
+ {
+     width:180px !important;
+     height:20px;}
+/*------------------------------------------------------ common end ---------------------------------------------------*/

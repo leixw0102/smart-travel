@@ -1,0 +1,142 @@
+@charset "utf-8";
+/*---------------------以下为网页顶部样式------------------------*/
+body{
+	margin:0;
+	padding:0;
+}
+.head{
+	width:100%;
+	height:65px;
+	position:relative;
+}
+.head .up{
+	width:100%;
+	height:65px;
+	background:#1C1C1C;
+	position:relative;
+}
+.date-bar{
+	width:100%;
+	height:30px;
+	background:url(../images/info_bar.png);
+	position:absolute;
+	bottom:0px;
+	line-height:30px;
+	vertical-align:middle;
+	color:#FFFFFF;
+}
+.logo{
+	width:119px;
+	height:39px;
+	background:url(../images/tittle.png);
+	float:left;
+	top:15px;
+	left:10px;
+	position:absolute;
+}
+.user-info{
+	float:right;
+	position:absolute;
+	right:55px;
+}
+.user-pic{
+	width:17px;
+	height:17px;
+	background:url(../images/admin_welcome.png);
+	float:left;
+	position:relative;
+	top:20px;
+}
+.user-c{
+	float:left;
+	position:relative;
+	top:18px;
+	left:10px;
+}
+.user-c .mc{
+	color:#8399B1;
+	float:left;
+}
+.user-c .border-line{
+	border-left:1px solid;
+	float:left;
+	height:12px;
+	top:5px;
+	position:relative;
+	color:#8399B1;
+}
+.user-c .pws{
+	position:relative;
+	float:left;
+	left:5px;
+}
+.user-c .pws a{
+	color:#8399B1;
+}
+.logout{
+	width:13px;
+	height:15px;
+	background:url(../images/logout.png) no-repeat center;
+	float:right;
+	position:absolute;
+	right:15px;
+	cursor:pointer;
+	top:20px;
+}
+.logout:hover{
+	background:url(../images/logout_over.png) no-repeat center;
+}
+#cityTQInfo2 {
+	color:#e89509;
+}
+#cityTQInfo1 {
+	color:#88b42b;
+}
+.time_set
+{   
+    margin-left:40px;
+    width:120px;
+    height:30px;
+    vertical-align:middle;
+ }
+ .split_line
+ {
+     width:5px;
+     height:30px;
+     vertical-align:middle;
+ }
+ .cityid_set
+ {
+     width:30px;
+     height:30px;
+     vertical-align:middle;
+     text-align: center;
+  }
+  .cityTQ_set
+  {
+      width:25px;
+      height:30px;
+     vertical-align:middle;
+     text-align: center;
+  }
+  .cityTQInfo1_set
+  {
+    width:100px;
+    height:30px;
+     vertical-align:middle;
+     text-align: center;
+  }
+ .cityTQInfo2_set
+  {
+    width:100px;
+    height:30px;
+     vertical-align:middle;
+     text-align: center;
+  }
+   .cityTQInfo_set
+  {
+    width:80px;
+    height:30px;
+     vertical-align:middle;
+     text-align: center;
+  }
