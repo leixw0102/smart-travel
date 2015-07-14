@@ -12,6 +12,24 @@
 		var w=$(".pad20")[0].clientWidth;
 		$(".body_main").width=w;
 	})
+	    function save(){
+	        $.ajax({
+                url: "<%=request.getContextPath()%>/1.0/news/create",
+                type: "post",
+                dataType:"json",
+                data: {title:$('#title').val(),
+                       abs:$('#abs').val(),
+                       content:$('#content').val()
+                       },
+                success: function (result) {
+                    if (result.code==1000){
+                        alert(result.code +":"+ result.msg+":"+ result.title);
+                    }else{
+                       alert(result.code +":"+ result.msg+":"+ result.title);
+                    }
+                }
+            });
+        }
 </script>
 </head>
 <body class="pad20">
@@ -23,7 +41,7 @@
 					<ul>
 						<li class="text w60 fb c1">新闻标题：</li>
 						<li class="value">
-							<input type="text" class="w300 h27 inputStyle"/>
+							<input id="title" type="text" class="w300 h27 inputStyle"/>
 						</li>
 						<span class="cldff0000">*</span><span class="cldccc">50字以内</span>
 					</ul>
@@ -46,7 +64,7 @@
 						<li class="text w60 fb c1">新闻摘要：</li>
 						<li class="value">
 							<div class="inputBt">
-								<textarea id="to" class="w300 h100 inputStyle"></textarea>
+								<textarea id="abs" class="w300 h100 inputStyle"></textarea>
 							</div>
 						</li>
 						<span class="cldff0000">*</span><span class="cldccc">100字以内</span>
@@ -57,7 +75,7 @@
 						<li class="text w60 fb c1">新闻正文：</li>
 						<li class="value">
 							<div class="inputBt">
-								<textarea id="to" class="w300 h100 inputStyle"></textarea>
+								<textarea id="content" class="w300 h100 inputStyle"></textarea>
 							</div>
 						</li>
 						<span class="cldff0000">*</span><span class="cldccc">5000字以内</span>
@@ -65,7 +83,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="bt_icon bt_icon_b3 fr r240 pr bd0" onClick="popCompanyInfo()"><div class="text c1 pdl0">确定</div></div>
+		<div class="bt_icon bt_icon_b3 fr r240 pr bd0" onClick="save()"><div class="text c1 pdl0">确定</div></div>
 	</div>
 	</body>
 </html>

@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import com.smart.model.NewsInfo;
+import java.util.List;
 @Service
 public class UserServiceImpl  implements UserService {
 
@@ -44,5 +45,16 @@ public class UserServiceImpl  implements UserService {
     public boolean updateUseTime(Long id,Date use) throws Exception {
         return userDao.updateTime(id,simpleDateFormat.format(use));  //To change body of implemented methods use File | Settings | File Templates.
     }
+    @Override
+    public List<NewsInfo> userNewsList(int pageNumber, int pageSize)
+            throws Exception {
+        // TODO Auto-generated method stub
+        return userDao.userNewsList(  pageNumber,   pageSize);
+    }
 
+    @Override
+    public NewsInfo userNewsDetail(int id) throws Exception {
+        // TODO Auto-generated method stub
+        return userDao.userNewsDetail(id);
+    }
 }

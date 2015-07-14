@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import com.smart.model.NewsInfo;
+import java.util.List;
 
 @Transactional(readOnly = true)
 @Repository
@@ -62,5 +64,48 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         return super.update("update t_user set use_time='"+time+"' where id="+id);
     }
 
+    @Override
+    public List<NewsInfo> userNewsList(int pageNumber, int pageSize)
+            throws Exception {
+        String sql="select * from news where del=0 limit "+(pageNumber-1)*pageSize+","+pageSize ;
+        return jdbcTemplate.query(sql, new RowMapper<NewsInfo>(){
 
+            @Override
+            public NewsInfo mapRow(ResultSet rs, int arg1)
+                    throws SQLException {
+                // TODO Auto-generated method stub
+                //if(rs.next()){
+                NewsInfo info = new NewsInfo();
+                info.setId(rs.getLong("id"));
+                info.setTitle(rs.getString("title"));
+                info.setAbs(rs.getString("abs"));
+                info.setCreateTime(rs.getDate("create_time"));
+                info.setPicture(rs.getString("picture"));
+                return info;
+                //}
+                //return null;
+            }});
+    }
+
+    @Override
+    public NewsInfo userNewsDetail(int id) throws Exception {
+        String sql="select * from news where del=0 and id='"+id+"'" ;
+        return jdbcTemplate.query(sql, new ResultSetExtractor<NewsInfo>(){
+            @Override
+            public NewsInfo extractData(ResultSet rs) throws SQLException,
+                    DataAccessException {
+                if(rs.next()){
+                    //UserInfo userInfo = new UserInfo();
+                    NewsInfo info = new NewsInfo();
+                    info.setId(rs.getLong("id"));
+                    info.setTitle(rs.getString("title"));
+                    info.setAbs(rs.getString("abs"));
+                    info.setCreateTime(rs.getDate("create_time"));
+                    info.setPicture(rs.getString("picture"));
+                    info.setContent(rs.getString("content"));
+                    return info;
+                }
+                return null;
+            }});
+    }
 }

@@ -58,7 +58,7 @@ function popCompanyInfo(){
 		width:610,
 		height:430,
 		center:true,
-		url:"<%=request.getContextPath()%>/publicNews-edit.jsp"
+		url:"publicNews-edit.jsp"
 	});
 }
 
