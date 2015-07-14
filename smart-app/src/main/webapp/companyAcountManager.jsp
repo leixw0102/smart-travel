@@ -1,6 +1,8 @@
 <%@ page import="com.smart.model.UserInfo" %>
 <%@ page import="com.smart.common.Page" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.smart.model.SellerInfo" %>
+<%@ page import="org.joda.time.DateTime" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,7 +17,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
-    <% Page<UserInfo> pag1= (Page<UserInfo>) request.getAttribute("msgs");%>
+    <% Page<SellerInfo> pag1= (Page<SellerInfo>) request.getAttribute("msgs");%>
 <script>
 $(function(){
 	var w=$(".pad20")[0].clientWidth;
@@ -53,8 +55,7 @@ var initPagination = function() {
  }();
 
  function page_callback(page_index, jq){
-	var new_content = $("#hiddenresult div.result:eq("+page_index+")").clone();
-	$("#Searchresult").empty().append(new_content); //装载对应分页的内容
+
 	return false;
 }
 })
@@ -91,95 +92,29 @@ function popCompanyInfo(){
 						<td width="20%" class="borderright">备注</td>
 					</tr>
                     <%
-                        int id =1;
-                     List<UserInfo> infos=pag1.getMessages();
+                        int id =0;
+                     List<SellerInfo> infos=pag1.getMessages();
                        if(null == infos || infos.isEmpty()){
 
                        }   else{
-                           for(UserInfo info : infos){
+                           for(SellerInfo info : infos){
                                ++id;
                            %>
                     <tr>
                         <td ><%=id%></td>
                         <td class="list-link"><%=info.getUserName()%></td>
                         <td><%=info.getPwd()%></td>
-                        <td><%=info.getRole()%></td>
-                        <td >asdasdas1</td>
-                        <td >2121232332</td>
-                        <td>sadad</td>
-                        <td>2015-7-11</td>
-                        <td>assad</td>
+                        <td><%=info.getType()%></td>
+                        <td ><%=info.getSellerName()%></td>
+                        <td ><%=info.getContactName()%></td>
+                        <td><%=info.getFree()%></td>
+                        <td><%=new DateTime(info.getCreateTime()).toString("yyyy-MM-dd HH:mm:ss")%></td>
+                        <td><%=info.getRemark()%></td>
                     </tr>
                     <%
                             } }
                     %>
-					<tr>
-						<td >1</td>
-						<td class="list-link">1332893423</td>
-						<td>***********</td>
-						<td>sadasdasd</td>
-						<td >asdasdas1</td>
-						<td >2121232332</td>
-						<td>sadad</td>
-						<td>2015-7-11</td>
-                        <td>assad</td>
-					</tr>
-					<tr>
-						<td >2</td>
-						<td  class="list-link">1332893423</td>
-						<td>***********</td>
-						<td>sadasdasd</td>
-						<td >asdasdas1</td>
-						<td >2121232332</td>
-						<td>sadad</td>
-						<td>2015-7-11</td>
-                        <td>assad</td>
-					</tr>
-					<tr>
-						<td >3</td>
-						<td class="list-link">1332893423</td>
-						<td>***********</td>
-						<td>sadasdasd</td>
-						<td >asdasdas1</td>
-						<td >2121232332</td>
-						<td>sadad</td>
-						<td>2015-7-11</td>
-                        <td>assad</td>
-					</tr>
-					<tr>
-						<td >4</td>
-						<td class="list-link">1332893423</td>
-						<td>***********</td>
-						<td>sadasdasd</td>
-						<td >asdasdas1</td>
-						<td >2121232332</td>
-						<td>sadad</td>
-						<td>2015-7-11</td>
-                        <td>assad</td>
-					</tr>
-					<tr>
-						<td >5</td>
-						<td class="list-link">1332893423</td>
-						<td>***********</td>
-						<td>sadasdasd</td>
-						<td >asdasdas1</td>
-						<td >2121232332</td>
-						<td>sadad</td>
-						<td>2015-7-11</td>
-                        <td>assad</td>
-					</tr>
-					<tr>
-						<td >6</td>
-						<td class="list-link">1332893423</td>
-						<td>***********</td>
-						<td>sadasdasd</td>
-						<td >asdasdas1</td>
-						<td >2121232332</td>
-						<td>sadad</td>
-						<td>2015-7-11</td>
-                        <td>assad</td>
-					</tr>
-					
+
 				</table>
 				<div class="detail_bottom">
 					<div>
