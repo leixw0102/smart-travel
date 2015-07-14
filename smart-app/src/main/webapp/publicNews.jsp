@@ -58,7 +58,7 @@ function popCompanyInfo(){
 		width:610,
 		height:430,
 		center:true,
-		url:"/xiaosi/page/publicNews-edit.jsp"
+		url:"<%=request.getContextPath()%>/publicNews-edit.jsp"
 	});
 }
 
