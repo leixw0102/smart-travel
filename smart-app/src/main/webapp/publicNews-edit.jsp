@@ -1,20 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-	<head>	
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="css/bridging.css"/>
-		<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
-		<script type="text/javascript" src="js/function.js" ></script>
-		<script>
-			$(function(){
-				var w=$(".pad20")[0].clientWidth;
-				$(".body_main").width=w;
-			})
-		</script>
-	</head>
-	<body class="pad20">
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bridging.css"/>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
+<script>
+	$(function(){
+		var w=$(".pad20")[0].clientWidth;
+		$(".body_main").width=w;
+	})
+</script>
+</head>
+<body class="pad20">
 		<div class="body_main">
 		<!--filter start-->
 		<div class="fieldsContainer">

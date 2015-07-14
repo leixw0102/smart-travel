@@ -35,12 +35,12 @@
 		level="DEBUG" /> <logger name="org.hibernate.SQL" level="DEBUG" /> <logger 
 		name="org.hibernate.engine.QueryParameters" level="DEBUG" /> <logger name="org.hibernate.engine.query.HQLQueryPlan" 
 		level="DEBUG" /> -->
-	<logger name="o.h.event.def" level="error"></logger>
-	<logger name="org.hibernate" level="error"></logger>
-	<logger name="com.jolbox.bonecp.BoneCPDataSource" level="error"></logger>
-	<logger name="org.apache.zookeeper.ZooKeeper" level="error"></logger>
-	<logger name="org.apache.zookeeper.client.ZooKeeperSaslClient" level="error"></logger>
-	<logger name="org.apache.zookeeper.ClientCnxn" level="error"></logger>
+	<!--<logger name="o.h.event.def" level="error"></logger>-->
+	<!--<logger name="org.hibernate" level="error"></logger>-->
+	<!--<logger name="com.jolbox.bonecp.BoneCPDataSource" level="error"></logger>-->
+	<!--<logger name="org.apache.zookeeper.ZooKeeper" level="error"></logger>-->
+	<!--<logger name="org.apache.zookeeper.client.ZooKeeperSaslClient" level="error"></logger>-->
+	<!--<logger name="org.apache.zookeeper.ClientCnxn" level="error"></logger>-->
 	<!-- 日志输出级别 -->
 	<root level="debug">
 		<appender-ref ref="STDOUT" />

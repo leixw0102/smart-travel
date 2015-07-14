@@ -25,7 +25,7 @@ public class UserServiceImpl  implements UserService {
     @Override
     public boolean isValid(UserVo vo,Date date) throws Exception {
 //        Date errorTime = DateUtils.getDate(vo.getUseTime()&1004,30);
-        Date oldDate = new Date(vo.getUseTime()&1004L);
+        Date oldDate = new Date(vo.getUseTime()^1004L);
 
         Long id= userDao.isValid(vo.getUserName(),vo.getRole(),simpleDateFormat.format(oldDate));  //To change body of implemented methods use File | Settings | File Templates.
         if(null == id){

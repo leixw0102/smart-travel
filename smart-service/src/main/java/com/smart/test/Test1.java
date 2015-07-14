@@ -17,7 +17,9 @@ package com.smart.test;/*
  * under the License.
  */
 
+import com.alibaba.fastjson.JSON;
 import com.smart.dao.UserDao;
+import com.smart.service.SellerService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -29,12 +31,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * Time: 21:43
  */
 public class Test1 {
-    public static void main(String[]args){
+    public static void main(String[]args) throws Exception {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        UserDao userDao = context.getBean(UserDao.class);
+        SellerService userDao = context.getBean(SellerService.class);
         if(null == userDao){
             System.out.println("abc");
         }  else{
+            System.out.println(JSON.toJSONString(userDao.getSellers(1)));
         }
     }
 }

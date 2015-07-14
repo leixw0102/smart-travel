@@ -84,6 +84,7 @@
 }
 .menu .items > ul.menu-items > li.no-level.flgl.down{
 	background:url(../images/yy-flgl-h.png) no-repeat 20px center;
+	background-color:#b98f55;
 }
 .menu .items > ul.menu-items > li.no-level.flgl:hover{
 	background:url(../images/yy-flgl-h.png) no-repeat 20px center;
@@ -98,6 +99,7 @@
 }
 .menu .items > ul.menu-items > li.no-level.finaAcount.down{
 	background:url(../images/yy-finaAcount-h.png) no-repeat 20px center;
+	background-color:#b98f55;
 }
 .menu .items > ul.menu-items > li.no-level.finaAcount:hover{
 	background:url(../images/yy-finaAcount-h.png) no-repeat 20px center;
@@ -112,6 +114,7 @@
 }
 .menu .items > ul.menu-items > li.no-level.companyAcount.down{
 	background:url(../images/yy-companyAcount-h.png) no-repeat 20px center;
+	background-color:#b98f55;
 }
 .menu .items > ul.menu-items > li.no-level.companyAcount:hover{
 	background:url(../images/yy-companyAcount-h.png) no-repeat 20px center;
@@ -126,6 +129,7 @@
 }
 .menu .items > ul.menu-items > li.no-level.yy-userAcount.down{
 	background:url(../images/yy-userAcount-h.png) no-repeat 20px center;
+	background-color:#b98f55;
 }
 .menu .items > ul.menu-items > li.no-level.yy-userAcount:hover{
 	background:url(../images/yy-userAcount-h.png) no-repeat 20px center;
@@ -143,6 +147,9 @@
 	display:none;
 	font-size:18px;
 	font-weight:bold;
+}
+.menu .items > ul.menu-items > li.down a{
+	background:url("../images/menu-label.png") no-repeat right;
 }
 .menu-items a:link{color: #595959;text-decoration:none;}
 .menu-items a:visited{ color: #595959;text-decoration:none;}

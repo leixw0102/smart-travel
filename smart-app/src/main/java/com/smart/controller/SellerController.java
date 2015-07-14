@@ -1,0 +1,75 @@
+package com.smart.controller;/*
+ * Copyright 2015 Future TV, Inc.
+ *
+ * The contents of this file are subject to the terms
+ * of the Common Development and Distribution License
+ * (the License). You may not use this file except in
+ * compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.icntv.tv/licenses/LICENSE-1.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+import com.smart.common.Page;
+import com.smart.model.SellerInfo;
+import com.smart.service.SellerService;
+import com.smart.vo.SellerVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
+
+/**
+ * Created by leixw
+ * <p/>
+ * Author: leixw
+ * Date: 2015/07/14
+ * Time: 10:00
+ */
+@Controller
+@RequestMapping("/1.0/seller/*")
+public class SellerController extends BaseController{
+    @Autowired
+    private SellerService sellerService;
+
+    @RequestMapping("getAccountLists")
+    public String getHome(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        request.setAttribute("msgs",sellerService.getSellers(1));
+        return "companyAcountManager";
+    }
+    @RequestMapping("page")
+    @ResponseBody
+    public Page get(){
+        try {
+            return sellerService.getSellers(1);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    @RequestMapping("add")
+    public void addSeller(HttpServletRequest request,HttpServletResponse response,SellerVo info)  throws Exception{
+        logger.info(info.toString());
+
+        sellerService.addSeller(info);
+//        return"redirect:getAccountLists";
+    }
+    @RequestMapping("addPage")
+    public String getAdd(HttpServletRequest request,HttpServletResponse response)  throws Exception{
+        Map<Integer,Map<Integer,String>> type=sellerService.getTypes();
+        request.setAttribute("types",type);
+        return "companyAcountManager-add";
+    }
+
+}

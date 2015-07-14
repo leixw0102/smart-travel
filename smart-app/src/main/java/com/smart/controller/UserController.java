@@ -1,16 +1,13 @@
 package com.smart.controller;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.NameFilter;
 import com.google.common.base.Strings;
 import com.smart.common.ResponseConstantCode;
@@ -27,9 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/1.0/outer/user/*")
-public class UserAction extends BaseAction {
-    private static Logger logger = LoggerFactory.getLogger(UserAction.class);
+@RequestMapping("/1.0/user/*")
+public class UserController extends BaseController {
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private UserService userService;
 

@@ -1,67 +1,70 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-	<head>	
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="css/bridging.css"/>
-		<link rel="stylesheet" href="js/plugins/pagination/default-style/css/pagination.css" />
-		<link rel="stylesheet" href="js/plugins/pagination/default-style/css/pagination.extend.css" />	
-		<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
-		<script type="text/javascript" src="js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
-		<script type="text/javascript" src="js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
-		<script type="text/javascript" src="js/function.js" ></script>
-		<script>
-			$(function(){
-				var w=$(".pad20")[0].clientWidth;
-				$(".body_main").width=w;
-			})
-			$(function(){
-			var initPagination = function() {
-				var total_page = $("#hiddenresult div.result").length;
-				var total_page1 = $("#hiddenresult div.result1").length;
-				// 创建分页
-				$("#pagination").pagination(total_page,{
-					callback: page_callback,
-					items_per_page : 1,				
-					prev_text:"上一页",
-					next_text:"下一页",
-					num_edge_entries : 3,			//边缘值
-					ellipse_text : '...',			//边缘显示
-					num_display_entries : 5	,		//显示条数
-					link_to : 'javascript:void(0)'
-					
-				});
-				$("#page").pagination(total_page1,{
-					callback: page_callback,
-					items_per_page : 1,				
-					prev_text:"上一页",
-					next_text:"下一页",
-					num_edge_entries : 3,			//边缘值
-					ellipse_text : '...',			//边缘显示
-					num_display_entries : 5	,		//显示条数
-					link_to : 'javascript:void(0)'
-					
-				});
-			 }();
-	 
-			 function page_callback(page_index, jq){
-				var new_content = $("#hiddenresult div.result:eq("+page_index+")").clone();
-				$("#Searchresult").empty().append(new_content); //装载对应分页的内容
-				return false;
-			}
-			})
-			function popCompanyInfo(){
-				window.top.$.popWin({
-					title:"编辑发布新闻页",
-					width:610,
-					height:430,
-					center:true,
-					url:"已发布新闻-编辑.html"
-				});
-			}
-			
-		</script>
-	</head>
-	<body class="pad20">
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bridging.css"/>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/js/plugins/pagination/default-style/css/pagination.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/js/plugins/pagination/default-style/css/pagination.extend.css" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
+<script>
+$(function(){
+	var w=$(".pad20")[0].clientWidth;
+	$(".body_main").width=w;
+})
+$(function(){
+var initPagination = function() {
+	var total_page = $("#hiddenresult div.result").length;
+	var total_page1 = $("#hiddenresult div.result1").length;
+	// 创建分页
+	$("#pagination").pagination(total_page,{
+		callback: page_callback,
+		items_per_page : 1,				
+		prev_text:"上一页",
+		next_text:"下一页",
+		num_edge_entries : 3,			//边缘值
+		ellipse_text : '...',			//边缘显示
+		num_display_entries : 5	,		//显示条数
+		link_to : 'javascript:void(0)'
+		
+	});
+	$("#page").pagination(total_page1,{
+		callback: page_callback,
+		items_per_page : 1,				
+		prev_text:"上一页",
+		next_text:"下一页",
+		num_edge_entries : 3,			//边缘值
+		ellipse_text : '...',			//边缘显示
+		num_display_entries : 5	,		//显示条数
+		link_to : 'javascript:void(0)'
+		
+	});
+ }();
+
+ function page_callback(page_index, jq){
+	var new_content = $("#hiddenresult div.result:eq("+page_index+")").clone();
+	$("#Searchresult").empty().append(new_content); //装载对应分页的内容
+	return false;
+}
+})
+function popCompanyInfo(){
+	window.top.$.popWin({
+		title:"编辑发布新闻页",
+		width:610,
+		height:430,
+		center:true,
+		url:"/xiaosi/page/publicNews-edit.jsp"
+	});
+}
+
+</script>
+</head>
+<body class="pad20">
 		<div class="body_main">
             	<div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">
 					<span class="titleSpan fl">已发布新闻</span>

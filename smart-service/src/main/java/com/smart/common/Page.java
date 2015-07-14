@@ -27,7 +27,7 @@ import java.util.List;
  * Time: 上午9:25
  */
 public abstract class Page<T> extends ResponseBody{
-    private Integer count;
+    private Long count;
 
     public Page() {
     }
@@ -36,13 +36,13 @@ public abstract class Page<T> extends ResponseBody{
     private Integer pageSize;
     private List<T> messages;
 
-    public Page(Integer count,Integer pageNumber,Integer pageSize){
+    public Page(Long count,Integer pageNumber,Integer pageSize){
         this.count=count;
         this.pageNumber=pageNumber;
         this.pageSize=pageSize;
     }
 
-    public Page(Integer count,Integer pageNumber,Integer pageSize,List<T> messages){
+    public Page(Long count,Integer pageNumber,Integer pageSize,List<T> messages){
         this.count=count;
         this.pageNumber=pageNumber;
         this.pageSize=pageSize;
@@ -69,11 +69,11 @@ public abstract class Page<T> extends ResponseBody{
 
     protected abstract String listAlias();
 
-    public Integer getCount() {
+    public Long getCount() {
         return count;
     }
 
-    public void setCount(Integer count) {
+    public void setCount(Long count) {
         this.count = count;
     }
 

@@ -23,9 +23,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-public class BaseAction {
+public class BaseController {
 
-    protected final static Logger logger = LoggerFactory.getLogger(BaseAction.class);
+    protected final static Logger logger = LoggerFactory.getLogger(BaseController.class);
     
     public static final String ERROR_CODE = "errorCode";
     public static final String ERROR_DESC = "errorDesc";
@@ -33,7 +33,7 @@ public class BaseAction {
     public static final String RESULT_CODE = "resultCode";
     public static final String RESULT_DESC = "resultDesc";
     protected Long getLong(Date date){
-        return date.getTime()&1004L;
+        return date.getTime()^1004L;
     }
     protected void loggeRequestrMsg(String url,String info){
 		logger.info("url={},request info = {}",url,info);

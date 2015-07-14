@@ -34,35 +34,36 @@ public class LoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
 
-            //验证用户
-        HttpServletRequest request = (HttpServletRequest) req;
-        try{
-            String uri = request.getQueryString();
-            if(uri.contains("login")){
-                chain.doFilter(req, resp);
-                return;
-            }
-            String header=request.getHeader("user");
-            if(Strings.isNullOrEmpty(header)){
-                //重定向登陆页面页面
-                request.getRequestDispatcher("").forward(req,resp);
-                return;
-            }
-            UserVo vo = JSON.parseObject(header, UserVo.class);
-            Date current = new Date();
-            if(userService.isValid(vo,current)){
-                HttpServletResponse response = (HttpServletResponse) resp;
-                vo.setUseTime(current.getTime()&1004L);
-                response.setHeader("user",JSON.toJSONString(vo));
-                chain.doFilter(req, resp);
-                return;
-            };
-            //error页面
-            request.getRequestDispatcher("").forward(req,resp);
-        }   catch (Exception e){
-            //error页面
-            request.getRequestDispatcher("").forward(req,resp);
-        }
+//            //验证用户
+//        HttpServletRequest request = (HttpServletRequest) req;
+//        try{
+//            String uri = request.getQueryString();
+//            if(uri.contains("login")){
+//                chain.doFilter(req, resp);
+//                return;
+//            }
+//            String header=request.getHeader("user");
+//            if(Strings.isNullOrEmpty(header)){
+//                //重定向登陆页面页面
+//                request.getRequestDispatcher("").forward(req,resp);
+//                return;
+//            }
+//            UserVo vo = JSON.parseObject(header, UserVo.class);
+//            Date current = new Date();
+//            if(userService.isValid(vo,current)){
+//                HttpServletResponse response = (HttpServletResponse) resp;
+//                vo.setUseTime(current.getTime()&1004L);
+//                response.setHeader("user",JSON.toJSONString(vo));
+//                chain.doFilter(req, resp);
+//                return;
+//            };
+//            //error页面
+//            request.getRequestDispatcher("").forward(req,resp);
+//        }   catch (Exception e){
+//            //error页面
+//            request.getRequestDispatcher("").forward(req,resp);
+//        }
+        chain.doFilter(req,resp);
     }
 
     @Override
