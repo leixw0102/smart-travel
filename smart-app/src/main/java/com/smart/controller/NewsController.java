@@ -95,28 +95,19 @@ public class NewsController extends BaseController {
       @ResponseBody
       public void newsList(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         try {
-            // JSONObject obj = getJsonObject(request);
-            // String body = readRequestBody(request);
-
-
-            String title = request.getParameter("title");
-            String abs = request.getParameter("abs");
-            String content = request.getParameter("content");
-            //String uid = obj.getString("uid");
-            //String picture = obj.getString("picture");
+            String page = request.getParameter("page");
+            String size = request.getParameter("size");
+            logger.info("newsList:"+page+":"+  size);
             //  logger.info(title + abs);
             // LifeInfo id=lifeService.getId(userId);
+            //Integer.parseInt(page)
             List<NewsInfo> list= userService.userNewsList(1,10);
             JSONObject result =	getSuccessJsonObject();
-            result.put("title", title);
-            result.put("abs", abs);
             result.put("list", list);
-            //   result.put("list", list);
             returnInfo(response, result,200);
-
         } catch (Exception e) {
             //   throw new ApiException(e);
-            returnInfo(response, getFailedJsonObject(1003, "内部错误"),200);
+            returnInfo(response, getFailedJsonObject(1003, "get news list error"),200);
         }
     }
 
