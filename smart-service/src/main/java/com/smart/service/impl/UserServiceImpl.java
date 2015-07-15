@@ -52,7 +52,7 @@ public class UserServiceImpl  implements UserService {
     public  Page userNewsList(int pageNumber, int pageSize)
             throws Exception {
       //  List<NewsInfo>
-        Page<NewsInfo> page = new Page<SellerInfo>() {
+        Page<NewsInfo> page = new Page<NewsInfo>() {
             @Override
             protected String listAlias() {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
@@ -76,7 +76,7 @@ public class UserServiceImpl  implements UserService {
     @Override
     public boolean create(String join, String title, String content, String abs) throws Exception {
 
-        return userDao.create(join,title,content,abs);  //To change body of implemented methods use File | Settings | File Templates.
+        return userDao.create(join, title, content, abs);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 
