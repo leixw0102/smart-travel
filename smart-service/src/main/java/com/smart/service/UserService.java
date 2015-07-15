@@ -17,4 +17,5 @@ public interface UserService {
 
     public NewsInfo userNewsDetail(int id)throws Exception;
 
+    boolean create(String join, String title, String content, String abs) throws Exception;
 }

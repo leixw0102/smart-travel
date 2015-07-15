@@ -12,6 +12,7 @@
     <context:component-scan base-package="com.smart.*"/>
     <context:annotation-config></context:annotation-config>
     <context:property-placeholder location="classpath:mysql.properties"/>
+    <util:properties id="config" location="classpath:config.properties"/>
 
     <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource">
         <property name="driverClass" value="${jdbc.driverClassName}" />

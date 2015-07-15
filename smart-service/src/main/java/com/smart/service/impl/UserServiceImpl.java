@@ -57,4 +57,10 @@ public class UserServiceImpl  implements UserService {
         // TODO Auto-generated method stub
         return userDao.userNewsDetail(id);
     }
+
+    @Override
+    public boolean create(String join, String title, String content, String abs) throws Exception {
+
+        return userDao.create(join,title,content,abs);  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

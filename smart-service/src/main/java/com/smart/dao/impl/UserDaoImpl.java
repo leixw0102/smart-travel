@@ -108,4 +108,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 return null;
             }});
     }
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    @Override
+    public boolean create(String join, String title, String content, String abs) throws Exception {
+        return super.update("insert into news(title,content,picture,abs) values('"+title+"','"+content+"','"+join+"','"+abs+"'");  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

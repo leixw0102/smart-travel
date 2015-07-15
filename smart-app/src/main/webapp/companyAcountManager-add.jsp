@@ -48,7 +48,7 @@
 </head>
 <body class="pad20">
 		<div class="body_main">
-		<form id="companyInfo" action="<%=request.getContextPath()%>/1.0/seller/add">
+		<form id="companyInfo">
 		<!--filter start-->
 		<div class="fieldsContainer">
 			<ul class="fields search pdt0 pdb0">

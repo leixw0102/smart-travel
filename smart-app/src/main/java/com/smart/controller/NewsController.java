@@ -2,9 +2,13 @@ package com.smart.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.NameFilter;
+import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
+import com.google.common.io.Files;
 import com.smart.common.ResponseConstantCode;
 import com.smart.common.ResponseMsg;
+import com.smart.model.Config;
 import com.smart.model.NewsInfo;
 import com.smart.model.UserInfo;
 import com.smart.service.UserService;
@@ -17,81 +21,98 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
-import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
 @Controller
 @RequestMapping("/1.0/news/*")
 public class NewsController extends BaseController {
     private static Logger logger = LoggerFactory.getLogger(NewsController.class);
     @Autowired
     private UserService userService;
+    @Resource(name="configImg")
+    private Config config;
 
 
 
     @RequestMapping(value = "create")
     @ResponseBody
-    public void newsCreate(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-        try {
-           // JSONObject obj = getJsonObject(request);
-           // String body = readRequestBody(request);
-
-
-            String title = request.getParameter("title");
-            String abs = request.getParameter("abs");
-          String content = request.getParameter("content");
-            //String uid = obj.getString("uid");
-            //String picture = obj.getString("picture");
-          //  logger.info(title + abs);
-           // LifeInfo id=lifeService.getId(userId);
-            List<NewsInfo> list= userService.userNewsList(1,10);
-            JSONObject result =	getSuccessJsonObject();
-            result.put("title", title);
-           result.put("abs", abs);
-            result.put("list", list);
-         //   result.put("list", list);
-            returnInfo(response, result,200);
-
-        } catch (Exception e) {
-         //   throw new ApiException(e);
-            returnInfo(response, getFailedJsonObject(1003, "内部错误"),200);
-        }
-    }
-
-    @RequestMapping(value = "create")
-    @ResponseBody
-    public void newsCreate(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-        try {
+    public ResponseMsg newsCreate(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
             // JSONObject obj = getJsonObject(request);
             // String body = readRequestBody(request);
+            CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+            multipartResolver.setDefaultEncoding("utf-8");
+            logger.info(multipartResolver.isMultipart(request)+"");
+            String title=null, abs=null,content=null;
+            if(multipartResolver.isMultipart(request))  {
+                MultipartHttpServletRequest multiRequest = multipartResolver.resolveMultipart(request);
 
+                Iterator<String> ite = multiRequest.getFileNames();
+                String af="";
+                File localDir ;
+                List<String> paths= Lists.newArrayList();
+                title = multiRequest.getParameter("title");
+                abs= multiRequest.getParameter("abs");
+                content = multiRequest.getParameter("content");
+                try{
+                    localDir= new File(config.getRootPath());
+                    if(!localDir.exists()){
+                        localDir.mkdirs();
+                    }
+                    while(ite.hasNext()){
+                        String name = ite.next();
+                        MultipartFile file = multiRequest.getFile(name);
+                        if(file!=null){
+                            File localFile=null;
+                            try {
+                                String serverFileName=System.currentTimeMillis()+"_"+file.getOriginalFilename();
+                                localFile = new File(localDir,serverFileName);
+                                logger.debug("af = "+af +" ;localdir = "+localDir.getAbsolutePath()+" ; file = "+localFile.getAbsolutePath());
+                                file.transferTo(localFile); //将上传文件写到服务器上指定的文件
+                                paths.add(config.getUrl()+File.separator+serverFileName);
+                            } catch (IllegalStateException e) {
+                                e.printStackTrace();
+                                logger.error("error msg!",e);
+                                e.printStackTrace();
+                                throw new Exception("upload error!");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                logger.error("error msg!",e);
+                                throw new Exception("upload error");
+                            }
+                        }
+                    }
 
-            String title = request.getParameter("title");
-            String abs = request.getParameter("abs");
-            String content = request.getParameter("content");
-            //String uid = obj.getString("uid");
-            //String picture = obj.getString("picture");
-            //  logger.info(title + abs);
-            // LifeInfo id=lifeService.getId(userId);
-            List<NewsInfo> list= userService.userNewsList(1,10);
-            JSONObject result =	getSuccessJsonObject();
-            result.put("title", title);
-            result.put("abs", abs);
-            result.put("list", list);
-            //   result.put("list", list);
-            returnInfo(response, result,200);
-
-        } catch (Exception e) {
-            //   throw new ApiException(e);
-            returnInfo(response, getFailedJsonObject(1003, "内部错误"),200);
-        }
-    } @RequestMapping(value = "list")
+                }catch(Exception e){
+                    logger.error("error!",e);
+                    return new ResponseMsg("1","error!"+e.getMessage());
+                }
+                logger.debug(Joiner.on(";").join(paths));
+//                //update
+                try {
+                    if(userService.create(Joiner.on(";").join(paths), title, content, abs)){
+                        return new ResponseMsg();
+                    };
+                    Files.deleteDirectoryContents(localDir);
+                    return new ResponseMsg("12","上传失败！检查用户相关信息");
+                } catch (Exception e) {
+                    logger.error("upload error msg!",e);
+                    return new ResponseMsg("12","update hote msg error!");
+                }
+            }
+        return  new ResponseMsg("12","update hote msg error!");
+    }
+    @RequestMapping(value = "list")
       @ResponseBody
       public void newsList(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         try {
