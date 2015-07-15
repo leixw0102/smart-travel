@@ -47,6 +47,7 @@ public class NewsController extends BaseController {
 
     @RequestMapping(value = "create")
     @ResponseBody
+
     public ResponseMsg newsCreate(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
             // JSONObject obj = getJsonObject(request);
             // String body = readRequestBody(request);
@@ -64,6 +65,7 @@ public class NewsController extends BaseController {
                 title = multiRequest.getParameter("title");
                 abs= multiRequest.getParameter("abs");
                 content = multiRequest.getParameter("content");
+                logger.info(title+"\t"+abs+"\t"+content);
                 try{
                     localDir= new File(config.getRootPath());
                     if(!localDir.exists()){
@@ -99,37 +101,46 @@ public class NewsController extends BaseController {
                 }
                 logger.debug(Joiner.on(";").join(paths));
 //                //update
-                try {
-                    if(userService.create(Joiner.on(";").join(paths), title, content, abs)){
-                        return new ResponseMsg();
-                    };
-                    Files.deleteDirectoryContents(localDir);
-                    return new ResponseMsg("12","上传失败！检查用户相关信息");
-                } catch (Exception e) {
-                    logger.error("upload error msg!",e);
-                    return new ResponseMsg("12","update hote msg error!");
-                }
+//                try {
+//                    if(userService.create(Joiner.on(";").join(paths), title, content, abs)){
+//                        return new ResponseMsg();
+//                    };
+//                    Files.deleteDirectoryContents(localDir);
+//                    return new ResponseMsg("12","上传失败！检查用户相关信息");
+//                } catch (Exception e) {
+//                    logger.error("upload error msg!",e);
+//                    return new ResponseMsg("12","update hote msg error!");
+//                }
             }
         return  new ResponseMsg("12","update hote msg error!");
     }
+
+//    @RequestMapping(value = "list1")
+//      @ResponseBody
+//      public void newsList(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+//        try {
+//            String page = request.getParameter("page");
+//            String size = request.getParameter("size");
+//            logger.info("newsList:"+page+":"+  size);
+//            //  logger.info(title + abs);
+//            // LifeInfo id=lifeService.getId(userId);
+//            //Integer.parseInt(page)
+//            List<NewsInfo> list= userService.userNewsList(1,10);
+//            JSONObject result =	getSuccessJsonObject();
+//            result.put("list", list);
+//            returnInfo(response, result,200);
+//        } catch (Exception e) {
+//            //   throw new ApiException(e);
+//            returnInfo(response, getFailedJsonObject(1003, "get news list error"),200);
+//        }
+
     @RequestMapping(value = "list")
-      @ResponseBody
-      public void newsList(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-        try {
-            String page = request.getParameter("page");
-            String size = request.getParameter("size");
-            logger.info("newsList:"+page+":"+  size);
-            //  logger.info(title + abs);
-            // LifeInfo id=lifeService.getId(userId);
-            //Integer.parseInt(page)
-            List<NewsInfo> list= userService.userNewsList(1,10);
-            JSONObject result =	getSuccessJsonObject();
-            result.put("list", list);
-            returnInfo(response, result,200);
-        } catch (Exception e) {
-            //   throw new ApiException(e);
-            returnInfo(response, getFailedJsonObject(1003, "get news list error"),200);
-        }
+    public String newsList(HttpServletRequest request,HttpServletResponse response,@RequestParam Integer page) throws Exception {
+        request.setAttribute("msgs",userService.userNewsList(page,10));
+        return "publicNews";
+
     }
+
+
 
 }

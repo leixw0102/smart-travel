@@ -1,3 +1,7 @@
+<%@ page import="com.smart.model.NewsInfo" %>
+<%@ page import="com.smart.common.Page" %>
+<%@ page import="java.util.List" %>
+<%@ page import="org.joda.time.DateTime" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,6 +16,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
+ <% Page<NewsInfo> pag1= (Page<NewsInfo>) request.getAttribute("msgs");%>
 <script>
 $(function(){
 	var w=$(".pad20")[0].clientWidth;
@@ -98,83 +103,32 @@ function popCompanyInfo(){
                 
 				<table class="blackbor_table"  cellspacing="0" cellpadding="0">
 					<tr class="trup">
-						<td width="5%">序号</td>
-						<td width="10%">用户名(手机号)</td>
-						<td width="5%">密码</td>
-						<td width="10%">商户类型</td>
-						<td width="20%" >商户名称</td>
-                        <td width="10%" >联系人</td>
-                        <td width="10%" >账户VIP类型</td>
-                        <td width="10%" >创建日期</td>
-						<td width="20%" class="borderright">备注</td>
+						<td width="5%">标题</td>
+						<td width="15%">图片</td>
+						<td width="20%">简介</td>
+						<td width="5%" >创建日期</td>
+						<td width="60%">内容 </td>
 					</tr>
-					<tr>
-						<td >1</td>
-						<td class="list-link">1332893423</td>
-						<td>***********</td>
-						<td>sadasdasd</td>
-						<td >asdasdas1</td>
-						<td >2121232332</td>
-						<td>sadad</td>
-						<td>2015-7-11</td>
-                        <td>assad</td>
-					</tr>
-					<tr>
-						<td >2</td>
-						<td  class="list-link">1332893423</td>
-						<td>***********</td>
-						<td>sadasdasd</td>
-						<td >asdasdas1</td>
-						<td >2121232332</td>
-						<td>sadad</td>
-						<td>2015-7-11</td>
-                        <td>assad</td>
-					</tr>
-					<tr>
-						<td >3</td>
-						<td class="list-link">1332893423</td>
-						<td>***********</td>
-						<td>sadasdasd</td>
-						<td >asdasdas1</td>
-						<td >2121232332</td>
-						<td>sadad</td>
-						<td>2015-7-11</td>
-                        <td>assad</td>
-					</tr>
-					<tr>
-						<td >4</td>
-						<td class="list-link">1332893423</td>
-						<td>***********</td>
-						<td>sadasdasd</td>
-						<td >asdasdas1</td>
-						<td >2121232332</td>
-						<td>sadad</td>
-						<td>2015-7-11</td>
-                        <td>assad</td>
-					</tr>
-					<tr>
-						<td >5</td>
-						<td class="list-link">1332893423</td>
-						<td>***********</td>
-						<td>sadasdasd</td>
-						<td >asdasdas1</td>
-						<td >2121232332</td>
-						<td>sadad</td>
-						<td>2015-7-11</td>
-                        <td>assad</td>
-					</tr>
-					<tr>
-						<td >6</td>
-						<td class="list-link">1332893423</td>
-						<td>***********</td>
-						<td>sadasdasd</td>
-						<td >asdasdas1</td>
-						<td >2121232332</td>
-						<td>sadad</td>
-						<td>2015-7-11</td>
-                        <td>assad</td>
-					</tr>
-					
+					 <%
+						int id =0;
+					 List<NewsInfo> infos=pag1.getMessages();
+					   if(null == infos || infos.isEmpty()){
+
+					   }   else{
+						   for(NewsInfo info : infos){
+							   ++id;
+						   %>
+					  <tr>
+						<td ><%=id%></td>
+						<td class="list-link"><%=info.getTitle()%></td>
+						<td><%=info.getPicture()%></td>
+						<td><%=info.getAbs()%></td>
+						<td ><%=info.getCreateTime()%></td>
+						<td ><%=info.getContent()%></td>
+						</tr>
+						<%
+								} }
+						%>
 				</table>
 				<div class="detail_bottom">
 					<div>

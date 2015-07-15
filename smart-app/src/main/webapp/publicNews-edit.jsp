@@ -27,6 +27,11 @@
                         url: '<%=request.getContextPath()%>/1.0/news/create?'+$('#newsInfo').serialize(), //用于文件上传的服务器端请求地址
                         secureuri: false, //是否需要安全协议，一般设置为false
                         fileElementId: 'file1', //文件上传域的ID
+                        data: {
+                            title:$('#title').val(),
+                              abs:$('#abs').val(),
+                              content:$('#content').val()
+                              },
                         dataType: 'json', //返回值类型 一般设置为json
                         success: function (data, status)  //服务器成功响应处理函数
                         {
