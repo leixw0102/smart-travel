@@ -109,11 +109,11 @@ function popCompanyInfo(){
                 
 				<table class="blackbor_table"  cellspacing="0" cellpadding="0">
 					<tr class="trup">
-					    <td width="5%">序号</td>
+					    <td width="10%">序号</td>
 						<td width="10%">标题</td>
 						<td width="20%">图片</td>
 						<td width="20%">简介</td>
-						<td width="10%" >创建日期</td>
+						<td width="15%" >创建日期</td>
 						<td width="45%">内容 </td>
 					</tr>
 					 <%
@@ -128,7 +128,7 @@ function popCompanyInfo(){
 					  <tr>
 						<td ><%=id%></td>
 						<td class="list-link"><%=info.getTitle()%></td>
-						<td><%=info.getPicture()%></td>
+						<td><img src=<%=info.getPicture()%> height="100" width="100" /></td>
 						<td><%=info.getAbs()%></td>
 						<td ><%=info.getCreateTime()%></td>
 						<td ><%=info.getContent()%></td>
