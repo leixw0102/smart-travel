@@ -114,30 +114,11 @@ public class NewsController extends BaseController {
         return  new ResponseMsg("12","update hote msg error!");
     }
     @RequestMapping(value = "list")
-      @ResponseBody
-      public void newsList(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-        try {
-            String page = request.getParameter("page");
-            String size = request.getParameter("size");
-            logger.info("newsList:"+page+":"+  size);
-            //  logger.info(title + abs);
-            // LifeInfo id=lifeService.getId(userId);
-            //Integer.parseInt(page)
-            List<NewsInfo> list= userService.userNewsList(1,10);
-            JSONObject result =	getSuccessJsonObject();
-            result.put("list", list);
-            returnInfo(response, result,200);
-        } catch (Exception e) {
-            //   throw new ApiException(e);
-            returnInfo(response, getFailedJsonObject(1003, "get news list error"),200);
-        }
+    public String newsList(HttpServletRequest request,HttpServletResponse response,@RequestParam Integer page) throws Exception {
+        request.setAttribute("msgs",userService.userNewsList(page,10));
+        return "publicNews";
     }
 
-      @RequestMapping(value = "list")
-       public String newsList(HttpServletRequest request,HttpServletResponse response,@RequestParam Integer page) throws Exception {
-          request.setAttribute("msgs",userService.userNewsList(page,10));
-          return "publicNews";
 
-    }
 
 }
