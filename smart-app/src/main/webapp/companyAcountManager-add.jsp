@@ -23,6 +23,8 @@
             url: "<%=request.getContextPath()%>/1.0/seller/add",
             type: methodType,
             data: $('#companyInfo').serialize(),
+            contentType:"application/json;charset=utf-8",
+
             success: function (result) {
 
                 if (result.code==0){

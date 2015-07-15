@@ -76,11 +76,11 @@ public class NewsController extends BaseController {
                         if(file!=null){
                             File localFile=null;
                             try {
-                                String serverFileName=file.getOriginalFilename();
+                                String serverFileName=System.nanoTime()+"_"+file.getOriginalFilename();
                                 localFile = new File(localDir,serverFileName);
                                 logger.debug("af = "+af +" ;localdir = "+localDir.getAbsolutePath()+" ; file = "+localFile.getAbsolutePath());
                                 file.transferTo(localFile); //将上传文件写到服务器上指定的文件
-                                paths.add(config.getUrl()+File.separator+serverFileName);
+                                paths.add(config.getUrl()+File.separator+localDir.getName()+File.separator+serverFileName);
                             } catch (IllegalStateException e) {
                                 e.printStackTrace();
                                 logger.error("error msg!",e);
