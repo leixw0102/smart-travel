@@ -30,7 +30,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-
+import com.smart.common.Token;
 /**
  * Created by leixw
  * <p/>
@@ -128,7 +128,8 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
     @Transactional(readOnly = false,rollbackFor = Exception.class)
     @Override
     public boolean addSeller(SellerVo info) throws Exception {
-       return  super.update("insert into user(username,password,roleType,servicefee_level,grade,contact_name,mark,level,seller_name) values('"+info.getUserName()+"','"+info.getPwd()+"'," +
+        String usekey =Token.getToken(info.getUserName(), String.valueOf(get(Integer.parseInt(info.getType()))), "1");
+       return  super.update("insert into user(UserKey,username,password,roleType,servicefee_level,grade,contact_name,mark,level,seller_name) values('"+usekey+"','"+info.getUserName()+"','"+info.getPwd()+"'," +
                 "'"+get(Integer.parseInt(info.getType()))+"','"+info.getFree()+"','"+info.getGrade()+"','"+info.getContactName()+"','"+info.getRemark()+"',1,'"+info.getSellerName()+"')");
     }
 }
