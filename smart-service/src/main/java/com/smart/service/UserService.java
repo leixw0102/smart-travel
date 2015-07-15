@@ -17,6 +17,6 @@ public interface UserService {
     public Page userNewsList(int pageNumber, int pageSize) throws Exception;
 
     public NewsInfo userNewsDetail(int id) throws Exception;
-    boolean create(String join, String title, String content, String abs) throws Exception;
+    public boolean create(String join, String title, String content, String abs) throws Exception;
 
 }
