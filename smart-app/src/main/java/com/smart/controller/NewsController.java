@@ -47,6 +47,7 @@ public class NewsController extends BaseController {
 
     @RequestMapping(value = "create")
     @ResponseBody
+
     public ResponseMsg newsCreate(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
             // JSONObject obj = getJsonObject(request);
             // String body = readRequestBody(request);
@@ -130,6 +131,13 @@ public class NewsController extends BaseController {
             //   throw new ApiException(e);
             returnInfo(response, getFailedJsonObject(1003, "get news list error"),200);
         }
+    }
+
+      @RequestMapping(value = "list")
+       public String newsList(HttpServletRequest request,HttpServletResponse response,@RequestParam Integer page) throws Exception {
+          request.setAttribute("msgs",userService.userNewsList(page,10));
+          return "publicNews";
+
     }
 
 }
