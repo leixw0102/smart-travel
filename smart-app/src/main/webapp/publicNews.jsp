@@ -9,13 +9,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bridging.css"/>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/js/plugins/pagination/default-style/css/pagination.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/js/plugins/pagination/default-style/css/pagination.extend.css" />
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
+    <link href="<%=request.getContextPath()%>/css/bridging.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/js/plugins/popWin/css/win.css"/>
+    <script src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/js/function.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/js/plugins/popWin/js/jquery.window.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/js/plugins/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+<%--<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bridging.css"/>--%>
+<%--<link rel="stylesheet" href="<%=request.getContextPath()%>/js/plugins/pagination/default-style/css/pagination.css" />--%>
+<%--<link rel="stylesheet" href="<%=request.getContextPath()%>/js/plugins/pagination/default-style/css/pagination.extend.css" />--%>
+<%--&lt;%&ndash;<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>&ndash;%&gt;--%>
+<%--<script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>--%>
+<%--<script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>--%>
+<%--<script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>--%>
  <% Page<NewsInfo> pag1= (Page<NewsInfo>) request.getAttribute("msgs");%>
 <script>
 $(function(){
@@ -63,7 +69,7 @@ function popCompanyInfo(){
 		width:610,
 		height:430,
 		center:true,
-		url:"publicNews-edit.jsp"
+		url:"<%=request.getContextPath()%>/publicNews-edit.jsp"
 	});
 }
 

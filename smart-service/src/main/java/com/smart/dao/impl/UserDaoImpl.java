@@ -70,7 +70,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     @Override
     public List<NewsInfo> userNewsList(int pageNumber, int pageSize)
             throws Exception {
-        String sql="select * from news where del=0 limit "+(pageNumber-1)*pageSize+","+pageSize ;
+        String sql="select * from news where del=0  order by create_time desc limit "+(pageNumber-1)*pageSize+","+pageSize ;
         return jdbcTemplate.query(sql, new RowMapper<NewsInfo>(){
 
             @Override
@@ -121,7 +121,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         @Transactional(readOnly = false,rollbackFor = Exception.class)
         @Override
         public boolean create(String join, String title, String content, String abs) throws Exception {
-            return super.update("insert into news(title,content,picture,abs) values('"+title+"','"+content+"','"+join+"','"+abs+"'");  //To change body of implemented methods use File | Settings | File Templates.
+            return super.update("insert into news(title,content,picture,abs) values('"+title+"','"+content+"','"+join+"','"+abs+"')");  //To change body of implemented methods use File | Settings | File Templates.
         }
 
 

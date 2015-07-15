@@ -17,7 +17,9 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
-    <% Page<SellerInfo> pag1= (Page<SellerInfo>) request.getAttribute("msgs");%>
+    <% Page<SellerInfo> pag1= (Page<SellerInfo>) request.getAttribute("msgs");
+        long size = pag1.getCount()/pag1.getPageSize()==0?pag1.getCount()/pag1.getPageSize()+1:pag1.getCount()/pag1.getPageSize();
+    %>
 <script>
 $(function(){
 	var w=$(".pad20")[0].clientWidth;
@@ -25,37 +27,38 @@ $(function(){
 })
 $(function(){
 var initPagination = function() {
-	var total_page = '<%=pag1.getCount()%>';
-	var total_page1 = '<%=pag1.getCount()%>';
+	var total_page = '<%=size%>';
+//	var total_page1 = '10';
 //    var total_page = $("#hiddenresult div.result").length;
 //    var total_page1 = $("#hiddenresult div.result1").length;
 	// 创建分页
 	$("#pagination").pagination(total_page,{
 		callback: page_callback,
-		items_per_page : 1,				
+		items_per_page : 1,
 		prev_text:"上一页",
 		next_text:"下一页",
+        current_page:<%=pag1.getPageNumber()-1%>,
 		num_edge_entries : 3,			//边缘值
 		ellipse_text : '...',			//边缘显示
 		num_display_entries : 5	,		//显示条数
 		link_to : 'javascript:void(0)'
 		
 	});
-	$("#page").pagination(total_page1,{
-		callback: page_callback,
-		items_per_page : 1,				
-		prev_text:"上一页",
-		next_text:"下一页",
-		num_edge_entries : 3,			//边缘值
-		ellipse_text : '...',			//边缘显示
-		num_display_entries : 5	,		//显示条数
-		link_to : 'javascript:void(0)'
-		
-	});
+//	$("#page").pagination(total_page1,{
+//		callback: page_callback,
+//		items_per_page : 1,
+//		prev_text:"上一页",
+//		next_text:"下一页",
+//		num_edge_entries : 3,			//边缘值
+//		ellipse_text : '...',			//边缘显示
+//		num_display_entries : 5	,		//显示条数
+//		link_to : 'javascript:void(0)'
+//
+//	});
  }();
 
  function page_callback(page_index, jq){
-
+     location.href="<%=request.getContextPath()%>/1.0/seller/getAccountLists?page="+(page_index+1)
 	return false;
 }
 })
@@ -92,7 +95,7 @@ function popCompanyInfo(){
 						<td width="20%" class="borderright">备注</td>
 					</tr>
                     <%
-                        int id =0;
+                        int id =(pag1.getPageNumber()-1)*pag1.getPageSize();
                      List<SellerInfo> infos=pag1.getMessages();
                        if(null == infos || infos.isEmpty()){
 

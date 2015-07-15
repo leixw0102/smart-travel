@@ -65,7 +65,6 @@ public class NewsController extends BaseController {
                 title = multiRequest.getParameter("title");
                 abs= multiRequest.getParameter("abs");
                 content = multiRequest.getParameter("content");
-                logger.info(title+"\t"+abs+"\t"+content);
                 try{
                     localDir= new File(config.getRootPath());
                     if(!localDir.exists()){
@@ -77,7 +76,7 @@ public class NewsController extends BaseController {
                         if(file!=null){
                             File localFile=null;
                             try {
-                                String serverFileName=System.currentTimeMillis()+"_"+file.getOriginalFilename();
+                                String serverFileName=file.getOriginalFilename();
                                 localFile = new File(localDir,serverFileName);
                                 logger.debug("af = "+af +" ;localdir = "+localDir.getAbsolutePath()+" ; file = "+localFile.getAbsolutePath());
                                 file.transferTo(localFile); //将上传文件写到服务器上指定的文件
@@ -100,17 +99,17 @@ public class NewsController extends BaseController {
                     return new ResponseMsg("1","error!"+e.getMessage());
                 }
                 logger.debug(Joiner.on(";").join(paths));
-//                //update
-//                try {
-//                    if(userService.create(Joiner.on(";").join(paths), title, content, abs)){
-//                        return new ResponseMsg();
-//                    };
-//                    Files.deleteDirectoryContents(localDir);
-//                    return new ResponseMsg("12","上传失败！检查用户相关信息");
-//                } catch (Exception e) {
-//                    logger.error("upload error msg!",e);
-//                    return new ResponseMsg("12","update hote msg error!");
-//                }
+                //update
+                try {
+                    if(userService.create(Joiner.on(";").join(paths), title, content, abs)){
+                        return new ResponseMsg();
+                    };
+                    Files.deleteDirectoryContents(localDir);
+                    return new ResponseMsg("12","上传失败！检查用户相关信息");
+                } catch (Exception e) {
+                    logger.error("upload error msg!",e);
+                    return new ResponseMsg("12","update hote msg error!");
+                }
             }
         return  new ResponseMsg("12","update hote msg error!");
     }

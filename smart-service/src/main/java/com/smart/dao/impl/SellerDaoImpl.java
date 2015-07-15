@@ -43,7 +43,9 @@ import java.util.Map;
 public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
     @Override
     public List<SellerInfo> getSeller(Integer pageNumber,Integer pageSize) throws Exception {
-        return super.getBySqlRowMapper("select * from user where roletype in (2,4,5,6) limit "+(pageNumber-1)*pageSize+","+pageSize,new RowMapper<SellerInfo>() {
+        String sql ="select * from user where roletype in (2,4,5,6) order by createtime desc limit "+(pageNumber-1)*pageSize+","+pageSize;
+        logger.info(sql);
+        return super.getBySqlRowMapper(sql,new RowMapper<SellerInfo>() {
             @Override
             public SellerInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
                 SellerInfo info = new SellerInfo();

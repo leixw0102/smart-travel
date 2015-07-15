@@ -6,10 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bridging.css"/>
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/uploadify.css"/>
+    <%--<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/uploadify.css"/>--%>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
     <script type="text/javascript"src="<%=request.getContextPath()%>/js/ajaxfileupload-1.js" />
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.uploadify-3.1.min.js" />
+    <%--<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.uploadify-3.1.min.js" />--%>
 <script>
 	$(function(){
 		var w=$(".pad20")[0].clientWidth;
@@ -20,11 +20,11 @@
     <script type="text/javascript">
 
         function save(){
-            alert($('#newsInfo').serialize())
+//            alert($('#newsInfo').serialize())
             $.ajaxFileUpload
             (
                     {
-                        url: '<%=request.getContextPath()%>/1.0/news/create?'+$('#newsInfo').serialize(), //用于文件上传的服务器端请求地址
+                        url: '<%=request.getContextPath()%>/1.0/news/create', //用于文件上传的服务器端请求地址
                         secureuri: false, //是否需要安全协议，一般设置为false
                         fileElementId: 'file1', //文件上传域的ID
                         data: {
@@ -35,10 +35,10 @@
                         dataType: 'json', //返回值类型 一般设置为json
                         success: function (data, status)  //服务器成功响应处理函数
                         {
-                            if (result.code==0){
+                            if (data.code==0){
                                 window.alert("success");
                             }else{
-                                alert(result.message)
+                                alert(data.message)
                             }
                         },
                         error: function (data, status, e)//服务器响应失败处理函数
@@ -51,22 +51,6 @@
 
         }
     </script>
-    <%--<!-- &lt;%&ndash;$.ajax({&ndash;%&gt;--%>
-                <%--url: "<%=request.getContextPath()%>/1.0/news/create",--%>
-                <%--type: "post",--%>
-                <%--dataType:"json",--%>
-<%--//                data: {title:$('#title').val(),--%>
-<%--//                       abs:$('#abs').val(),--%>
-<%--//                       content:$('#content').val()--%>
-<%--//                       },--%>
-                <%--success: function (result) {--%>
-                    <%--if (result.code==1000){--%>
-                        <%--alert(result.code +":"+ result.msg+":"+ result.title);--%>
-                    <%--}else{--%>
-                       <%--alert(result.code +":"+ result.msg+":"+ result.title);--%>
-                    <%--}--%>
-                <%--}--%>
-            <%--});--%>
 </head>
 <body class="pad20">
 		<div class="body_main">
@@ -121,7 +105,7 @@
 				</li>
 			</ul>
 		</div>
-		<div id="abcd" class="bt_icon bt_icon_b3 fr r240 pr bd0" ><div class="text c1 pdl0">确定</div></div>
+		<div id="abcd" class="bt_icon bt_icon_b3 fr r240 pr bd0" onclick="javascript:save()" ><div class="text c1 pdl0">确定</div></div>
                 </form>
 	</div>
 	</body>
