@@ -129,7 +129,7 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
     @Override
     public boolean addSeller(SellerVo info) throws Exception {
         String usekey =Token.getToken(info.getUserName(), String.valueOf(get(Integer.parseInt(info.getType()))), "1");
-       return  super.update("insert into user(UserKey,username,password,roleType,servicefee_level,grade,contact_name,mark,level,seller_name) values('"+usekey+"','"+info.getUserName()+"','"+info.getPwd()+"'," +
+       return  super.update("insert into user(Mac,UserKey,username,password,roleType,servicefee_level,grade,contact_name,mark,level,seller_name) values('1','"+usekey+"','"+info.getUserName()+"','"+info.getPwd()+"'," +
                 "'"+get(Integer.parseInt(info.getType()))+"','"+info.getFree()+"','"+info.getGrade()+"','"+info.getContactName()+"','"+info.getRemark()+"',1,'"+info.getSellerName()+"')");
     }
 }
