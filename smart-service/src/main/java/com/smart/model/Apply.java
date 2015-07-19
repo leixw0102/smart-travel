@@ -47,14 +47,6 @@ public class Apply {
 	}
 	private int status;
 	
-	private Float totalMoney;
-	
-	public Float getTotalMoney() {
-		return totalMoney;
-	}
-	public void setTotalMoney(Float totalMoney) {
-		this.totalMoney = totalMoney;
-	}
 	public long getUserId() {
 		return userId;
 	}

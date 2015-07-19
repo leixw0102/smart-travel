@@ -21,6 +21,7 @@ import com.smart.common.Page;
 import com.smart.dao.FinanceDao;
 import com.smart.model.Apply;
 import com.smart.service.FinanceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,7 +35,7 @@ import java.util.List;
  */
 @Service
 public class FinanceServiceImpl implements FinanceService {
-
+    @Autowired
     private FinanceDao financeDao;
     @Override
     public boolean confirm(Long applyId) throws Exception {
@@ -59,6 +60,8 @@ public class FinanceServiceImpl implements FinanceService {
         Long total=financeDao.searchCount(from,to,type);
 
         List<Apply> list = financeDao.search(page,from,to,type);
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        applies.setCount(total);
+        applies.setMessages(list);
+        return applies;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

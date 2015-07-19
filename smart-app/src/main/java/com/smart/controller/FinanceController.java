@@ -17,9 +17,13 @@ package com.smart.controller;/*
  * under the License.
  */
 
+import com.alibaba.fastjson.JSON;
+import com.smart.common.Page;
 import com.smart.common.ResponseMsg;
 import com.smart.service.FinanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,5 +81,12 @@ public class FinanceController extends BaseController {
         }catch (Exception e){
            throw new ApiException(new ResponseMsg("1004",e.getMessage()));
         }
+    }
+
+    public static void main(String []args) throws Exception {
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        FinanceService financeService1=context.getBean(FinanceService.class);
+        Page page=financeService1.search(1,"2015-07-09","2015-07-10",2);
+        System.out.println(JSON.toJSONString(page));
     }
 }
