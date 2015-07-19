@@ -88,8 +88,8 @@ function popCompanyInfo(){
 						<td width="10%">用户名(手机号)</td>
 						<td width="5%">密码</td>
 						<td width="10%">商户类型</td>
-						<td width="20%" >商户名称</td>
-                        <td width="10%" >联系人</td>
+						<%--<td width="20%" >商户名称</td>--%>
+                        <%--<td width="10%" >联系人</td>--%>
                         <td width="10%" >服务费比例</td>
                         <td width="10%" >创建日期</td>
 						<td width="20%" class="borderright">备注</td>
@@ -108,8 +108,8 @@ function popCompanyInfo(){
                         <td class="list-link"><%=info.getUserName()%></td>
                         <td><%=info.getPwd()%></td>
                         <td><%=info.getType()%></td>
-                        <td ><%=info.getSellerName()%></td>
-                        <td ><%=info.getContactName()%></td>
+                        <%--<td ><%=info.getSellerName()%></td>--%>
+                        <%--<td ><%=info.getContactName()%></td>--%>
                         <td><%=info.getFree()%></td>
                         <td><%=new DateTime(info.getCreateTime()).toString("yyyy-MM-dd HH:mm:ss")%></td>
                         <td><%=info.getRemark()%></td>

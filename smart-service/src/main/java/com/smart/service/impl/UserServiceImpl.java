@@ -22,21 +22,21 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     public UserInfo sellerLogin(String user, String passwd) throws Exception {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return userDao.sellerLogin(user,passwd);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public boolean isValid(UserVo vo,Date oldDate) throws Exception {
+    public boolean isValid(UserVo vo,Date date) throws Exception {
 
-        Long id= userDao.isValid(vo.getUserName(),vo.getRole(),simpleDateFormat.format(oldDate));  //To change body of implemented methods use File | Settings | File Templates.
+        Long id= userDao.isValid(vo.getUserName(),vo.getRole(),simpleDateFormat.format(vo.getUseTime()));  //To change body of implemented methods use File | Settings | File Templates.
         if(null == id){
             return false;
         }
-        Date newDate = DateUtils.getDate(oldDate.getTime(),30);
-        if(oldDate.getTime()-newDate.getTime()>0){
-            //瓒呰繃30鍒嗛挓
+        Date newDate = DateUtils.getDate(vo.getUseTime(),30);
+        if(date.getTime()-newDate.getTime()>0){
+
             return false;
         }
-        userDao.updateTime(id,simpleDateFormat.format(oldDate)) ;
+        userDao.updateTime(id,simpleDateFormat.format(date)) ;
         return true;
     }
 

@@ -542,7 +542,9 @@
 .fieldsContainer ul > li ul li.w60 {
 	width: 60px;
 }
-
+.fieldsContainer ul > li ul li.w90 {
+	width: 90px;
+}
 .fieldsContainer ul.pdt0{padding-top:0}
 .fieldsContainer ul.pdb0{padding-bottom:0}
 
@@ -597,6 +599,7 @@
 .fr{float:right}
 .r10{right:10px}
 .r240{right:240px}
+.r200{right:200px}
 .pr{position:relative}
 .t8{top:8px}
 .lh40{line-height: 40px;}

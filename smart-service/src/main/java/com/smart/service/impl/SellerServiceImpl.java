@@ -19,6 +19,7 @@ package com.smart.service.impl;/*
 
 import com.smart.common.Page;
 import com.smart.dao.SellerDao;
+import com.smart.model.CompanyInfo;
 import com.smart.model.SellerInfo;
 import com.smart.service.SellerService;
 import com.smart.vo.SellerVo;
@@ -63,7 +64,22 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public boolean addSeller(SellerVo info) throws Exception {
+    public Map<Integer, String> getTypes(Integer type) throws Exception {
+        return sellerDao.getTypes(type);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Long addSeller(SellerVo info) throws Exception {
         return sellerDao.addSeller(info);
+    }
+
+    @Override
+    public boolean addCompany(CompanyInfo info) throws Exception {
+        return sellerDao.addCompany(info);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean fingByPhone(String userName) throws Exception {
+        return sellerDao.findByPhone(userName);  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

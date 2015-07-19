@@ -18,6 +18,7 @@
  */
 package com.smart.dao;
 
+import com.smart.model.CompanyInfo;
 import com.smart.model.SellerInfo;
 import com.smart.vo.SellerVo;
 
@@ -36,6 +37,10 @@ public interface SellerDao {
     public Long count()throws Exception;
 
     Map<Integer,Map<Integer,String>> getTypes() throws Exception;
+   Map<Integer,String> getTypes(Integer type) throws Exception;
+    Long addSeller(SellerVo info) throws Exception;
 
-    boolean addSeller(SellerVo info) throws Exception;
+    boolean addCompany(CompanyInfo info) throws Exception;
+
+    boolean findByPhone(String userName) throws Exception;
 }

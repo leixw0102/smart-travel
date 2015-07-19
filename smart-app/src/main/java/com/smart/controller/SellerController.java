@@ -19,6 +19,7 @@ package com.smart.controller;/*
 
 import com.smart.common.Page;
 import com.smart.common.ResponseMsg;
+import com.smart.model.CompanyInfo;
 import com.smart.model.SellerInfo;
 import com.smart.service.SellerService;
 import com.smart.vo.SellerVo;
@@ -59,15 +60,47 @@ public class SellerController extends BaseController{
             return null;
         }
     }
-    @RequestMapping("add")
+    @RequestMapping("addUser")
     @ResponseBody
     public com.smart.common.ResponseBody addSeller(HttpServletRequest request,HttpServletResponse response,SellerVo info)  throws Exception{
         logger.info(info.toString());
+
+
         if(info.verfiy()){
             return new ResponseMsg("1","参数不能为空或者2次密码输入不正确");
         };
+
+
+
         try{
-            if(sellerService.addSeller(info)){
+            if(sellerService.fingByPhone(info.getUserName())){
+                return  new ResponseMsg("1","该用户已经存在"+info.getUserName());
+            };
+            long id=sellerService.addSeller(info);
+            if(id>0){
+                request.getSession().setAttribute("userType", info.getType());
+                request.getSession().setAttribute("addUserId",id);
+                return  new ResponseMsg();
+            };
+            return  new ResponseMsg("1","插入失败");
+        }catch (Exception e){
+            logger.error("error!",e);
+            return new ResponseMsg("1","插入失败,"+e.getMessage());
+        }
+//        return"redirect:getAccountLists";
+
+    }
+
+    @RequestMapping("addCompany")
+    @ResponseBody
+    public com.smart.common.ResponseBody addCompany(HttpServletRequest request,HttpServletResponse response,CompanyInfo info)  throws Exception{
+        logger.info(info.toString());
+        if(!info.verfiy()){
+            return new ResponseMsg("1","error!");
+        };
+        try{
+//            info.setType(Integer.parseInt(request.getSession().getAttribute("userType").toString()));
+            if(sellerService.addCompany(info)){
                 return  new ResponseMsg();
             };
             return  new ResponseMsg("1","插入失败");
@@ -80,9 +113,16 @@ public class SellerController extends BaseController{
     }
     @RequestMapping("addPage")
     public String getAdd(HttpServletRequest request,HttpServletResponse response)  throws Exception{
-        Map<Integer,Map<Integer,String>> type=sellerService.getTypes();
-        request.setAttribute("types",type);
-        return "companyAcountManager-add";
+//        Map<Integer,Map<Integer,String>> type=sellerService.getTypes();
+//        request.setAttribute("types",type);
+        return "companyAcountManager-addUser";
+    }
+    @RequestMapping("addCompanyPage")
+    public String getAddCompany(HttpServletRequest request,HttpServletResponse response) throws Exception {
+        Integer type = Integer.parseInt(request.getSession().getAttribute("userType").toString());
+        Map<Integer,String> maps=sellerService.getTypes(type);
+        request.setAttribute("secondaryTypes",maps);
+        return "companyAcountManager-addCompany";
     }
 
 }

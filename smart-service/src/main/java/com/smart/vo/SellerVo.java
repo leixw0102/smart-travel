@@ -139,6 +139,6 @@ public class SellerVo {
     }
 
     public boolean verfiy() {
-        return Strings.isNullOrEmpty(this.getUserName())||Strings.isNullOrEmpty(this.getPwd())||!pwd.equals(pwd2) ||this.getGrade()==null || this.getFree()==null ;
+        return Strings.isNullOrEmpty(this.getUserName())||Strings.isNullOrEmpty(this.getPwd())||!pwd.equals(pwd2) ;
     }
 }
