@@ -19,13 +19,21 @@ package com.smart.dao.impl;/*
 
 import com.google.common.collect.Maps;
 import com.smart.dao.SellerDao;
+import com.smart.model.CompanyInfo;
 import com.smart.model.SellerInfo;
 import com.smart.model.TypeConfig;
 import com.smart.vo.SellerVo;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -125,11 +133,89 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
         }
         return maps;
     }
+
+    @Override
+    public Map<Integer, String> getTypes(Integer type) throws Exception {
+        List<TypeConfig> configs=super.getBySqlRowMapper("select * from type_config where module="+type,new RowMapper<TypeConfig>() {
+            @Override
+            public TypeConfig mapRow(ResultSet rs, int rowNum) throws SQLException {
+                TypeConfig config = new TypeConfig();
+                config.setModuleId(rs.getInt("module"));
+                config.setTypeId(rs.getInt("type_id"));
+                config.setTypeName(rs.getString("type_name"));
+                return config;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+       Map<Integer,String>  maps = Maps.newHashMap();
+       for(TypeConfig config : configs){
+           maps.put(config.getTypeId(),config.getTypeName());
+       }
+        return maps;
+    }
+
     @Transactional(readOnly = false,rollbackFor = Exception.class)
     @Override
-    public boolean addSeller(SellerVo info) throws Exception {
-        String usekey =Token.getToken(info.getUserName(), String.valueOf(get(Integer.parseInt(info.getType()))), "1");
-       return  super.update("insert into user(Mac,UserKey,username,password,roleType,servicefee_level,grade,contact_name,mark,level,seller_name) values('1','"+usekey+"','"+info.getUserName()+"','"+info.getPwd()+"'," +
-                "'"+get(Integer.parseInt(info.getType()))+"','"+info.getFree()+"','"+info.getGrade()+"','"+info.getContactName()+"','"+info.getRemark()+"',1,'"+info.getSellerName()+"')");
+    public Long addSeller(final SellerVo info) throws Exception {
+        final String usekey =Token.getToken(info.getUserName(), String.valueOf(get(Integer.parseInt(info.getType()))), "1");
+
+
+        final String sql="insert into user(Mac,UserKey,username,password,roleType,servicefee_level,mark,level) values(?,?,?,?,?,?,?,?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        super.getJdbcTemplate().update(new PreparedStatementCreator() {
+
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con)
+                    throws SQLException {
+                PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                ps.setString(1,"1");
+                ps.setString(2,usekey);
+                ps.setString(3,info.getUserName());
+                ps.setString(4,info.getPwd());
+                ps.setInt(5, get(Integer.parseInt(info.getType())));
+                ps.setDouble(6, info.getFree());
+                ps.setString(7,info.getRemark());
+                ps.setString(8,"1");
+                return ps;
+            }
+        }, keyHolder);
+
+        return keyHolder.getKey().longValue();
+//       return  super.update("insert into user(Mac,UserKey,username,password,roleType,servicefee_level,mark,level) values('1','"+usekey+"','"+info.getUserName()+"','"+info.getPwd()+"'," +
+//                "'"+get(Integer.parseInt(info.getType()))+"','"+info.getFree()+"','"+info.getRemark()+"',1')");
+//        Connection connection = super.getConnection();
+//        connection.setAutoCommit(false);
+//        return false;
+    }
+
+    private String updateSql(int i,CompanyInfo info){
+        switch (i){
+                case 1:
+                    return "insert into hotel(user_id,contact_name,type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                case 2:
+                    return "insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                case 3:
+                    return "insert into life(user_id,contact_name,life_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                case 4:
+                    return "insert into restaurant(user_id,contact_name,rt_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                default:
+                    return "";
+        }
+    }
+    @Transactional(rollbackFor = Exception.class,readOnly = false)
+    @Override
+    public boolean addCompany(CompanyInfo info) throws Exception {
+
+        return super.update(updateSql(info.getType(),info));  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean findByPhone(String userName) throws Exception {
+       return super.getJdbcTemplate().query("select userId from user where username='"+userName+"'",new ResultSetExtractor<Boolean>() {
+            @Override
+            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                return rs.next();  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        }) ;
+//        return super.getJdbcTemplate().queryForLong(;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

@@ -1,4 +1,4 @@
-package com.smart.service;/*
+package com.smart.service.impl;/*
  * Copyright 2015 Future TV, Inc.
  *
  * The contents of this file are subject to the terms
@@ -18,26 +18,23 @@ package com.smart.service;/*
  */
 
 import com.smart.common.Page;
-import com.smart.model.CompanyInfo;
-import com.smart.vo.SellerVo;
-
-import java.util.Map;
+import com.smart.dao.OrderDao;
+import com.smart.service.OrderServie;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by leixw
  * <p/>
  * Author: leixw
- * Date: 2015/07/14
- * Time: 17:11
+ * Date: 2015/07/19
+ * Time: 16:50
  */
-public interface SellerService {
-    public Page getSellers(Integer pageNumber) throws  Exception;
-
-    Map<Integer,Map<Integer,String>> getTypes() throws Exception;
-    Map<Integer,String> getTypes(Integer type) throws Exception;
-    Long addSeller(SellerVo info) throws Exception;
-
-    boolean addCompany(CompanyInfo info) throws Exception;
-
-    boolean fingByPhone(String userName) throws Exception;
+@Service
+public class OrderServiceImpl implements OrderServie {
+    private OrderDao orderDao;
+    @Override
+    public Page search(Integer page, String from, String to, Integer type, Integer orderType) throws Exception {
+//        orderDao.search(page,);  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
+    }
 }

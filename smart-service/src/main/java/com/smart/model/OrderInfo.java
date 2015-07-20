@@ -1,4 +1,4 @@
-package com.smart.service;/*
+package com.smart.model;/*
  * Copyright 2015 Future TV, Inc.
  *
  * The contents of this file are subject to the terms
@@ -17,27 +17,13 @@ package com.smart.service;/*
  * under the License.
  */
 
-import com.smart.common.Page;
-import com.smart.model.CompanyInfo;
-import com.smart.vo.SellerVo;
-
-import java.util.Map;
-
 /**
  * Created by leixw
  * <p/>
  * Author: leixw
- * Date: 2015/07/14
- * Time: 17:11
+ * Date: 2015/07/19
+ * Time: 17:25
  */
-public interface SellerService {
-    public Page getSellers(Integer pageNumber) throws  Exception;
+public class OrderInfo {
 
-    Map<Integer,Map<Integer,String>> getTypes() throws Exception;
-    Map<Integer,String> getTypes(Integer type) throws Exception;
-    Long addSeller(SellerVo info) throws Exception;
-
-    boolean addCompany(CompanyInfo info) throws Exception;
-
-    boolean fingByPhone(String userName) throws Exception;
 }

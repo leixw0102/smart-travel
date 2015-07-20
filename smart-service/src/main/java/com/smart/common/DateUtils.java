@@ -34,4 +34,11 @@ public class DateUtils {
        DateTime dateTime = new  DateTime(date);
        return dateTime.plusMinutes(min).toDate();
     }
+
+    public static String plusDay(String day,int plus){
+        return DateTime.parse(day).plusDays(plus).toString("yyyy-MM-dd");
+    }
+    public static void main(String[]args){
+        System.out.println(plusDay("2015-09-09",1));
+    }
 }

@@ -18,26 +18,14 @@ package com.smart.service;/*
  */
 
 import com.smart.common.Page;
-import com.smart.model.CompanyInfo;
-import com.smart.vo.SellerVo;
-
-import java.util.Map;
 
 /**
  * Created by leixw
  * <p/>
  * Author: leixw
- * Date: 2015/07/14
- * Time: 17:11
+ * Date: 2015/07/19
+ * Time: 16:49
  */
-public interface SellerService {
-    public Page getSellers(Integer pageNumber) throws  Exception;
-
-    Map<Integer,Map<Integer,String>> getTypes() throws Exception;
-    Map<Integer,String> getTypes(Integer type) throws Exception;
-    Long addSeller(SellerVo info) throws Exception;
-
-    boolean addCompany(CompanyInfo info) throws Exception;
-
-    boolean fingByPhone(String userName) throws Exception;
+public interface OrderServie {
+    Page search(Integer page, String from, String to, Integer type, Integer orderType) throws Exception;
 }

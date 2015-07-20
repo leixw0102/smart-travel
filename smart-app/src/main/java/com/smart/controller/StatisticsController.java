@@ -1,4 +1,4 @@
-package com.smart.service;/*
+package com.smart.controller;/*
  * Copyright 2015 Future TV, Inc.
  *
  * The contents of this file are subject to the terms
@@ -17,27 +17,19 @@ package com.smart.service;/*
  * under the License.
  */
 
-import com.smart.common.Page;
-import com.smart.model.CompanyInfo;
-import com.smart.vo.SellerVo;
-
-import java.util.Map;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Created by leixw
  * <p/>
  * Author: leixw
- * Date: 2015/07/14
- * Time: 17:11
+ * Date: 2015/07/16
+ * Time: 20:47
  */
-public interface SellerService {
-    public Page getSellers(Integer pageNumber) throws  Exception;
+@Controller
+@RequestMapping("/1.0/*")
+public class StatisticsController extends BaseController {
 
-    Map<Integer,Map<Integer,String>> getTypes() throws Exception;
-    Map<Integer,String> getTypes(Integer type) throws Exception;
-    Long addSeller(SellerVo info) throws Exception;
 
-    boolean addCompany(CompanyInfo info) throws Exception;
-
-    boolean fingByPhone(String userName) throws Exception;
 }

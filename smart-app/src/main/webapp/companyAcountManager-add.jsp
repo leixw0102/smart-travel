@@ -30,7 +30,7 @@
                 if (result.code==0){
 //                    $('#add-conf').dialog('close');
 //                    $('#mcdg').datagrid('reload');
-                   window.
+
                     alert("success");
                 }else{
                     alert(result.message)

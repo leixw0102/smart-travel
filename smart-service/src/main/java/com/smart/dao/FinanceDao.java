@@ -1,4 +1,4 @@
-package com.smart.service;/*
+/*
  * Copyright 2015 Future TV, Inc.
  *
  * The contents of this file are subject to the terms
@@ -16,28 +16,25 @@ package com.smart.service;/*
  * specific language governing permissions and limitations
  * under the License.
  */
+package com.smart.dao;
 
-import com.smart.common.Page;
-import com.smart.model.CompanyInfo;
-import com.smart.vo.SellerVo;
+import com.smart.model.Apply;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by leixw
  * <p/>
  * Author: leixw
- * Date: 2015/07/14
- * Time: 17:11
+ * Date: 2015/07/16
+ * Time: 20:24
  */
-public interface SellerService {
-    public Page getSellers(Integer pageNumber) throws  Exception;
+public interface FinanceDao {
 
-    Map<Integer,Map<Integer,String>> getTypes() throws Exception;
-    Map<Integer,String> getTypes(Integer type) throws Exception;
-    Long addSeller(SellerVo info) throws Exception;
+    public boolean confirm(Long applyId) throws Exception;
+    public boolean refuse(Long applyId) throws Exception;
 
-    boolean addCompany(CompanyInfo info) throws Exception;
+    Long searchCount(String from, String to, Integer type) throws Exception;
 
-    boolean fingByPhone(String userName) throws Exception;
+    List<Apply> search(Integer page, String from, String to, Integer type) throws Exception;
 }
