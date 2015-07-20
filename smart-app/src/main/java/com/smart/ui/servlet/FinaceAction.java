@@ -28,8 +28,8 @@ public class FinaceAction extends HttpServlet {
 		String type = request.getParameter("type");
 		if(type.equalsIgnoreCase("finace_main")){
 			request.getRequestDispatcher("finace.jsp").forward(request, response);
+		}else if(type.equalsIgnoreCase("search")){
 			
-		
 		}
 	}
 

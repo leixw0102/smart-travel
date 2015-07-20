@@ -52,16 +52,22 @@ var initPagination = function() {
 	return false;
 }
 })
-function popCompanyInfo(){
-	window.top.$.popWin({
-		title:"编辑发布新闻页",
-		width:610,
-		height:430,
-		center:true,
-		url:"/xiaosi/page/publicNews-edit.jsp"
-	});
-}
 
+function search(){
+		$.ajax({
+
+		   type: "GET",
+	
+		   url: "/smart-app/FinaceAction",
+	
+		   data: "type=search",
+	
+		   success: function(msg){	
+		   		alert("search sucess");
+		   }
+	
+		});
+	}
 </script>
 </head>
 <body class="pad20">
@@ -98,7 +104,7 @@ function popCompanyInfo(){
 									</li>
 								</ul>
 							</div>
-							<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">查询</div></div>
+							<div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="search()"><div class="text c1 pdl0">查询</div></div>
 						</td>
 					</tr>
 				
@@ -129,7 +135,7 @@ function popCompanyInfo(){
 						<td>sadad</td>
 						<td>2015-7-11</td>
                         <td>assad</td>
-                        <td>assad</td>
+                        <td>已拒绝</td>
                         <td>
                         	<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">兑现</div></div>
                         	<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">拒绝</div></div>
@@ -145,7 +151,7 @@ function popCompanyInfo(){
 						<td>sadad</td>
 						<td>2015-7-11</td>
                         <td>assad</td>
-                        <td>assad</td>
+                        <td>已兑现</td>
                         <td>
                         	<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">兑现</div></div>
                         	<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">拒绝</div></div>
@@ -161,7 +167,7 @@ function popCompanyInfo(){
 						<td>sadad</td>
 						<td>2015-7-11</td>
                         <td>assad</td>
-                        <td>assad</td>
+                        <td>已兑现</td>
                         <td>
                         	<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">兑现</div></div>
                         	<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">拒绝</div></div>
@@ -177,7 +183,7 @@ function popCompanyInfo(){
 						<td>sadad</td>
 						<td>2015-7-11</td>
                         <td>assad</td>
-                        <td>assad</td>
+                        <td>已拒绝</td>
                         <td>
                         	<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">兑现</div></div>
                         	<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">拒绝</div></div>
