@@ -45,13 +45,13 @@ public class FinanceDaoImpl extends BaseDaoImpl implements FinanceDao {
     @Transactional(readOnly = false,rollbackFor = Exception.class)
     @Override
     public boolean confirm(Long applyId) throws Exception {
-        return super.update("update cash_apply set status=2,,finish_time='"+DateTime.now().toString("yyyy-MM-dd HH:mm:ss")+"' where id="+applyId);  //To change body of implemented methods use File | Settings | File Templates.
+        return super.update("update cash_apply set status=3,finish_time='"+DateTime.now().toString("yyyy-MM-dd HH:mm:ss")+"' where id="+applyId);  //To change body of implemented methods use File | Settings | File Templates.
     }
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @Transactional(readOnly = false,rollbackFor = Exception.class)
     @Override
     public boolean refuse(Long applyId) throws Exception {
-        return super.update("update cash_apply set status=4 ,set finish_time='"+ DateTime.now().toString("yyyy-MM-dd HH:mm:ss")+"' where id ="+applyId);  //To change body of implemented methods use File | Settings | File Templates.
+        return super.update("update cash_apply set status=2 ,set finish_time='"+ DateTime.now().toString("yyyy-MM-dd HH:mm:ss")+"' where id ="+applyId);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
@@ -59,7 +59,7 @@ public class FinanceDaoImpl extends BaseDaoImpl implements FinanceDao {
         String sql ="select count(*) from cash_apply as a,user as b where 1=1 and a.user_id=b.userid ";
         String where = "";
 //        if(type!=0){
-            where+=" b.roleType="+type;
+            where+=" and b.roleType="+type;
 //        }
         if(!Strings.isNullOrEmpty(from) && !Strings.isNullOrEmpty(to)){
             String tonew= DateUtils.plusDay(to,1);
@@ -97,7 +97,7 @@ public class FinanceDaoImpl extends BaseDaoImpl implements FinanceDao {
 
     @Override
     public List<Apply> search(Integer page, String from, String to, final Integer type) throws Exception {
-        String sql =  selectSql(type,from,to);
+        String sql =  selectSql(type,from,to)+ " limit "+(page-1)*10+","+10;
         logger.debug(sql);
         return getBySqlRowMapper(sql,new RowMapper<Apply>() {
             @Override
@@ -109,6 +109,7 @@ public class FinanceDaoImpl extends BaseDaoImpl implements FinanceDao {
                     apply.setFinishTime(rs.getDate("finish_time"));
                     apply.setType(getRoleName(type));
                     apply.setId(rs.getLong("id"));
+                    apply.setUserId(rs.getLong("user_id"));
                     apply.setMoney(rs.getFloat("money"));
                     apply.setPhoneNumber(rs.getString("phone_number"));
                     apply.setName(rs.getString("name"));

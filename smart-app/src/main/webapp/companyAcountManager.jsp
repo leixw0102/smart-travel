@@ -28,9 +28,6 @@ $(function(){
 $(function(){
 var initPagination = function() {
 	var total_page = '<%=size%>';
-//	var total_page1 = '10';
-//    var total_page = $("#hiddenresult div.result").length;
-//    var total_page1 = $("#hiddenresult div.result1").length;
 	// 创建分页
 	$("#pagination").pagination(total_page,{
 		callback: page_callback,
@@ -44,17 +41,6 @@ var initPagination = function() {
 		link_to : 'javascript:void(0)'
 		
 	});
-//	$("#page").pagination(total_page1,{
-//		callback: page_callback,
-//		items_per_page : 1,
-//		prev_text:"上一页",
-//		next_text:"下一页",
-//		num_edge_entries : 3,			//边缘值
-//		ellipse_text : '...',			//边缘显示
-//		num_display_entries : 5	,		//显示条数
-//		link_to : 'javascript:void(0)'
-//
-//	});
  }();
 
  function page_callback(page_index, jq){

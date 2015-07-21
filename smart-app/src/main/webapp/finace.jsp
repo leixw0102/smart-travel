@@ -50,24 +50,8 @@
             }
         })
 
-        function search(){
-            $.ajax({
-
-                type: "GET",
-
-                url: "/smart-app/FinaceAction",
-
-                data: "type=search",
-
-                success: function(msg){
-                    alert("search sucess");
-                }
-
-            });
-        }
 
         function confirm(id){
-            alert(id)
             var methodType = 'Get';
             $.ajax({
                 url: "<%=request.getContextPath()%>/1.0/finance/confirm/"+id,
@@ -87,7 +71,6 @@
             });
         }
         function refuse(id){
-            alert(id)
             var methodType = 'Get';
             $.ajax({
                 url: "<%=request.getContextPath()%>/1.0/finance/refuse/"+id,
@@ -106,12 +89,33 @@
             });
         }
     </script>
+    <script type="text/javascript">
+        function search(){
+            alert(0)
+            alert($('#abcType').val())
+//            $.ajax({
+//
+//                type: "GET",
+//
+//                url: "/smart-app/FinaceAction",
+//
+//                data: "type=search",
+//
+//                success: function(msg){
+//                    alert("search sucess");
+//                }
+//
+//            });
+        }
+
+    </script>
 </head>
 <body class="pad20">
 <div class="body_main">
     <div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">
         <span class="titleSpan fl">财务管理</span>
     </div>
+    <form id ="applyTable">
     <table class="blackbor_table bt0 bb0"  cellspacing="0" cellpadding="0">
         <tr>
             <td>
@@ -121,11 +125,11 @@
                             <ul>
                                 <li class="text w60 fb c1 pb0">提现申请日期：</li>
                                 <li class="value pb0">
-                                    <input type="text" class="w300 h27 inputStyle"/>
+                                    <input name="from" type="text" class="w300 h27 inputStyle"/>
                                 </li>
                                 <li class="text pb0">-</li>
                                 <li class="value pb0">
-                                    <input type="text" class="w300 h27 inputStyle"/>
+                                    <input name="to" type="text" class="w300 h27 inputStyle"/>
                                 </li>
                             </ul>
                         </li>
@@ -133,21 +137,24 @@
                             <ul>
                                 <li class="text w60 fb c1 pb0">商户类型：</li>
                                 <li class="value pb0">
-                                    <select class="w300">
-                                        <option>酒店</option>
+                                    <select id="abcType" name="type" class="w300">
+                                        <option selected="true" value="2">酒店</option>
+                                        <option  value="4">美食</option>
+                                        <option value="5">景点</option>
+                                        <option  value="6">美食</option>
                                     </select>
                                 </li>
                             </ul>
                         </li>
                     </ul>
                 </div>
-                <div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="search()"><div class="text c1 pdl0">查询</div></div>
+                <div id="abc" class="bt_icon bt_icon_b3 fr r10 pr bd0" ><div onclick="alert(0);" class="text c1 pdl0">查询</div></div>
             </td>
         </tr>
 
     </table>
 
-
+     </form>
     <table class="blackbor_table"  cellspacing="0" cellpadding="0">
         <tr class="trup">
             <td width="3%">序号</td>
@@ -164,6 +171,9 @@
         </tr>
         <%  int id =(applies.getPageNumber()-1)*applies.getPageSize();
             List<Apply> as=applies.getMessages();
+            if(null == as || as.isEmpty()){
+
+            }else{
             for(Apply apply : as){
                 ++id;
         %>
@@ -176,7 +186,7 @@
             <td ><%=apply.getTime()%></td>
             <td><%=apply.getMoney()%></td>
             <td><%=apply.getServiceCharge()%></td>
-            <td><%=apply.getFinishTime()%></td>
+            <td><%=apply.getFinishTime()==null?"":apply.getFinishTime()%></td>
             <td>
                 <% if(apply.getStatus()==1){%>
                 <div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="confirm('<%=apply.getId()%>')"><div class="text c1 pdl0">兑现</div></div>
@@ -188,7 +198,8 @@
                 <%}%>
             </td>
         </tr>
-        <%}%>
+        <%}
+            }%>
     </table>
     <div class="detail_bottom">
         <div>
