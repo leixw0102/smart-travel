@@ -43,4 +43,6 @@ public interface SellerDao {
     boolean addCompany(CompanyInfo info) throws Exception;
 
     boolean findByPhone(String userName) throws Exception;
+
+    boolean addAccount(Long userId) throws Exception;
 }

@@ -20,6 +20,7 @@ package com.smart.controller;/*
 import com.alibaba.fastjson.JSON;
 import com.smart.common.Page;
 import com.smart.common.ResponseMsg;
+import com.smart.model.Apply;
 import com.smart.service.FinanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -71,13 +72,14 @@ public class FinanceController extends BaseController {
             return new ResponseMsg("1004",e.getMessage());
         }
     }
-    @RequestMapping("getLists/{page}")
-    @ResponseBody
-    public com.smart.common.Page getList(HttpServletRequest request,HttpServletResponse response,@PathVariable Integer page,
+    @RequestMapping("getHomeList/{type}/{page}")
+    public String getList(HttpServletRequest request,HttpServletResponse response,@PathVariable Integer page,
                                                  @RequestParam(required = false) String from,@RequestParam(required = false) String to,
-                                                 @RequestParam(required = false) Integer type){
+                                                 @PathVariable Integer type){
         try{
-            return financeService.search(page,from,to,type);
+            Page<Apply> applies= financeService.search(page,from,to,type);
+            request.setAttribute("appliesList",applies);
+            return "finace";
         }catch (Exception e){
            throw new ApiException(new ResponseMsg("1004",e.getMessage()));
         }

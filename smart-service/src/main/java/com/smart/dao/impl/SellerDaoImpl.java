@@ -179,6 +179,8 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
             }
         }, keyHolder);
 
+
+
         return keyHolder.getKey().longValue();
 //       return  super.update("insert into user(Mac,UserKey,username,password,roleType,servicefee_level,mark,level) values('1','"+usekey+"','"+info.getUserName()+"','"+info.getPwd()+"'," +
 //                "'"+get(Integer.parseInt(info.getType()))+"','"+info.getFree()+"','"+info.getRemark()+"',1')");
@@ -210,12 +212,18 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
 
     @Override
     public boolean findByPhone(String userName) throws Exception {
-       return super.getJdbcTemplate().query("select userId from user where username='"+userName+"'",new ResultSetExtractor<Boolean>() {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                return rs.next();  //To change body of implemented methods use File | Settings | File Templates.
-            }
-        }) ;
+       return super.getJdbcTemplate().query("select userId from user where username='" + userName + "'", new ResultSetExtractor<Boolean>() {
+           @Override
+           public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+               return rs.next();  //To change body of implemented methods use File | Settings | File Templates.
+           }
+       }) ;
 //        return super.getJdbcTemplate().queryForLong(;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    @Override
+    public boolean addAccount(Long userId) throws Exception {
+
+        return super.update("insert into account(userId) values("+userId+")");  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

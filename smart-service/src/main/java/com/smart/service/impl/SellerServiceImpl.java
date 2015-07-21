@@ -70,7 +70,9 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public Long addSeller(SellerVo info) throws Exception {
-        return sellerDao.addSeller(info);
+        Long id= sellerDao.addSeller(info);
+        sellerDao.addAccount(id);
+        return id;
     }
 
     @Override

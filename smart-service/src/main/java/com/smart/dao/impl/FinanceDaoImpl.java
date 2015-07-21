@@ -17,6 +17,7 @@ package com.smart.dao.impl;/*
  * under the License.
  */
 
+import com.google.common.base.Strings;
 import com.smart.common.DateUtils;
 import com.smart.dao.FinanceDao;
 import com.smart.model.Apply;
@@ -60,22 +61,35 @@ public class FinanceDaoImpl extends BaseDaoImpl implements FinanceDao {
 //        if(type!=0){
             where+=" b.roleType="+type;
 //        }
-        return super.getJdbcTemplate().queryForLong(sql);  //To change body of implemented methods use File | Settings | File Templates.
+        if(!Strings.isNullOrEmpty(from) && !Strings.isNullOrEmpty(to)){
+            String tonew= DateUtils.plusDay(to,1);
+            where +=" and a.create_time>'"+from+"' and a.create_time<='"+tonew+"'";
+        }
+
+        return super.getJdbcTemplate().queryForLong(sql+where);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 
 
-    private String selectSql(int i,String from,String to){
-        String tonew= DateUtils.plusDay(to,1);
+    private String selectSql(Integer i,String from,String to){
+        String where="";
+        if(i!=null || i!=0){
+            where +=" and  c.roletype="+i ;
+        }
+        if(!Strings.isNullOrEmpty(from) && !Strings.isNullOrEmpty(to)){
+            String tonew= DateUtils.plusDay(to,1);
+          where +=" and a.create_time>'"+from+"' and a.create_time<='"+tonew+"'";
+        }
+
         switch (i){
             case 2:
-                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,hotel as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId and  c.roletype="+i +" and a.create_time>'"+from+"' and a.create_time<='"+tonew+"'";
+                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,hotel as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId  "+where;
             case 5:
-                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,view_spot as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId and  c.roletype="+i +" and a.create_time>'"+from+"' and a.create_time<='"+tonew+"'"; //"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,view_spot as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId "+where; //"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
             case 6:
-                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,life as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId and  c.roletype="+i +" and a.create_time>'"+from+"' and a.create_time<='"+tonew+"'"; //"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,life as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId "+where; //"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
             case 4:
-                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,restaurant as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId and  c.roletype="+i +" and a.create_time>'"+from+"' and a.create_time<='"+tonew+"'"; //"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,restaurant as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId "+where; //"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
             default:
                 return "";
         }
