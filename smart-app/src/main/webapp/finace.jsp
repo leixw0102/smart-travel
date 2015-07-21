@@ -148,7 +148,7 @@
                         </li>
                     </ul>
                 </div>
-                <div id="abc" class="bt_icon bt_icon_b3 fr r10 pr bd0" ><div onclick="alert(0);" class="text c1 pdl0">查询</div></div>
+                <div id="abc" class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="search()"  ><div class="text c1 pdl0">查询</div></div>
             </td>
         </tr>
 
