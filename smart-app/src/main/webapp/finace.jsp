@@ -16,7 +16,10 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
     <%
      Page<Apply> applies= (Page<Apply>) request.getAttribute("appliesList");
-    %>
+        long size =0L;
+        if(applies.getCount()!=0){
+           size = applies.getCount()/applies.getPageSize()==0?applies.getCount()/applies.getPageSize()+1:applies.getCount()/applies.getPageSize();
+        }  %>
 <script>
 $(function(){
 	var w=$(".pad20")[0].clientWidth;
@@ -24,25 +27,14 @@ $(function(){
 })
 $(function(){
 var initPagination = function() {
-	var total_page = $("#hiddenresult div.result").length;
-	var total_page1 = $("#hiddenresult div.result1").length;
+	var total_page = '<%=size%>';
 	// 创建分页
 	$("#pagination").pagination(total_page,{
 		callback: page_callback,
 		items_per_page : 1,				
 		prev_text:"上一页",
 		next_text:"下一页",
-		num_edge_entries : 3,			//边缘值
-		ellipse_text : '...',			//边缘显示
-		num_display_entries : 5	,		//显示条数
-		link_to : 'javascript:void(0)'
-		
-	});
-	$("#page").pagination(total_page1,{
-		callback: page_callback,
-		items_per_page : 1,				
-		prev_text:"上一页",
-		next_text:"下一页",
+        current_page:<%=applies.getPageNumber()-1%>,
 		num_edge_entries : 3,			//边缘值
 		ellipse_text : '...',			//边缘显示
 		num_display_entries : 5	,		//显示条数
@@ -52,8 +44,7 @@ var initPagination = function() {
  }();
 
  function page_callback(page_index, jq){
-	var new_content = $("#hiddenresult div.result:eq("+page_index+")").clone();
-	$("#Searchresult").empty().append(new_content); //装载对应分页的内容
+
 	return false;
 }
 })
