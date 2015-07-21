@@ -14,6 +14,7 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/My97DatePicker/WdatePicker.js"></script> 
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
     <%
         Page<Apply> applies= (Page<Apply>) request.getAttribute("appliesList");
@@ -125,11 +126,11 @@
                             <ul>
                                 <li class="text w60 fb c1 pb0">提现申请日期：</li>
                                 <li class="value pb0">
-                                    <input name="from" type="text" class="w300 h27 inputStyle"/>
+                                    <input name="from" type="text" class="w300 h27 inputStyle" onfocus="WdatePicker()"/>
                                 </li>
                                 <li class="text pb0">-</li>
                                 <li class="value pb0">
-                                    <input name="to" type="text" class="w300 h27 inputStyle"/>
+                                    <input name="to" type="text" class="w300 h27 inputStyle"  onfocus="WdatePicker()"/>
                                 </li>
                             </ul>
                         </li>

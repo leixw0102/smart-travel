@@ -27,7 +27,7 @@ public class FinaceAction extends HttpServlet {
 		// TODO Auto-generated method stub
 		String type = request.getParameter("type");
 		if(type.equalsIgnoreCase("finace_main")){
-			request.getRequestDispatcher("finace.jsp").forward(request, response);
+			request.getRequestDispatcher("finace1.jsp").forward(request, response);
 		}else if(type.equalsIgnoreCase("search")){
 			
 		}
