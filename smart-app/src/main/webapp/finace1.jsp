@@ -65,6 +65,14 @@ function popCompanyInfo(){
 
 </script>
 </head>
+<div class="head">
+	<div class="up">
+		<div class="logo"></div>
+		<div class="user-info">
+
+		</div>
+	</div>
+</div>
 <body class="pad20">
 		<div class="body_main">
             	<div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">
