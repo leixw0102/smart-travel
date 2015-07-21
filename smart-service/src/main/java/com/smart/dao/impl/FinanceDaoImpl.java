@@ -83,20 +83,20 @@ public class FinanceDaoImpl extends BaseDaoImpl implements FinanceDao {
 
         switch (i){
             case 2:
-                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,hotel as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId  "+where;
+                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,hotel as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId  "+where +" order by create_time,finish_time desc ";
             case 5:
-                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,view_spot as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId "+where; //"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,view_spot as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId "+where+" order by create_time,finish_time desc "; //"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
             case 6:
-                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,life as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId "+where; //"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,life as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId "+where+" order by create_time,finish_time desc "; //"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
             case 4:
-                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,restaurant as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId "+where; //"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select a.*,b.contact_name,b.phone_number from cash_apply as a,restaurant as b ,user as c where 1=1 and a.user_id=b.user_id and a.user_id = c.userId "+where+" order by create_time,finish_time desc "; //"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
             default:
                 return "";
         }
     }
 
     @Override
-    public List<Apply> search(Integer page, String from, String to, Integer type) throws Exception {
+    public List<Apply> search(Integer page, String from, String to, final Integer type) throws Exception {
         String sql =  selectSql(type,from,to);
         logger.debug(sql);
         return getBySqlRowMapper(sql,new RowMapper<Apply>() {
@@ -106,7 +106,8 @@ public class FinanceDaoImpl extends BaseDaoImpl implements FinanceDao {
                     Apply apply= new Apply();
                     apply.setApplyDesc(rs.getString("apply_desc"));
                     apply.setContactName(rs.getString("contact_name"));
-//                    apply.setFinishTime();
+                    apply.setFinishTime(rs.getDate("finish_time"));
+                    apply.setType(getRoleName(type));
                     apply.setId(rs.getLong("id"));
                     apply.setMoney(rs.getFloat("money"));
                     apply.setPhoneNumber(rs.getString("phone_number"));
@@ -120,5 +121,20 @@ public class FinanceDaoImpl extends BaseDaoImpl implements FinanceDao {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
             }
         });  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public String getRoleName(int i){
+        switch (i){
+            case 2:
+                return "酒店";
+            case 4:
+                return "美食";
+            case 5:
+                return "景点";
+            case 6:
+                return "生活";
+            default:
+                return "";
+        }
     }
 }
