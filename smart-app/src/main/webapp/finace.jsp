@@ -1,3 +1,5 @@
+<%@ page import="com.smart.model.Apply" %>
+<%@ page import="com.smart.common.Page" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -5,13 +7,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="css/bridging.css"/>
-<link rel="stylesheet" href="js/plugins/pagination/default-style/css/pagination.css" />
-<link rel="stylesheet" href="js/plugins/pagination/default-style/css/pagination.extend.css" />	
-<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
-<script type="text/javascript" src="js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
-<script type="text/javascript" src="js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
-<script type="text/javascript" src="js/function.js" ></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bridging.css"/>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/js/plugins/pagination/default-style/css/pagination.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/js/plugins/pagination/default-style/css/pagination.extend.css" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
+    <%
+     Page<Apply> applies= (Page<Apply>) request.getAttribute("appliesList");
+    %>
 <script>
 $(function(){
 	var w=$(".pad20")[0].clientWidth;
