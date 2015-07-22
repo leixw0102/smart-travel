@@ -52,7 +52,6 @@
 
 
         function confirm(id){
-            alert(id)
             var methodType = 'Get';
             $.ajax({
                 url: "<%=request.getContextPath()%>/1.0/finance/confirm/"+id,
@@ -72,7 +71,6 @@
             });
         }
         function refuse(id){
-            alert(id)
             var methodType = 'Get';
             $.ajax({
                 url: "<%=request.getContextPath()%>/1.0/finance/refuse/"+id,
@@ -90,6 +88,26 @@
                 }
             });
         }
+    </script>
+    <script type="text/javascript">
+        function search(){
+            alert(0)
+            alert($('#abcType').val())
+//            $.ajax({
+//
+//                type: "GET",
+//
+//                url: "/smart-app/FinaceAction",
+//
+//                data: "type=search",
+//
+//                success: function(msg){
+//                    alert("search sucess");
+//                }
+//
+//            });
+        }
+
     </script>
 </head>
 <body class="pad20">
@@ -130,7 +148,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="javascript:search()"><div class="text c1 pdl0">查询</div></div>
+                <div class="bt_icon bt_icon_b3 fr r10 pr bd0" ><div onclick="alert(0);" class="text c1 pdl0">查询</div></div>
             </td>
         </tr>
 
