@@ -53,14 +53,11 @@ var initPagination = function() {
 	return false;
 }
 })
+function test(){
+    alert(0);
+}
 function popCompanyInfo(){
-	window.top.$.popWin({
-		title:"编辑发布新闻页",
-		width:610,
-		height:430,
-		center:true,
-		url:"/xiaosi/page/publicNews-edit.jsp"
-	});
+    alert(0);
 }
 
 </script>
@@ -98,7 +95,7 @@ function popCompanyInfo(){
 									</li>
 								</ul>
 							</div>
-							<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">查询</div></div>
+							<div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="popCompanyInfo()"><div class="text c1 pdl0">查询</div></div>
 						</td>
 					</tr>
 				

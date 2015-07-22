@@ -14,7 +14,7 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/My97DatePicker/WdatePicker.js"></script> 
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
     <%
         Page<Apply> applies= (Page<Apply>) request.getAttribute("appliesList");
@@ -91,6 +91,9 @@
         }
     </script>
     <script type="text/javascript">
+        function test(){
+            alert(0);
+        }
         function search(){
             alert(0)
             alert($('#abcType').val())
@@ -124,8 +127,9 @@
     <div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">
         <span class="titleSpan fl">财务管理</span>
     </div>
-    <form id ="applyTable">
+
     <table class="blackbor_table bt0 bb0"  cellspacing="0" cellpadding="0">
+        <form id ="applyTable">
         <tr>
             <td>
                 <div class="fieldsContainer fl">
@@ -157,13 +161,14 @@
                         </li>
                     </ul>
                 </div>
-                <div id="abc" class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="search()"  ><div class="text c1 pdl0">查询</div></div>
+
+    </form>
+                <div id="abc" class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="javascript:test()"  ><div class="text c1 pdl0">查询</div></div>
             </td>
         </tr>
 
     </table>
 
-     </form>
     <table class="blackbor_table"  cellspacing="0" cellpadding="0">
         <tr class="trup">
             <td width="3%">序号</td>
