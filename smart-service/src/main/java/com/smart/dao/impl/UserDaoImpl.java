@@ -1,7 +1,9 @@
 package com.smart.dao.impl;
 
 
+import com.smart.common.Page;
 import com.smart.dao.UserDao;
+import com.smart.model.CashUserInfo;
 import com.smart.model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,29 +22,29 @@ import java.util.List;
 @Transactional(readOnly = true)
 @Repository
 public class UserDaoImpl extends BaseDaoImpl implements UserDao {
-	private static Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 
-        @Override
-        public UserInfo sellerLogin(String user, String passwd) throws Exception {
-            return super.getJdbcTemplate().query("select * from t_user where user_name='"+user+"' and pwd = '"+passwd+"'",new ResultSetExtractor<UserInfo>() {
-                @Override
-                public UserInfo extractData(ResultSet rs) throws SQLException, DataAccessException {
-                    if(rs.next()){
-                        UserInfo info=new UserInfo();
-                        info.setAlias(rs.getString("alias"));
-                        info.setId(rs.getLong("id"));
-                        info.setMark(rs.getString("mark"));
-                        info.setPhone(rs.getString("phone"));
-                        info.setRole(rs.getInt("role"));
-                        info.setPwd(rs.getString("pwd"));
-                        info.setUseTime(rs.getDate("use_time"));
-                        info.setUserName(rs.getString("user_name"));
-                        return info;
-                    }
-                    return null;
+    @Override
+    public UserInfo sellerLogin(String user, String passwd) throws Exception {
+        return super.getJdbcTemplate().query("select * from t_user where user_name='"+user+"' and pwd = '"+passwd+"'",new ResultSetExtractor<UserInfo>() {
+            @Override
+            public UserInfo extractData(ResultSet rs) throws SQLException, DataAccessException {
+                if(rs.next()){
+                    UserInfo info=new UserInfo();
+                    info.setAlias(rs.getString("alias"));
+                    info.setId(rs.getLong("id"));
+                    info.setMark(rs.getString("mark"));
+                    info.setPhone(rs.getString("phone"));
+                    info.setRole(rs.getInt("role"));
+                    info.setPwd(rs.getString("pwd"));
+                    info.setUseTime(rs.getDate("use_time"));
+                    info.setUserName(rs.getString("user_name"));
+                    return info;
                 }
-            });
-        }
+                return null;
+            }
+        });
+    }
 
 
 
@@ -118,11 +120,35 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         return super.getJdbcTemplate().queryForObject("select count(*) from news ", Long.class);  //To change body of implemented methods use File | Settings | File Templates.
 
     }
-        @Transactional(readOnly = false,rollbackFor = Exception.class)
-        @Override
-        public boolean create(String join, String title, String content, String abs) throws Exception {
-            return super.update("insert into news(title,content,picture,abs) values('"+title+"','"+content+"','"+join+"','"+abs+"')");  //To change body of implemented methods use File | Settings | File Templates.
-        }
 
-
+    @Override
+    public List<CashUserInfo> searchCashUser(int i, int i1) throws Exception {
+        return super.getBySqlRowMapper("select * from t_user where role=3 order by use_time desc ",new RowMapper<CashUserInfo>() {
+            @Override
+            public CashUserInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                if(rs.next()){
+                    CashUserInfo info = new CashUserInfo();
+                    info.setMark(rs.getString("mark"));
+                    info.setContactName(rs.getString("alias"));
+                    info.setId(rs.getLong("id"));
+                    info.setPwd(rs.getString("pwd"));
+                    info.setUserName(rs.getString("user_name"));
+                }
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    @Override
+    public long countCashUser() throws Exception {
+        return super.getJdbcTemplate().queryForLong("select count(*) from t_user where role=3");  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    @Override
+    public boolean create(String join, String title, String content, String abs) throws Exception {
+        return super.update("insert into news(title,content,picture,abs) values('"+title+"','"+content+"','"+join+"','"+abs+"')");  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+
+}

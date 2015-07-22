@@ -1,6 +1,7 @@
 package com.smart.service;
 
 
+import com.smart.model.CashUserInfo;
 import com.smart.model.UserInfo;
 import com.smart.vo.UserVo;
 import com.smart.model.NewsInfo;
@@ -19,4 +20,5 @@ public interface UserService {
     public NewsInfo userNewsDetail(int id) throws Exception;
     public boolean create(String join, String title, String content, String abs) throws Exception;
 
+    Page<CashUserInfo> searchCashUser(int i, int i1)throws Exception;
 }

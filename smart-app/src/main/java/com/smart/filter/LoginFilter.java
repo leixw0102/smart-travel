@@ -34,6 +34,22 @@ public class LoginFilter implements Filter {
     }
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) resp;
+        String uri = request.getQueryString();
+        if(uri.contains("login")){
+            chain.doFilter(request,response);
+            return;
+        }
+
+        Object obj = request.getSession().getAttribute("userSessionId");
+        if(null == obj ){
+//            request.getRequestDispatcher("").forward(request,response);
+            return;
+        }
+
+        chain.doFilter(request,response);
+        return;
 
 //            //验证用户
 //        HttpServletRequest request = (HttpServletRequest) req;
@@ -64,7 +80,6 @@ public class LoginFilter implements Filter {
 //            //error页面
 //            request.getRequestDispatcher("").forward(req,resp);
 //        }
-        chain.doFilter(req,resp);
     }
 
     @Override

@@ -14,7 +14,6 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
     <%
         Page<Apply> applies= (Page<Apply>) request.getAttribute("appliesList");
@@ -53,6 +52,7 @@
 
 
         function confirm(id){
+            alert(id)
             var methodType = 'Get';
             $.ajax({
                 url: "<%=request.getContextPath()%>/1.0/finance/confirm/"+id,
@@ -72,6 +72,7 @@
             });
         }
         function refuse(id){
+            alert(id)
             var methodType = 'Get';
             $.ajax({
                 url: "<%=request.getContextPath()%>/1.0/finance/refuse/"+id,
@@ -90,46 +91,14 @@
             });
         }
     </script>
-    <script type="text/javascript">
-        function test(){
-            alert(0);
-        }
-        function search(){
-            alert(0)
-            alert($('#abcType').val())
-//            $.ajax({
-//
-//                type: "GET",
-//
-//                url: "/smart-app/FinaceAction",
-//
-//                data: "type=search",
-//
-//                success: function(msg){
-//                    alert("search sucess");
-//                }
-//
-//            });
-        }
-
-    </script>
 </head>
-<div class="head">
-	<div class="up">
-		<div class="logo"></div>
-		<div class="user-info">
-
-		</div>
-	</div>
-</div>
 <body class="pad20">
 <div class="body_main">
     <div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">
         <span class="titleSpan fl">财务管理</span>
     </div>
-
+    <form id ="applyTable">
     <table class="blackbor_table bt0 bb0"  cellspacing="0" cellpadding="0">
-        <form id ="applyTable">
         <tr>
             <td>
                 <div class="fieldsContainer fl">
@@ -138,11 +107,11 @@
                             <ul>
                                 <li class="text w60 fb c1 pb0">提现申请日期：</li>
                                 <li class="value pb0">
-                                    <input name="from" type="text" class="w300 h27 inputStyle" onfocus="WdatePicker()"/>
+                                    <input name="from" type="text" class="w300 h27 inputStyle"/>
                                 </li>
                                 <li class="text pb0">-</li>
                                 <li class="value pb0">
-                                    <input name="to" type="text" class="w300 h27 inputStyle"  onfocus="WdatePicker()"/>
+                                    <input name="to" type="text" class="w300 h27 inputStyle"/>
                                 </li>
                             </ul>
                         </li>
@@ -161,14 +130,13 @@
                         </li>
                     </ul>
                 </div>
-
-    </form>
-                <div id="abc" class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="javascript:test()"  ><div class="text c1 pdl0">查询</div></div>
+                <div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="javascript:search()"><div class="text c1 pdl0">查询</div></div>
             </td>
         </tr>
 
     </table>
 
+     </form>
     <table class="blackbor_table"  cellspacing="0" cellpadding="0">
         <tr class="trup">
             <td width="3%">序号</td>

@@ -3,6 +3,7 @@ package com.smart.service.impl;
 import com.smart.common.Page;
 import com.smart.common.DateUtils;
 import com.smart.dao.UserDao;
+import com.smart.model.CashUserInfo;
 import com.smart.model.SellerInfo;
 import com.smart.model.UserInfo;
 import com.smart.service.UserService;
@@ -84,6 +85,22 @@ public class UserServiceImpl  implements UserService {
         return userDao.create(join, title, content, abs);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public Page<CashUserInfo> searchCashUser(int i, int i1) throws Exception {
+        Page<CashUserInfo> infos = new Page<CashUserInfo>() {
+            @Override
+            protected String listAlias() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+        Long total = userDao.countCashUser();
+        infos.setCount(total);
+        List<CashUserInfo> users= userDao.searchCashUser(i,i1);  //To change body of implemented methods use File | Settings | File Templates.
+        infos.setMessages(users);
+        infos.setPageSize(i1);
+        infos.setPageNumber(i);
+        return null;
+    }
 
 
 }
