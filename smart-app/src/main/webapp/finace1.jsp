@@ -63,6 +63,11 @@ function popCompanyInfo(){
 	});
 }
 
+function newsSearch(){
+	
+	alert("111");
+}
+
 </script>
 </head>
 <div class="head">
@@ -98,7 +103,7 @@ function popCompanyInfo(){
 									</li>
 								</ul>
 							</div>
-							<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">查询</div></div>
+							<div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="newsSearch()"><div class="text c1 pdl0">查询</div></div>
 						</td>
 					</tr>
 				
