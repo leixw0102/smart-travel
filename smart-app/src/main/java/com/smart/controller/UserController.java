@@ -64,16 +64,20 @@ public class UserController extends BaseController {
                 if (userInfo == null){
                     throw new ApiException(new ResponseMsg(ResponseConstantCode.DATA_CANT_FOUND_CODE,ResponseConstantCode.DATA_CANT_FOUND_DESC));
                 }else{
-//                      request.getSession().setAttribute("userSessionId",userInfo.getId()+"-"+userInfo.getRole());
+                      request.getSession().setAttribute("userSessionId",userInfo.getId()+"-"+userInfo.getRole()+"-"+userInfo.getUserName());
 //                    Date use=new Date();
 //                    response.setHeader("user", JSON.toJSONString(new UserVo(3,"3",getLong(use))));
 //                    userService.updateUseTime(userInfo.getId(),use);
-                    return new com.smart.common.ResponseBody() {
-                        @Override
-                        public List<NameFilter> nameFilters() {
-                            return null;  //To change body of implemented methods use File | Settings | File Templates.
-                        }
-                    };
+                    ResponseMsg<String> msg=new ResponseMsg<String>();
+                    int type = userInfo.getRole();
+                    if(type==1){
+                        msg.setInfo("/1.0/seller/main");
+                    }else if(type==2){
+                        msg.setInfo("/1.0/news/list");
+                    } else if(type==3){
+                        msg.setInfo("/1.0/finance/getHomeList/2/1");
+                    }
+                    return msg;
                 }
             }
             //	logger.info("影人图片查询结束，返回终端数据；");

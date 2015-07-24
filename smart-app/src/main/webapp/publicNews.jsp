@@ -22,7 +22,12 @@
 <%--<script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>--%>
 <%--<script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>--%>
 <%--<script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>--%>
- <% Page<NewsInfo> pag1= (Page<NewsInfo>) request.getAttribute("msgs");%>
+ <%   Object user = session.getAttribute("userSessionId");
+     if(null == user ){
+         response.sendRedirect("login.jsp");
+
+     }
+     Page<NewsInfo> pag1= (Page<NewsInfo>) request.getAttribute("msgs");%>
 <script>
 $(function(){
 	var w=$(".pad20")[0].clientWidth;

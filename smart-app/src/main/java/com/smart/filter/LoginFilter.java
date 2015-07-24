@@ -44,7 +44,7 @@ public class LoginFilter implements Filter {
 
         Object obj = request.getSession().getAttribute("userSessionId");
         if(null == obj ){
-//            request.getRequestDispatcher("").forward(request,response);
+            request.getRequestDispatcher("login.jsp").forward(request,response);
             return;
         }
 

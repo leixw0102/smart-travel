@@ -14,8 +14,13 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
-    <%
+    <%    Object user = session.getAttribute("userSessionId");
+        if(null == user ){
+            response.sendRedirect("login.jsp");
+
+        }
         Page<Apply> applies= (Page<Apply>) request.getAttribute("appliesList");
         long size =0L;
         if(applies.getCount()!=0){
@@ -110,51 +115,59 @@
 
     </script>
 </head>
+<div class="head">
+    <div class="up">
+        <div class="logo"></div>
+        <div class="user-info">
+
+        </div>
+    </div>
+</div>
 <body class="pad20">
 <div class="body_main">
     <div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">
         <span class="titleSpan fl">财务管理</span>
     </div>
     <form id ="applyTable">
-    <table class="blackbor_table bt0 bb0"  cellspacing="0" cellpadding="0">
-        <tr>
-            <td>
-                <div class="fieldsContainer fl">
-                    <ul class="fields search pdt0 pdb0 bg2" style="width:100% ">
-                        <li class="pr9 pb0">
-                            <ul>
-                                <li class="text w60 fb c1 pb0">提现申请日期：</li>
-                                <li class="value pb0">
-                                    <input name="from" type="text" class="w300 h27 inputStyle"/>
-                                </li>
-                                <li class="text pb0">-</li>
-                                <li class="value pb0">
-                                    <input name="to" type="text" class="w300 h27 inputStyle"/>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="pr9 pb0">
-                            <ul>
-                                <li class="text w60 fb c1 pb0">商户类型：</li>
-                                <li class="value pb0">
-                                    <select id="abcType" name="type" class="w300">
-                                        <option selected="true" value="2">酒店</option>
-                                        <option  value="4">美食</option>
-                                        <option value="5">景点</option>
-                                        <option  value="6">美食</option>
-                                    </select>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class="bt_icon bt_icon_b3 fr r10 pr bd0" ><div onclick="alert(0);" class="text c1 pdl0">查询</div></div>
-            </td>
-        </tr>
+        <table class="blackbor_table bt0 bb0"  cellspacing="0" cellpadding="0">
+            <tr>
+                <td>
+                    <div class="fieldsContainer fl">
+                        <ul class="fields search pdt0 pdb0 bg2" style="width:100% ">
+                            <li class="pr9 pb0">
+                                <ul>
+                                    <li class="text w60 fb c1 pb0">提现申请日期：</li>
+                                    <li class="value pb0">
+                                        <input name="from" type="text" class="w300 h27 inputStyle" onfocus="WdatePicker()"/>
+                                    </li>
+                                    <li class="text pb0">-</li>
+                                    <li class="value pb0">
+                                        <input name="to" type="text" class="w300 h27 inputStyle"  onfocus="WdatePicker()"/>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="pr9 pb0">
+                                <ul>
+                                    <li class="text w60 fb c1 pb0">商户类型：</li>
+                                    <li class="value pb0">
+                                        <select id="abcType" name="type" class="w300">
+                                            <option selected="true" value="2">酒店</option>
+                                            <option  value="4">美食</option>
+                                            <option value="5">景点</option>
+                                            <option  value="6">美食</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="abc" class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="search()"  ><div class="text c1 pdl0">查询</div></div>
+                </td>
+            </tr>
 
-    </table>
+        </table>
 
-     </form>
+    </form>
     <table class="blackbor_table"  cellspacing="0" cellpadding="0">
         <tr class="trup">
             <td width="3%">序号</td>
@@ -174,8 +187,8 @@
             if(null == as || as.isEmpty()){
 
             }else{
-            for(Apply apply : as){
-                ++id;
+                for(Apply apply : as){
+                    ++id;
         %>
         <tr>
             <td ><%=id%></td>
@@ -199,7 +212,7 @@
             </td>
         </tr>
         <%}
-            }%>
+        }%>
     </table>
     <div class="detail_bottom">
         <div>
