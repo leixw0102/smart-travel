@@ -30,4 +30,10 @@ public interface UserDao {
     boolean saveFinaceUser(CashUserInfo info) throws Exception;
 
     CashUserInfo searchFinanceUser(CashUserInfo info) throws Exception;
+
+    boolean deleteById(Long id) throws Exception;
+
+    boolean updateById(Long id, String old, String newPwd) throws Exception;
+
+    CashUserInfo findUserByIdAndPwd(Long id, String old) throws Exception;
 }

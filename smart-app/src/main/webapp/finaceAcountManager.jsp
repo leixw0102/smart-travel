@@ -31,7 +31,7 @@
     <script>
     var orderby = ""; //进行排序的依据 
     $(function(){
-    	InitData(0);	
+    	InitData(1);
  
 		 
 	})
@@ -39,7 +39,30 @@
 		function page_callback(page_index, jq){
 			 InitData(page_index);
 		}
-		
+
+    function deleteMsg(id){
+
+        <%--$.ajax({--%>
+
+            <%--type: "Post",--%>
+
+            <%--url: "<%=request.getContextPath()%>/1.0/user/login",--%>
+
+            <%--data: $('#userLogin').serialize(),--%>
+
+            <%--success: function(result){--%>
+                <%--if (result.code==0){--%>
+                    <%--location.href="<%=request.getContextPath()%>"+result.info;--%>
+                <%--}else{--%>
+                    <%--alert(result.message)--%>
+                <%--}--%>
+
+            <%--}--%>
+
+        <%--});--%>
+    }
+        var totalPage=0;
+        var pageSize=20;
 		function InitData(pageIndex) { 
 			var tbody = ""; //声明表格中body部分 
 			$.ajax({ //这里使用到Jquery的ajax方法，具体使用在这里不详细叙述 
@@ -52,12 +75,14 @@
 				success: function(data) { 
 					$(".blackbor_table tr:gt(0)").remove(); 
 					var myData = data.messages;
+                    totalPage= data.count/data.pageSize==0? data.count/data.pageSize:(data.count/data.pageSize)+1
+                    pageSize=data.pageSize;
 					$.each(myData, function(i, n) { 
 						var trs = ""; 
-						trs += "<tr><td align='center'>" + n.number + "</td><td align='center'>" + n.contactName + "</td><td>" + n.userName + "</td><td>" + n.pwd + "</td><td>" + n.mark + "</td>";
+						trs += "<tr><td align='center'>" + i + "</td><td align='center'>" + n.contactName + "</td><td>" + n.userName + "</td><td>" + n.pwd + "</td><td>" + n.mark + "</td>";
 						trs += '<td align="center">'+
-			                       	'<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">删除</div></div>'+
-			                        '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="pwdRewrite()"><div class="text c1 pdl0">密码重置</div></div>'+
+			                       	'<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="deleteMsg('+ n.id+')"><div class="text c1 pdl0">删除</div></div>'+
+			                        '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="pwdRewrite('+ n.id+')"><div class="text c1 pdl0">密码重置</div></div>'+
 			                    '</td></tr>'
 						tbody += trs; 
 					}); 
@@ -65,11 +90,11 @@
 				} 
 			}); 
 			//加入分页的绑定 
-			$("#Pagination").pagination(<%=pageCount%>, { 
+			$("#Pagination").pagination(totalPage, {
 				callback: page_callback, 
 				prev_text: '< 上一页', 
 				next_text: '下一页 >', 
-				items_per_page: 20, 
+				items_per_page: pageSize,
 				num_display_entries: 6, 
 				current_page: pageIndex, 
 				num_edge_entries: 2 
@@ -86,14 +111,14 @@
 			url:"<%=request.getContextPath()%>/finaceAcountManagerAdd.jsp"
 		});
 	}
-    
-    function pwdRewrite(){
-    	window.top.$.popWin({
+    var pwdRewrite_win;
+    function pwdRewrite(id){
+        pwdRewrite_win = window.top.$.popWin({
 			title:"密码重置",
 			width:400,
 			height:240,
 			center:true,
-			url:"<%=request.getContextPath()%>/pwdRewrite.jsp"
+			url:"<%=request.getContextPath()%>/1.0/user/getUpdatePwdPage/"+id
 		});
     }
     </script>

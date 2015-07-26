@@ -112,5 +112,20 @@ public class UserServiceImpl  implements UserService {
         return userDao.saveFinaceUser(info);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public boolean deleteById(Long id) throws Exception {
+        return userDao.deleteById(id);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean updateById(Long id, String old, String newPwd) throws Exception {
+        return userDao.updateById(id,old,newPwd);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public CashUserInfo findUserByIdAndPwd(Long id, String old) throws Exception {
+        return userDao.findUserByIdAndPwd(id,old);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
 
 }
