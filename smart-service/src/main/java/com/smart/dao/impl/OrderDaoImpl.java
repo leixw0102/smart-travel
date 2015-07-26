@@ -39,6 +39,17 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    private String getOrderSql(String from, String to, Integer type, Integer orderType){
+        switch (type){
+            case 2:
+                return "";
+            case 4:
+                return "";
+            default:
+                return "";
+        }
+    }
+
     @Override
     public List<OrderInfo> search(Integer page, String from, String to, Integer type, Integer orderType) throws Exception {
         return null;  //To change body of implemented methods use File | Settings | File Templates.

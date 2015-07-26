@@ -12,6 +12,12 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
+    <%
+        Object user = session.getAttribute("userSessionId");
+        if(null == user ){
+            response.sendRedirect("login.jsp");
+
+        }%>
     <script>
 	$(function(){
 		var w=$(".pad20")[0].clientWidth;

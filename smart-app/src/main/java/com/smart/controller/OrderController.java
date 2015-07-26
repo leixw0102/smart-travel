@@ -42,11 +42,11 @@ import javax.servlet.http.HttpServletResponse;
 public class OrderController extends BaseController {
     @Autowired
     private OrderServie orderServie;
-    @RequestMapping("getOrderLists/{page}")
+    @RequestMapping("getOrderLists/{page}/{orderType}")
     @ResponseBody
     public com.smart.common.Page getList(HttpServletRequest request,HttpServletResponse response,@PathVariable Integer page,
                                          @RequestParam(required = false) String from,@RequestParam(required = false) String to,
-                                         @RequestParam(required = false) Integer type,@RequestParam(required = false) Integer orderType){
+                                         @RequestParam(required = false) Integer type,@PathVariable Integer orderType){
         try{
             return orderServie.search(page,from,to,type,orderType);
         }catch (Exception e){

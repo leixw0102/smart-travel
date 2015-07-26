@@ -29,6 +29,16 @@ import com.google.common.base.Strings;
 public class CashUserInfo {
 
     private long  id;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     private String userName;
     private  String pwd;
     private String pwd2;

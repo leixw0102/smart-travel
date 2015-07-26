@@ -19,6 +19,14 @@
     <script src="<%=request.getContextPath()%>/js/plugins/jquery-ui-1.10.4.custom.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="<%=request.getContextPath()%>/js/plugins/popWin/js/jquery.window.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
+    <%
+        Object user = session.getAttribute("userSessionId");
+        if(null == user ){
+            response.sendRedirect("login.jsp");
+
+        }
+
+    %>
     <script>
     $(function(){
 		var initPagination = function() {

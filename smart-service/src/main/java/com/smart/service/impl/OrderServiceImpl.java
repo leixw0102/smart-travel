@@ -19,8 +19,11 @@ package com.smart.service.impl;/*
 
 import com.smart.common.Page;
 import com.smart.dao.OrderDao;
+import com.smart.model.OrderInfo;
 import com.smart.service.OrderServie;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by leixw
@@ -35,6 +38,18 @@ public class OrderServiceImpl implements OrderServie {
     @Override
     public Page search(Integer page, String from, String to, Integer type, Integer orderType) throws Exception {
 //        orderDao.search(page,);  //To change body of implemented methods use File | Settings | File Templates.
-        return null;
+        Page<OrderInfo> infos = new Page<OrderInfo>() {
+            @Override
+            protected String listAlias() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+        Long total=orderDao.count(from,to,type,orderType);
+        infos.setPageSize(20);
+        infos.setPageNumber(page);
+        infos.setCount(total);
+        List<OrderInfo> orders=orderDao.search(page,from,to,type,orderType);
+        infos.setMessages(orders);
+        return infos;
     }
 }

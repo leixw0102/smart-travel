@@ -1,5 +1,7 @@
 package com.smart.model;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.Date;
 
 public class Apply {
@@ -95,5 +97,10 @@ public class Apply {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
+
+    public static void main(String[]args){
+        JSONObject object = new JSONObject();
+        object.put("abc","sdfdsfsd");
+        System.out.println(object.toJSONString());
+    }
 }

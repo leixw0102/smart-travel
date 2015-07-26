@@ -26,4 +26,8 @@ public interface UserDao {
     List<CashUserInfo> searchCashUser(int i, int i1) throws Exception;
 
     long countCashUser() throws Exception;
+
+    boolean saveFinaceUser(CashUserInfo info) throws Exception;
+
+    CashUserInfo searchFinanceUser(CashUserInfo info) throws Exception;
 }

@@ -43,11 +43,7 @@ $(function(){
 </head>
 <body>
 	<div class="top">
-		<div class="login-logo fl"></div>
-	
-		<div class="bt_icon bt_icon_b2 fr pd10 r10 pr t8" style="margin-top:13px;" onClick="popCompanyInfo()"><div class="text clfff pdl0">登录</div></div>
-		<div class="user-login-wrapper fr"><input type="text" class="user-login"/></div>
-		<div class="pwd-login-wrapper fr"><input type="text" class="pwd-login"/></div>
+
         <form id="userLogin">
 		<div class="login-logo fl"></div>
 	
