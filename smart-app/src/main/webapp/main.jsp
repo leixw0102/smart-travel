@@ -7,9 +7,12 @@
 <title>Insert title here</title>
     <%
         Object user = session.getAttribute("userSessionId");
+        String userName="游客";
         if(null == user ){
             response.sendRedirect("login.jsp");
 
+        } else{
+        userName=user.toString().split("-")[2];
         }
     %>
 <link href="<%=request.getContextPath()%>/css/bridging.css" rel="stylesheet" type="text/css" />
@@ -49,7 +52,23 @@ function contentWH(){
 	$(".page").width(document.body.clientWidth - $(".menu").outerWidth(true));
 }
 function logout(){
-	
+    $.ajax({
+
+        type: "Post",
+
+        url: "<%=request.getContextPath()%>/1.0/user/logout",
+
+
+        success: function(result){
+            if (result.code==0){
+                location.href="<%=request.getContextPath()%>/"+result.info;
+            }else{
+                alert(result.message)
+            }
+
+        }
+
+    });
 }
 </script>
 <style>
@@ -62,7 +81,7 @@ function logout(){
 	<div class="up">
 		<div class="logo"></div>
 		<div class="user-info" style="display:inline-block;color:#fff;float:right;margin-top:25px;margin-right:60px">
-			您好，王先生
+			您好，<%=userName%>
 		</div>
 		<div class="bt_icon bt_icon_b2 fr  pr t8" style="margin-top:13px;margin-right:10px" onClick="logout()"><div class="text clfff pdl0">退出</div></div>
 	</div>

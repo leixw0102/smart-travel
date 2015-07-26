@@ -56,6 +56,15 @@ public class SellerVo {
     public void setPwd2(String pwd2) {
         this.pwd2 = pwd2;
     }
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     private String type;
     private String sellerName;

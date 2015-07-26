@@ -64,24 +64,25 @@ function popCompanyInfo(){
 	});
 }
 
+var editSellerUser_win;
+function editUserInfo(id){
 
-function editUserInfo(){
-	window.top.$.popWin({
+    editSellerUser_win=window.top.$.popWin({
 		title:"编辑用户信息",
 		width:610,
 		height:530,
 		center:true,
-		url:"<%=request.getContextPath()%>/editUserInfo.jsp"
+		url:"<%=request.getContextPath()%>/1.0/seller/editSeller/"+id
 	});
 }
 
-function editCompanyInfo(){
+function editCompanyInfo(id){
 	window.top.$.popWin({
 		title:"编辑商户信息",
 		width:610,
 		height:330,
 		center:true,
-		url:"<%=request.getContextPath()%>/editCompanyInfo.jsp"
+		url:"<%=request.getContextPath()%>/1.0/seller/editCompanyPage/"+id
 	});
 }
 </script>
@@ -117,7 +118,7 @@ function editCompanyInfo(){
                            %>
                     <tr>
                         <td ><%=id%></td>
-                        <td class="list-link" style="cursor:pointer" onclick="editUserInfo()"><%=info.getUserName()%></td>
+                        <td class="list-link" style="cursor:pointer" onclick="editUserInfo('<%=info.getId()%>')"><%=info.getUserName()%></td>
                         <td><%=info.getPwd()%></td>
                         <td><%=info.getType()%></td>
                         <%--<td ><%=info.getSellerName()%></td>--%>
@@ -125,7 +126,7 @@ function editCompanyInfo(){
                         <td><%=info.getFree()%></td>
                         <td><%=new DateTime(info.getCreateTime()).toString("yyyy-MM-dd HH:mm:ss")%></td>
                         <td><%=info.getRemark()%></td>
-                        <td><div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="editCompanyInfo()"><div class="text c1 pdl0">修改商户信息</div></div></td>
+                        <td><div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="editCompanyInfo(<%=info.getId()%>)"><div class="text c1 pdl0">修改商户信息</div></div></td>
                     </tr>
                     <%
                             } }

@@ -51,6 +51,15 @@ public class SellerInfo {
     private String remark;
     private String contactName;
     private Double grade;
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Float getFree() {
         return free;

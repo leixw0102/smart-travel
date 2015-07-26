@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.NameFilter;
@@ -49,12 +50,12 @@ public class UserController extends BaseController {
             }
 
             if(userService.saveFinanceUser(info)){
-
+                return new ResponseMsg();
             };
-            return new ResponseMsg("1","插入失败,");
+            return new ResponseMsg("1","插入失败");
         }catch (Exception e){
             logger.error("add finance user error!" ,e);
-            return new ResponseMsg("1","插入失败,"+e.getMessage());
+            return new ResponseMsg("1","插入失败"+e.getMessage());
         }
     }
     @RequestMapping("getCashHome")
@@ -89,7 +90,7 @@ public class UserController extends BaseController {
             }else{
                 UserInfo userInfo = userService.sellerLogin(userName,  pwd) ;
                 if (userInfo == null){
-                    throw new ApiException(new ResponseMsg(ResponseConstantCode.DATA_CANT_FOUND_CODE,ResponseConstantCode.DATA_CANT_FOUND_DESC));
+                    return new ResponseMsg(ResponseConstantCode.DATA_CANT_FOUND_CODE,ResponseConstantCode.DATA_CANT_FOUND_DESC);
                 }else{
                     request.getSession().setAttribute("userSessionId",userInfo.getId()+"-"+userInfo.getRole()+"-"+userInfo.getUserName());
 //                    Date use=new Date();
@@ -147,6 +148,15 @@ public class UserController extends BaseController {
     public String getReWritePage(HttpServletRequest request,HttpServletResponse response,@PathVariable Long id){
         request.setAttribute("financeUpdateId",id);
         return "pwdRewrite";
+    }
+    @RequestMapping("logout")
+    @ResponseBody
+    public ResponseMsg logout(HttpServletRequest request,HttpServletResponse response){
+        HttpSession session=request.getSession(false);
+        session.removeAttribute("userSessionId");
+        ResponseMsg<String> msg=new ResponseMsg<String>();
+        msg.setInfo("login.jsp");
+        return msg;
     }
 
 }

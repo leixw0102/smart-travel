@@ -84,4 +84,19 @@ public class SellerServiceImpl implements SellerService {
     public boolean fingByPhone(String userName) throws Exception {
         return sellerDao.findByPhone(userName);  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    @Override
+    public SellerVo getUserById(Long id) throws Exception {
+        return sellerDao.getUserById(id);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public long updateSeller(SellerVo info) throws Exception {
+        return sellerDao.updateSeller(info);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public CompanyInfo getCompanyByUserId(Long id) throws Exception {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

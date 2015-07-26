@@ -17,6 +17,7 @@ package com.smart.controller;/*
  * under the License.
  */
 
+import com.google.common.collect.Maps;
 import com.smart.common.Page;
 import com.smart.common.ResponseMsg;
 import com.smart.model.CompanyInfo;
@@ -25,9 +26,11 @@ import com.smart.service.SellerService;
 import com.smart.vo.SellerVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,6 +61,35 @@ public class SellerController extends BaseController{
             return sellerService.getSellers(1);
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    @RequestMapping("updateSellerUser")
+    @ResponseBody
+    public com.smart.common.ResponseBody updateSeller(HttpServletRequest request,HttpServletResponse response,SellerVo info) {
+        logger.info(info.toString());
+        if(info.getId()==null){
+            return new ResponseMsg("1","更新对象ID不存在");
+        }
+
+        if(info.verfiy()){
+            return new ResponseMsg("1","参数不能为空或者2次密码输入不正确");
+        };
+
+
+
+        try{
+
+            long id=sellerService.updateSeller(info);
+            if(id>0){
+                request.getSession().setAttribute("userType", info.getType());
+                request.getSession().setAttribute("addUserId",id);
+                return  new ResponseMsg();
+            };
+            return  new ResponseMsg("1","插入失败");
+        }catch (Exception e){
+            logger.error("error!",e);
+            return new ResponseMsg("1","插入失败,"+e.getMessage());
         }
     }
     @RequestMapping("addUser")
@@ -128,6 +160,45 @@ public class SellerController extends BaseController{
     @RequestMapping("main")
     public String getHomeSystem(){
         return "main";
+    }
+    @RequestMapping("editSeller/{id}")
+    public ModelAndView getSellerVo(@PathVariable Long id){
+        try{
+            SellerVo vo = sellerService.getUserById(id);
+            Map<String,String> maps = getMaps(vo);
+            return new ModelAndView("editUserInfo",maps);
+        }catch (Exception e){
+            logger.error("error",e);
+            return new ModelAndView("editUserInfo");
+        }
+    }
+    @RequestMapping("editCompanyPage/{id}")
+    public ModelAndView getCompanyUpdatePage(@PathVariable Long id){
+        try{
+            CompanyInfo vo = sellerService.getCompanyByUserId(id);
+            Map<String,String> maps = getMapsByCompany(vo);
+            return new ModelAndView("editCompanyInfo",maps);
+        }catch (Exception e){
+            logger.error("error",e);
+            return new ModelAndView("editCompanyInfo");
+        }
+    }
+
+    private Map<String, String> getMapsByCompany(CompanyInfo vo) {
+        return null;  //To change body of created methods use File | Settings | File Templates.
+    }
+
+    private Map<String, String> getMaps(SellerVo vo) {
+
+        Map<String,String> maps = Maps.newHashMap();
+        maps.put("userName",vo.getUserName());
+        maps.put("pwd",vo.getPwd());
+        maps.put("pwd2",vo.getPwd2());
+        maps.put("type",vo.getType());
+        maps.put("free",vo.getFree()+"");
+        maps.put("remark",vo.getRemark());
+        maps.put("id",vo.getId()+"");
+        return maps;
     }
 
 }

@@ -42,24 +42,25 @@
 
     function deleteMsg(id){
 
-        <%--$.ajax({--%>
+        $.ajax({
 
-            <%--type: "Post",--%>
+            type: "Post",
 
-            <%--url: "<%=request.getContextPath()%>/1.0/user/login",--%>
+            url: "<%=request.getContextPath()%>/1.0/user/financeDeleteById/"+id,
 
-            <%--data: $('#userLogin').serialize(),--%>
+//            data: $('#userLogin').serialize(),
 
-            <%--success: function(result){--%>
-                <%--if (result.code==0){--%>
-                    <%--location.href="<%=request.getContextPath()%>"+result.info;--%>
-                <%--}else{--%>
-                    <%--alert(result.message)--%>
-                <%--}--%>
+            success: function(result){
+                if (result.code==0){
+                    alert("删除成功")
+                    InitData(1);
+                }else{
+                    alert(result.message)
+                }
 
-            <%--}--%>
+            }
 
-        <%--});--%>
+        });
     }
         var totalPage=0;
         var pageSize=20;
@@ -102,8 +103,10 @@
 		} 	
     </script>
     <script type="text/javascript">
+        var pwdRewrite_win;
+        var addFinance_win;
     function popCompanyInfo(){
-		window.top.$.popWin({
+        addFinance_win=window.top.$.popWin({
 			title:"添加财务用户",
 			width:610,
 			height:350,
@@ -111,7 +114,7 @@
 			url:"<%=request.getContextPath()%>/finaceAcountManagerAdd.jsp"
 		});
 	}
-    var pwdRewrite_win;
+
     function pwdRewrite(id){
         pwdRewrite_win = window.top.$.popWin({
 			title:"密码重置",

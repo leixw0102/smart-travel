@@ -25,6 +25,26 @@
 	})
 
         function addFinanceUser(){
+            $.ajax({
+
+                type: "post",
+
+                url: "<%=request.getContextPath()%>/1.0/user/addFinanceUser",
+
+                data: $('#addFinanceForm').serialize(),
+
+                success: function(result){
+                    if (result.code==0){
+                        alert("添加成功");
+                        window.top.frames['mainFrame'].addFinance_win.closeWin();
+                        window.top.frames['mainFrame'].InitData(1);
+                    }else{
+                        alert(result.message)
+                    }
+
+                }
+
+            });
 
         }
     </script>
@@ -33,13 +53,14 @@
 <body class="pad20">
 		<div class="body_main">
 		<!--filter start-->
+            <form id="addFinanceForm">
 		<div class="fieldsContainer">
 			<ul class="fields search pdt0 pdb0">
 				<li class="pr9">
 					<ul>
 						<li class="text w60 fb c1">手机号：</li>
 						<li class="value">
-							<input type="text" class="w300 h27 inputStyle"/>
+							<input name="phone" type="text" class="w300 h27 inputStyle"/>
 						</li>
 					</ul>
 				</li>
@@ -47,7 +68,7 @@
                     <ul>
                         <li class="text w60 fb c1">用户名：</li>
                         <li class="value">
-                            <input type="text" class="w300 h27 inputStyle"/>
+                            <input name="userName" type="text" class="w300 h27 inputStyle"/>
                         </li>
                     </ul>
                 </li>
@@ -55,7 +76,7 @@
 					<ul>
 						<li class="text w60 fb c1">密码：</li>
 						<li class="value">
-							<input type="text" class="w300 h27 inputStyle"/>
+							<input name="pwd" type="password" class="w300 h27 inputStyle"/>
 						</li>
 					</ul>
 				</li>
@@ -63,7 +84,7 @@
 					<ul>
 						<li class="text w60 fb c1">确认密码：</li>
 						<li class="value">
-							<input type="text" class="w300 h27 inputStyle"/>
+							<input name="pwd2" type="password" class="w300 h27 inputStyle"/>
 						</li>
 					</ul>
 				</li>
@@ -71,7 +92,7 @@
 					<ul>
 						<li class="text w60 fb c1">联系人：</li>
 						<li class="value">
-								<input type="text" class="w300 h27 inputStyle"/>
+								<input name="contactName" type="text" class="w300 h27 inputStyle"/>
 						</li>
 					</ul>
 				</li>
@@ -80,14 +101,15 @@
 						<li class="text w60 fb c1">备注：</li>
 						<li class="value">
 							<div class="inputBt">
-								<textarea id="to" class="w300 h100 inputStyle"></textarea>
+								<textarea id="to" name="mark" class="w300 h100 inputStyle"></textarea>
 							</div>
 						</li>
 					</ul>
 				</li>
 			</ul>
 		</div>
-		<div class="bt_icon bt_icon_b3 fr r240 pr bd0" onClick="popCompanyInfo()"><div class="text c1 pdl0">确定</div></div>
+		<div class="bt_icon bt_icon_b3 fr r240 pr bd0" onClick="addFinanceUser()"><div class="text c1 pdl0">确定</div></div>
+            </form>
 	</div>
 	</body>
 </html>

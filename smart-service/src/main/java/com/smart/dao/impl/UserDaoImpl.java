@@ -123,7 +123,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
     public List<CashUserInfo> searchCashUser(int i, int i1) throws Exception {
-        return super.getBySqlRowMapper("select * from t_user where role=3 order by use_time desc limit "+(i-1)*i1+","+i1,new RowMapper<CashUserInfo>() {
+        return super.getBySqlRowMapper("select * from t_user where role=3 order by id desc limit "+(i-1)*i1+","+i1,new RowMapper<CashUserInfo>() {
             @Override
             public CashUserInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
                 CashUserInfo info = new CashUserInfo();
@@ -145,7 +145,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     @Transactional(readOnly = false,rollbackFor = Exception.class)
     @Override
     public boolean saveFinaceUser(CashUserInfo info) throws Exception {
-        return super.update("insert into t_user(user_name,pwd,phone,alias,mark,role) values('"+info.getUserName()+"','"+info.getPwd()+"','"+info.getPhone()+"','','',3)");  //To change body of implemented methods use File | Settings | File Templates.
+        return super.update("insert into t_user(user_name,pwd,phone,alias,mark,role) values('"+info.getUserName()+"','"+info.getPwd()+"','"+info.getPhone()+"','"+info.getContactName()+"','"+info.getMark()+"',3)");  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
@@ -159,7 +159,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                     info.setUserName(rs.getString("user_name"));
                     info.setPwd(rs.getString("pwd"));
                     info.setId(rs.getLong("id"));
-                    info.setContactName(rs.getString("contact_name"));
+                    info.setContactName(rs.getString("alias"));
                     info.setPhone(rs.getString("phone"));
                     return info;
                 }
@@ -195,7 +195,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                     info.setUserName(rs.getString("user_name"));
                     info.setPwd(rs.getString("pwd"));
                     info.setId(rs.getLong("id"));
-                    info.setContactName(rs.getString("contact_name"));
+                    info.setContactName(rs.getString("alias"));
                     info.setPhone(rs.getString("phone"));
                     return info;
                 }

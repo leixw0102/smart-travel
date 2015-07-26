@@ -67,6 +67,7 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
                 info.setRemark(rs.getString("mark")==null?"":rs.getString("mark"));
                 info.setSellerName(rs.getString("seller_name")==null?"":rs.getString("seller_name"));
                 info.setFree(rs.getFloat("servicefee_level"));
+                info.setId(rs.getLong("userId"));
                 return info;  //To change body of implemented methods use File | Settings | File Templates.
             }
         });  //To change body of implemented methods use File | Settings | File Templates.
@@ -225,5 +226,55 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
     public boolean addAccount(Long userId) throws Exception {
 
         return super.update("insert into account(userId) values("+userId+")");  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public SellerVo getUserById(Long id) throws Exception {
+        return super.getJdbcTemplate().query("select * from user where userId="+id,new ResultSetExtractor<SellerVo>() {
+            @Override
+            public SellerVo extractData(ResultSet rs) throws SQLException, DataAccessException {
+                if(rs.next()){
+                    SellerVo info = new SellerVo();
+                    info.setPwd(rs.getString("password"));
+                    info.setUserName(rs.getString("username"));
+                    info.setCreateTime(rs.getTimestamp("createtime"));
+                    int role=rs.getInt("roleType");
+                    info.setType(getRole(role));
+                    info.setContactName(rs.getString("contact_name") == null ? "" : rs.getString("contact_name"));
+                    info.setGrade(rs.getDouble("grade"));
+                    info.setRemark(rs.getString("mark")==null?"":rs.getString("mark"));
+                    info.setSellerName(rs.getString("seller_name")==null?"":rs.getString("seller_name"));
+                    info.setFree(rs.getFloat("servicefee_level"));
+                    info.setId(rs.getLong("userId"));
+                    return info;
+                }
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+
+        });  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    @Override
+    public long updateSeller(SellerVo info) throws Exception {
+        final String usekey =Token.getToken(info.getUserName(), String.valueOf(get(Integer.parseInt(info.getType()))), "1");
+         super.update("update user set Mac='1',UserKey='"+usekey+"',username='"+info.getUserName()+"',password='"+info.getPwd()+"',roleType="+get(Integer.parseInt(info.getType()))+",servicefee_level="+info.getFree()+",mark='"+info.getRemark()+"',level='1' where userId= "+info.getId());  //To change body of implemented methods use File | Settings | File Templates.
+        return info.getId();
+    }
+
+
+    private String getRole(int role) {
+        switch (role){
+                    case 2:
+                        return 1+"";
+                    case 5:
+                        return "2";
+                    case 6:
+                        return "3";
+                    case 4:
+                        return "4";
+                    default:
+                        return "0";
+                }
     }
 }
