@@ -33,8 +33,11 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("addUser")
+    @RequestMapping("addFinanceUser")
     public String addUser(HttpServletResponse response,HttpServletRequest request,CashUserInfo info){
+           if(info.check()){
+               throw new ApiException(new ResponseMsg("填写信息错误","10"));
+           }
             return "";//页面财务
     }
 
@@ -73,7 +76,7 @@ public class UserController extends BaseController {
                     if(type==1){
                         msg.setInfo("/1.0/seller/main");
                     }else if(type==2){
-                        msg.setInfo("/1.0/news/list");
+                        msg.setInfo("/1.0/news/list?page=1");
                     } else if(type==3){
                         msg.setInfo("/1.0/finance/getHomeList/2/1");
                     }
