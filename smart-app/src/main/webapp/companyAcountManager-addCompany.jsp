@@ -9,7 +9,11 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bridging.css"/>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
-    <%
+    <%   Object user = session.getAttribute("userSessionId");
+        if(null == user ){
+            response.sendRedirect("login.jsp");
+
+        }
     Map<Integer,String> maps = (Map<Integer, String>) request.getAttribute("secondaryTypes");
         String userId = request.getSession().getAttribute("addUserId").toString();
         String userType=request.getSession().getAttribute("userType").toString();

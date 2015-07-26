@@ -18,6 +18,27 @@ $(function(){
 	var w=$(".pad20")[0].clientWidth;
 	$(".body_main").width=w;
 })
+
+    function login(){
+        $.ajax({
+
+            type: "GET",
+
+            url: "<%=request.getContextPath()%>/1.0/user/login",
+
+            data: $('#userLogin').serialize(),
+
+            success: function(result){
+                if (result.code==0){
+                    location.href="<%=request.getContextPath()%>"+result.info;
+                }else{
+                    alert(result.message)
+                }
+
+            }
+
+        });
+    }
 </script>
 </head>
 <body>
@@ -27,6 +48,13 @@ $(function(){
 		<div class="bt_icon bt_icon_b2 fr pd10 r10 pr t8" style="margin-top:13px;" onClick="popCompanyInfo()"><div class="text clfff pdl0">登录</div></div>
 		<div class="user-login-wrapper fr"><input type="text" class="user-login"/></div>
 		<div class="pwd-login-wrapper fr"><input type="text" class="pwd-login"/></div>
+        <form id="userLogin">
+		<div class="login-logo fl"></div>
+	
+		<div class="bt_icon bt_icon_b2 fr pd10 r10 pr t8" style="margin-top:13px;" onClick="login()"><div class="text clfff pdl0">登录</div></div>
+		<div class="user-login-wrapper fr"><input name="pwd"  type="password" class="user-login"/></div>
+		<div class="pwd-login-wrapper fr"><input name="userName" type="text" class="pwd-login"/></div>
+            </form>
 	</div>
 	<div class="login-bg"></div>
 	<div class="login-bts">

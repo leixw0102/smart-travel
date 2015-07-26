@@ -125,4 +125,9 @@ public class SellerController extends BaseController{
         return "companyAcountManager-addCompany";
     }
 
+    @RequestMapping("main")
+    public String getHomeSystem(){
+        return "main";
+    }
+
 }

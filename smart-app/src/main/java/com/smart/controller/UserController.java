@@ -5,13 +5,16 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.NameFilter;
 import com.google.common.base.Strings;
+import com.smart.common.Page;
 import com.smart.common.ResponseConstantCode;
 import com.smart.common.ResponseMsg;
+import com.smart.model.CashUserInfo;
 import com.smart.model.UserInfo;
 import com.smart.service.UserService;
 import com.smart.vo.UserVo;
@@ -30,11 +33,25 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("addUser")
+    public String addUser(HttpServletResponse response,HttpServletRequest request,CashUserInfo info){
+            return "";//页面财务
+    }
 
+    @RequestMapping("cashUsers")
+    public String getCashUsers(HttpServletResponse response,HttpServletRequest request){
+        try {
+            userService.searchCashUser(1,20);
+            return "" ;
+        } catch (Exception e) {
+            throw new ApiException(new ResponseMsg(ResponseConstantCode.DATA_CANT_FOUND_CODE,ResponseConstantCode.DATA_CANT_FOUND_DESC));
+        }
+
+    }
 
     @RequestMapping(value = "login")
     @ResponseBody
-    public com.smart.common.ResponseBody sellerLogin(HttpServletResponse response,@RequestParam String userName,@RequestParam String pwd) throws ServletException, IOException {
+    public com.smart.common.ResponseBody sellerLogin(HttpServletRequest request,HttpServletResponse response,@RequestParam String userName,@RequestParam String pwd) throws ServletException, IOException {
         try {
 
             //String token = userService.buyerLogin( username,  password,mac) ;
@@ -47,15 +64,20 @@ public class UserController extends BaseController {
                 if (userInfo == null){
                     throw new ApiException(new ResponseMsg(ResponseConstantCode.DATA_CANT_FOUND_CODE,ResponseConstantCode.DATA_CANT_FOUND_DESC));
                 }else{
-                    Date use=new Date();
-                    response.setHeader("user", JSON.toJSONString(new UserVo(3,"3",getLong(use))));
-                    userService.updateUseTime(userInfo.getId(),use);
-                    return new com.smart.common.ResponseBody() {
-                        @Override
-                        public List<NameFilter> nameFilters() {
-                            return null;  //To change body of implemented methods use File | Settings | File Templates.
-                        }
-                    };
+                      request.getSession().setAttribute("userSessionId",userInfo.getId()+"-"+userInfo.getRole()+"-"+userInfo.getUserName());
+//                    Date use=new Date();
+//                    response.setHeader("user", JSON.toJSONString(new UserVo(3,"3",getLong(use))));
+//                    userService.updateUseTime(userInfo.getId(),use);
+                    ResponseMsg<String> msg=new ResponseMsg<String>();
+                    int type = userInfo.getRole();
+                    if(type==1){
+                        msg.setInfo("/1.0/seller/main");
+                    }else if(type==2){
+                        msg.setInfo("/1.0/news/list");
+                    } else if(type==3){
+                        msg.setInfo("/1.0/finance/getHomeList/2/1");
+                    }
+                    return msg;
                 }
             }
             //	logger.info("影人图片查询结束，返回终端数据；");

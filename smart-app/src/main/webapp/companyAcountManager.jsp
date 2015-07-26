@@ -17,7 +17,13 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.js" ></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/pagination/default-style/js/jquery.pagination.extend.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
-    <% Page<SellerInfo> pag1= (Page<SellerInfo>) request.getAttribute("msgs");
+    <%
+        Object user = session.getAttribute("userSessionId");
+        if(null == user ){
+            response.sendRedirect("login.jsp");
+
+        }
+        Page<SellerInfo> pag1= (Page<SellerInfo>) request.getAttribute("msgs");
         long size = pag1.getCount()/pag1.getPageSize()==0?pag1.getCount()/pag1.getPageSize()+1:pag1.getCount()/pag1.getPageSize();
     %>
 <script>
