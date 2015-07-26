@@ -109,7 +109,7 @@
         addFinance_win=window.top.$.popWin({
 			title:"添加财务用户",
 			width:610,
-			height:350,
+			height:380,
 			center:true,
 			url:"<%=request.getContextPath()%>/finaceAcountManagerAdd.jsp"
 		});
@@ -126,16 +126,7 @@
     }
     </script>
 </head>
-<body>
-	<!--head-->
-       <div class="head">
-           <div class="up">
-               <div class="logo"></div>
-               <div class="user-info">
-       
-               </div>
-           </div>
-       </div>
+<body class="pad20">
        <!--content-->
 	<div class="body_main">
            	<div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">
