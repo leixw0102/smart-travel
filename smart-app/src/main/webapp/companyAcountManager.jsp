@@ -55,7 +55,6 @@ var initPagination = function() {
 }
 })
 function popCompanyInfo(){
-
 	window.top.$.popWin({
 		title:"添加商户信息",
 		width:610,
@@ -65,6 +64,26 @@ function popCompanyInfo(){
 	});
 }
 
+
+function editUserInfo(){
+	window.top.$.popWin({
+		title:"编辑用户信息",
+		width:610,
+		height:530,
+		center:true,
+		url:"<%=request.getContextPath()%>/editUserInfo.jsp"
+	});
+}
+
+function editCompanyInfo(){
+	window.top.$.popWin({
+		title:"编辑商户信息",
+		width:610,
+		height:330,
+		center:true,
+		url:"<%=request.getContextPath()%>/editCompanyInfo.jsp"
+	});
+}
 </script>
 </head>
 <body class="pad20">
@@ -79,12 +98,13 @@ function popCompanyInfo(){
 						<td width="5%">序号</td>
 						<td width="10%">用户名(手机号)</td>
 						<td width="5%">密码</td>
-						<td width="10%">商户类型</td>
+						<td width="5%">商户类型</td>
 						<%--<td width="20%" >商户名称</td>--%>
                         <%--<td width="10%" >联系人</td>--%>
-                        <td width="10%" >服务费比例</td>
+                        <td width="5%" >服务费比例</td>
                         <td width="10%" >创建日期</td>
-						<td width="20%" class="borderright">备注</td>
+						<td width="10%" class="borderright">备注</td>
+						<td width="20%" class="borderright">操作</td>
 					</tr>
                     <%
                         int id =(pag1.getPageNumber()-1)*pag1.getPageSize();
@@ -97,7 +117,7 @@ function popCompanyInfo(){
                            %>
                     <tr>
                         <td ><%=id%></td>
-                        <td class="list-link"><%=info.getUserName()%></td>
+                        <td class="list-link" style="cursor:pointer" onclick="editUserInfo()"><%=info.getUserName()%></td>
                         <td><%=info.getPwd()%></td>
                         <td><%=info.getType()%></td>
                         <%--<td ><%=info.getSellerName()%></td>--%>
@@ -105,6 +125,7 @@ function popCompanyInfo(){
                         <td><%=info.getFree()%></td>
                         <td><%=new DateTime(info.getCreateTime()).toString("yyyy-MM-dd HH:mm:ss")%></td>
                         <td><%=info.getRemark()%></td>
+                        <td><div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="editCompanyInfo()"><div class="text c1 pdl0">修改商户信息</div></div></td>
                     </tr>
                     <%
                             } }
