@@ -24,7 +24,9 @@
 		$(".body_main").width=w;
 	})
 
-//        function
+        function addFinanceUser(){
+
+        }
     </script>
    
 </head>
@@ -41,6 +43,14 @@
 						</li>
 					</ul>
 				</li>
+                <li class="pr9">
+                    <ul>
+                        <li class="text w60 fb c1">用户名：</li>
+                        <li class="value">
+                            <input type="text" class="w300 h27 inputStyle"/>
+                        </li>
+                    </ul>
+                </li>
 				<li class="pr9">
 					<ul>
 						<li class="text w60 fb c1">密码：</li>

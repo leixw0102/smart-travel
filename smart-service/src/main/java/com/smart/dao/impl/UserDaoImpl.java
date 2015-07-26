@@ -126,13 +126,13 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         return super.getBySqlRowMapper("select * from t_user where role=3 order by use_time desc limit "+(i-1)*i1+","+i1,new RowMapper<CashUserInfo>() {
             @Override
             public CashUserInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    CashUserInfo info = new CashUserInfo();
-                    info.setMark(rs.getString("mark"));
-                    info.setContactName(rs.getString("alias"));
-                    info.setId(rs.getLong("id"));
-                    info.setPwd(rs.getString("pwd"));
-                    info.setUserName(rs.getString("user_name"));
-                    return info;
+                CashUserInfo info = new CashUserInfo();
+                info.setMark(rs.getString("mark"));
+                info.setContactName(rs.getString("alias"));
+                info.setId(rs.getLong("id"));
+                info.setPwd(rs.getString("pwd"));
+                info.setUserName(rs.getString("user_name"));
+                return info;
             }
         });  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -151,6 +151,42 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     @Override
     public CashUserInfo searchFinanceUser(CashUserInfo info) throws Exception {
         return super.getJdbcTemplate().query("select * from t_user where user_name='"+info.getUserName()+"' and pwd='"+info.getPwd()+"'",new ResultSetExtractor<CashUserInfo>() {
+            @Override
+            public CashUserInfo extractData(ResultSet rs) throws SQLException, DataAccessException {
+                if(rs.next()){
+                    CashUserInfo info = new CashUserInfo();
+                    info.setMark(rs.getString("mark"));
+                    info.setUserName(rs.getString("user_name"));
+                    info.setPwd(rs.getString("pwd"));
+                    info.setId(rs.getLong("id"));
+                    info.setContactName(rs.getString("contact_name"));
+                    info.setPhone(rs.getString("phone"));
+                    return info;
+                }
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });  //To change body of implemented methods use File | Settings | File Templates.
+    }
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    @Override
+    public boolean deleteById(Long id) throws Exception {
+        try{
+            super.delete("delete from t_user where id="+id);  //To change body of implemented methods use File | Settings | File Templates.
+            return true;
+        }catch (Exception e){
+            logger.error("delete by id error!",e);
+            return false;
+        }
+    }
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    @Override
+    public boolean updateById(Long id, String old, String newPwd) throws Exception {
+        return super.update("update t_user set pwd='"+newPwd+"' where id="+id);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public CashUserInfo findUserByIdAndPwd(Long id, String old) throws Exception {
+        return super.getJdbcTemplate().query("select * from t_user where id="+id+" and pwd='"+old+"'",new ResultSetExtractor<CashUserInfo>() {
             @Override
             public CashUserInfo extractData(ResultSet rs) throws SQLException, DataAccessException {
                 if(rs.next()){

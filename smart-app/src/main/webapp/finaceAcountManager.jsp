@@ -61,7 +61,8 @@
 
         <%--});--%>
     }
-
+        var totalPage=0;
+        var pageSize=20;
 		function InitData(pageIndex) { 
 			var tbody = ""; //声明表格中body部分 
 			$.ajax({ //这里使用到Jquery的ajax方法，具体使用在这里不详细叙述 
@@ -74,6 +75,8 @@
 				success: function(data) { 
 					$(".blackbor_table tr:gt(0)").remove(); 
 					var myData = data.messages;
+                    totalPage= data.count/data.pageSize==0? data.count/data.pageSize:(data.count/data.pageSize)+1
+                    pageSize=data.pageSize;
 					$.each(myData, function(i, n) { 
 						var trs = ""; 
 						trs += "<tr><td align='center'>" + i + "</td><td align='center'>" + n.contactName + "</td><td>" + n.userName + "</td><td>" + n.pwd + "</td><td>" + n.mark + "</td>";
@@ -87,11 +90,11 @@
 				} 
 			}); 
 			//加入分页的绑定 
-			$("#Pagination").pagination(<%=pageCount%>, { 
+			$("#Pagination").pagination(totalPage, {
 				callback: page_callback, 
 				prev_text: '< 上一页', 
 				next_text: '下一页 >', 
-				items_per_page: 20, 
+				items_per_page: pageSize,
 				num_display_entries: 6, 
 				current_page: pageIndex, 
 				num_edge_entries: 2 
@@ -115,7 +118,7 @@
 			width:400,
 			height:240,
 			center:true,
-			url:"<%=request.getContextPath()%>/pwdRewrite.jsp?financeId=id"
+			url:"<%=request.getContextPath()%>/1.0/user/getUpdatePwdPage/"+id
 		});
     }
     </script>

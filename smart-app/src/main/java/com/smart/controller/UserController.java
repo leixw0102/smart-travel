@@ -113,8 +113,40 @@ public class UserController extends BaseController {
         }
     }
     @RequestMapping("financeDeleteById/{id}")
+    @ResponseBody
     public com.smart.common.ResponseBody deleteFinance(@PathVariable Long id){
-        return null;
+        try{
+            if(userService.deleteById(id)){
+               return new ResponseMsg();
+            }
+            return new ResponseMsg("1","删除失败");
+        }catch (Exception e){
+            return new ResponseMsg("1","删除失败");
+        }
+
+    }
+    @RequestMapping("updatePwd/{id}")
+    @ResponseBody
+    public   com.smart.common.ResponseBody updatePwd(@PathVariable Long id,@RequestParam String old,@RequestParam String newPwd) {
+        try{
+
+            CashUserInfo info=userService.findUserByIdAndPwd(id,old);
+            if(null == info){
+                return new ResponseMsg("1","原始密码输入错误");
+            }
+
+            if(userService.updateById(id,old,newPwd)){
+                return new ResponseMsg();
+            }
+            return new ResponseMsg("1","更新失败");
+        }catch (Exception e){
+            return new ResponseMsg("1","更新失败");
+        }
+    }
+    @RequestMapping("getUpdatePwdPage/{id}")
+    public String getReWritePage(HttpServletRequest request,HttpServletResponse response,@PathVariable Long id){
+        request.setAttribute("financeUpdateId",id);
+        return "pwdRewrite";
     }
 
 }
