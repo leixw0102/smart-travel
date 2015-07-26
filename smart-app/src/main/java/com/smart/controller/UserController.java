@@ -14,6 +14,7 @@ import com.google.common.base.Strings;
 import com.smart.common.Page;
 import com.smart.common.ResponseConstantCode;
 import com.smart.common.ResponseMsg;
+import com.smart.model.Apply;
 import com.smart.model.CashUserInfo;
 import com.smart.model.UserInfo;
 import com.smart.service.UserService;
@@ -22,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,16 +35,41 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("addUser")
-    public String addUser(HttpServletResponse response,HttpServletRequest request,CashUserInfo info){
-            return "";//页面财务
+    @RequestMapping("addFinanceUser")
+    @ResponseBody
+    public com.smart.common.ResponseBody addUser(HttpServletResponse response,HttpServletRequest request,CashUserInfo info){
+        if(info.check()){
+            throw new ApiException(new ResponseMsg("10","填写信息错误"));
+        }
+        try{
+
+            CashUserInfo find= userService.searchFinanceUser(info);
+            if(null != find){
+                return new ResponseMsg("1","用户已经存在");
+            }
+
+            if(userService.saveFinanceUser(info)){
+
+            };
+            return new ResponseMsg("1","插入失败,");
+        }catch (Exception e){
+            logger.error("add finance user error!" ,e);
+            return new ResponseMsg("1","插入失败,"+e.getMessage());
+        }
+    }
+    @RequestMapping("getCashHome")
+    public String getCashUserHome()  {
+        return "finaceAccountManager";
     }
 
-    @RequestMapping("cashUsers")
-    public String getCashUsers(HttpServletResponse response,HttpServletRequest request){
+    @RequestMapping("cashUsers/{page}")
+    @ResponseBody
+    public Page<CashUserInfo> getCashUsers(HttpServletResponse response,HttpServletRequest request,@PathVariable Integer page){
         try {
-            userService.searchCashUser(1,20);
-            return "" ;
+            Page<CashUserInfo> financeUsers=userService.searchCashUser(page,20);
+            return financeUsers;
+//            request.setAttribute("financeUsers",financeUsers);
+//            return "finaceAccountManager" ;
         } catch (Exception e) {
             throw new ApiException(new ResponseMsg(ResponseConstantCode.DATA_CANT_FOUND_CODE,ResponseConstantCode.DATA_CANT_FOUND_DESC));
         }
@@ -64,7 +91,7 @@ public class UserController extends BaseController {
                 if (userInfo == null){
                     throw new ApiException(new ResponseMsg(ResponseConstantCode.DATA_CANT_FOUND_CODE,ResponseConstantCode.DATA_CANT_FOUND_DESC));
                 }else{
-                      request.getSession().setAttribute("userSessionId",userInfo.getId()+"-"+userInfo.getRole()+"-"+userInfo.getUserName());
+                    request.getSession().setAttribute("userSessionId",userInfo.getId()+"-"+userInfo.getRole()+"-"+userInfo.getUserName());
 //                    Date use=new Date();
 //                    response.setHeader("user", JSON.toJSONString(new UserVo(3,"3",getLong(use))));
 //                    userService.updateUseTime(userInfo.getId(),use);
@@ -73,7 +100,7 @@ public class UserController extends BaseController {
                     if(type==1){
                         msg.setInfo("/1.0/seller/main");
                     }else if(type==2){
-                        msg.setInfo("/1.0/news/list");
+                        msg.setInfo("/1.0/news/list?page=1");
                     } else if(type==3){
                         msg.setInfo("/1.0/finance/getHomeList/2/1");
                     }

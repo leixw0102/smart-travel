@@ -18,6 +18,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <artifactId>smart-service</artifactId>
             <groupId>com.qilian</groupId>
             <version>${version}</version>

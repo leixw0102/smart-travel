@@ -99,7 +99,17 @@ public class UserServiceImpl  implements UserService {
         infos.setMessages(users);
         infos.setPageSize(i1);
         infos.setPageNumber(i);
-        return null;
+        return infos;
+    }
+
+    @Override
+    public CashUserInfo searchFinanceUser(CashUserInfo info) throws Exception {
+        return userDao.searchFinanceUser(info);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean saveFinanceUser(CashUserInfo info) throws Exception {
+        return userDao.saveFinaceUser(info);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 

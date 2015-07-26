@@ -17,6 +17,8 @@ package com.smart.model;/*
  * under the License.
  */
 
+import com.google.common.base.Strings;
+
 /**
  * Created by leixw
  * <p/>
@@ -27,6 +29,16 @@ package com.smart.model;/*
 public class CashUserInfo {
 
     private long  id;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     private String userName;
     private  String pwd;
     private String pwd2;
@@ -37,6 +49,10 @@ public class CashUserInfo {
         return contactName;
     }
 
+
+    public boolean check(){
+        return Strings.isNullOrEmpty(userName) || Strings.isNullOrEmpty(pwd) || Strings.isNullOrEmpty(pwd2) || Strings.isNullOrEmpty(contactName) || !pwd.equals(pwd2);
+    }
     public void setContactName(String contactName) {
         this.contactName = contactName;
     }
