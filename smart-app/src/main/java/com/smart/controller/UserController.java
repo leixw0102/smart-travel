@@ -57,13 +57,19 @@ public class UserController extends BaseController {
             return new ResponseMsg("1","插入失败,"+e.getMessage());
         }
     }
+    @RequestMapping("getCashHome")
+    public String getCashUserHome()  {
+        return "finaceAccountManager";
+    }
 
     @RequestMapping("cashUsers/{page}")
-    public String getCashUsers(HttpServletResponse response,HttpServletRequest request,@PathVariable Integer page){
+    @ResponseBody
+    public Page<CashUserInfo> getCashUsers(HttpServletResponse response,HttpServletRequest request,@PathVariable Integer page){
         try {
             Page<CashUserInfo> financeUsers=userService.searchCashUser(page,20);
-            request.setAttribute("financeUsers",financeUsers);
-            return "finaceAccountManager" ;
+            return financeUsers;
+//            request.setAttribute("financeUsers",financeUsers);
+//            return "finaceAccountManager" ;
         } catch (Exception e) {
             throw new ApiException(new ResponseMsg(ResponseConstantCode.DATA_CANT_FOUND_CODE,ResponseConstantCode.DATA_CANT_FOUND_DESC));
         }
