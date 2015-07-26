@@ -61,6 +61,7 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
                 info.setUserName(rs.getString("username"));
                 info.setCreateTime(rs.getTimestamp("createtime"));
                 int role=rs.getInt("roleType");
+                info.setT(Integer.parseInt(getRole(role)));
                 info.setType(getRoleName(role));
                 info.setContactName(rs.getString("contact_name") == null ? "" : rs.getString("contact_name"));
                 info.setGrade(rs.getDouble("grade"));
@@ -119,7 +120,7 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
                 return config;  //To change body of implemented methods use File | Settings | File Templates.
             }
         });
-       Map<Integer,Map<Integer,String>>  maps = Maps.newHashMap();
+        Map<Integer,Map<Integer,String>>  maps = Maps.newHashMap();
         for(TypeConfig config : configs){
             if(maps.containsKey(config.getModuleId())){
                 Map<Integer,String> m=maps.get(config.getModuleId());
@@ -147,10 +148,10 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
                 return config;  //To change body of implemented methods use File | Settings | File Templates.
             }
         });
-       Map<Integer,String>  maps = Maps.newHashMap();
-       for(TypeConfig config : configs){
-           maps.put(config.getTypeId(),config.getTypeName());
-       }
+        Map<Integer,String>  maps = Maps.newHashMap();
+        for(TypeConfig config : configs){
+            maps.put(config.getTypeId(),config.getTypeName());
+        }
         return maps;
     }
 
@@ -190,35 +191,79 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
 //        return false;
     }
 
-    private String updateSql(int i,CompanyInfo info){
+    private String updateSql(int i){
         switch (i){
-                case 1:
-                    return "insert into hotel(user_id,contact_name,type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
-                case 2:
-                    return "insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
-                case 3:
-                    return "insert into life(user_id,contact_name,life_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
-                case 4:
-                    return "insert into restaurant(user_id,contact_name,rt_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
-                default:
-                    return "";
+            case 1:
+//                return "insert into hotel(user_id,contact_name,type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "insert into hotel(user_id,contact_name,type,name,grade) values(?,?,?,?,?)";
+            case 2:
+//                return "insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values(?,?,?,?,?)";
+            case 3:
+//                return "insert into life(user_id,contact_name,life_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "insert into life(user_id,contact_name,life_type,name,grade) values(?,?,?,?,?)";
+            case 4:
+//                return "insert into restaurant(user_id,contact_name,rt_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "insert into restaurant(user_id,contact_name,rt_type,name,grade) values(?,?,?,?,?)";
+            default:
+                return "";
+        }
+    }
+    private String updateCSql(int i,CompanyInfo info){
+        switch (i){
+            case 1:
+//                return "insert into hotel(user_id,contact_name,type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "update  hotel set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();
+            case 2:
+//                return "insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "update view_spot set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',view_spot_type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();//set user_id,contact_name,view_spot_type,name,grade) ";
+            case 3:
+//                return "insert into life(user_id,contact_name,life_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "update life set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',life_type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();
+            case 4:
+//                return "insert into restaurant(user_id,contact_name,rt_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "update restaurant set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',rt_type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();
+            default:
+                return "";
         }
     }
     @Transactional(rollbackFor = Exception.class,readOnly = false)
     @Override
-    public boolean addCompany(CompanyInfo info) throws Exception {
+    public Long addCompany(final CompanyInfo info) throws Exception {
+        final String sql = updateSql(info.getType());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        super.getJdbcTemplate().update(new PreparedStatementCreator() {
 
-        return super.update(updateSql(info.getType(),info));  //To change body of implemented methods use File | Settings | File Templates.
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con)
+                    throws SQLException {
+                PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                ps.setLong(1, info.getUserId());
+                ps.setString(2,info.getContactName());
+                ps.setLong(3, info.getSecondaryType() == null ? 1 : info.getSecondaryType());
+                ps.setString(4,info.getName()==null?"":info.getName());
+                ps.setDouble(5,info.getGrade()==null?4.0:info.getGrade());
+//                ps.setDouble(6, info.getFree());
+//                ps.setString(7,info.getRemark());
+//                ps.setString(8,"1");
+                return ps;
+            }
+        }, keyHolder);
+
+
+
+        return keyHolder.getKey().longValue();
+//        return super.update(updateSql(info.getType(),info));  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public boolean findByPhone(String userName) throws Exception {
-       return super.getJdbcTemplate().query("select userId from user where username='" + userName + "'", new ResultSetExtractor<Boolean>() {
-           @Override
-           public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-               return rs.next();  //To change body of implemented methods use File | Settings | File Templates.
-           }
-       }) ;
+        return super.getJdbcTemplate().query("select userId from user where username='" + userName + "'", new ResultSetExtractor<Boolean>() {
+            @Override
+            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                return rs.next();  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        }) ;
 //        return super.getJdbcTemplate().queryForLong(;  //To change body of implemented methods use File | Settings | File Templates.
     }
     @Transactional(readOnly = false,rollbackFor = Exception.class)
@@ -239,6 +284,7 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
                     info.setUserName(rs.getString("username"));
                     info.setCreateTime(rs.getTimestamp("createtime"));
                     int role=rs.getInt("roleType");
+
                     info.setType(getRole(role));
                     info.setContactName(rs.getString("contact_name") == null ? "" : rs.getString("contact_name"));
                     info.setGrade(rs.getDouble("grade"));
@@ -258,23 +304,63 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
     @Override
     public long updateSeller(SellerVo info) throws Exception {
         final String usekey =Token.getToken(info.getUserName(), String.valueOf(get(Integer.parseInt(info.getType()))), "1");
-         super.update("update user set Mac='1',UserKey='"+usekey+"',username='"+info.getUserName()+"',password='"+info.getPwd()+"',roleType="+get(Integer.parseInt(info.getType()))+",servicefee_level="+info.getFree()+",mark='"+info.getRemark()+"',level='1' where userId= "+info.getId());  //To change body of implemented methods use File | Settings | File Templates.
+        super.update("update user set Mac='1',UserKey='"+usekey+"',username='"+info.getUserName()+"',password='"+info.getPwd()+"',roleType="+get(Integer.parseInt(info.getType()))+",servicefee_level="+info.getFree()+",mark='"+info.getRemark()+"',level='1' where userId= "+info.getId());  //To change body of implemented methods use File | Settings | File Templates.
         return info.getId();
     }
 
+    @Override
+    public CompanyInfo getCompanyByUserId(final Long id, final Integer type) throws Exception {
+//        String sql = get
+        return super.getJdbcTemplate().query(getSelectSql(type,id),new ResultSetExtractor<CompanyInfo>() {
+            @Override
+            public CompanyInfo extractData(ResultSet rs) throws SQLException, DataAccessException {
+                if(rs.next()){
+                    CompanyInfo info = new CompanyInfo();
+                    info.setType(type);
+                    info.setContactName(rs.getString("contact_name"));
+                    info.setGrade(rs.getDouble("grade"));
+                    info.setName(rs.getString("name"));
+                    info.setSecondaryType(rs.getInt("type"));
+                    info.setUserId(id);
+                    return info;
+                }
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Long updateCompany(CompanyInfo info) throws Exception {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public String getSelectSql(int type,Long id){
+        switch (type){
+            case 1:
+                return "select a.name,a.grade ,a.contact_name, a.type as type from  hotel as a where user_id="+id;// values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+            case 2:
+                return "select  a.name,a.grade ,a.contact_name, a.view_spot_type as type  from  view_spot as a where user_id="+id;//"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+            case 3:
+                return "select  a.name,a.grade ,a.contact_name, a.life_type as type from  life as a where user_id="+id;//"insert into life(user_id,contact_name,life_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+            case 4:
+                return "select  a.name,a.grade ,a.contact_name, a.rt_type as type from  restaurant as a where user_id="+id;//"insert into restaurant(user_id,contact_name,rt_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+            default:
+                return "";
+        }
+    }
 
     private String getRole(int role) {
         switch (role){
-                    case 2:
-                        return 1+"";
-                    case 5:
-                        return "2";
-                    case 6:
-                        return "3";
-                    case 4:
-                        return "4";
-                    default:
-                        return "0";
-                }
+            case 2:
+                return 1+"";
+            case 5:
+                return "2";
+            case 6:
+                return "3";
+            case 4:
+                return "4";
+            default:
+                return "0";
+        }
     }
 }

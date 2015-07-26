@@ -132,7 +132,7 @@ public class SellerController extends BaseController{
         };
         try{
 //            info.setType(Integer.parseInt(request.getSession().getAttribute("userType").toString()));
-            if(sellerService.addCompany(info)){
+            if(sellerService.addCompany(info)>0){
                 return  new ResponseMsg();
             };
             return  new ResponseMsg("1","插入失败");
@@ -143,6 +143,24 @@ public class SellerController extends BaseController{
 //        return"redirect:getAccountLists";
 
     }
+
+    public com.smart.common.ResponseBody updateCompany(HttpServletRequest request,HttpServletResponse response,CompanyInfo info){
+        logger.info(info.toString());
+        if(!info.verfiy()){
+            return new ResponseMsg("1","error!");
+        };
+        try{
+//            info.setType(Integer.parseInt(request.getSession().getAttribute("userType").toString()));
+            if(sellerService.updateCompany(info)>0){
+                return  new ResponseMsg();
+            };
+            return  new ResponseMsg("1","插入失败");
+        }catch (Exception e){
+            logger.error("error!",e);
+            return new ResponseMsg("1","插入失败,"+e.getMessage());
+        }
+    }
+
     @RequestMapping("addPage")
     public String getAdd(HttpServletRequest request,HttpServletResponse response)  throws Exception{
 //        Map<Integer,Map<Integer,String>> type=sellerService.getTypes();
@@ -165,6 +183,7 @@ public class SellerController extends BaseController{
     public ModelAndView getSellerVo(@PathVariable Long id){
         try{
             SellerVo vo = sellerService.getUserById(id);
+            logger.info(vo.toString());
             Map<String,String> maps = getMaps(vo);
             return new ModelAndView("editUserInfo",maps);
         }catch (Exception e){
@@ -172,11 +191,23 @@ public class SellerController extends BaseController{
             return new ModelAndView("editUserInfo");
         }
     }
-    @RequestMapping("editCompanyPage/{id}")
-    public ModelAndView getCompanyUpdatePage(@PathVariable Long id){
+    @RequestMapping("editCompanyPage/{id}/{type}")
+    public ModelAndView getCompanyUpdatePage(@PathVariable Long id,@PathVariable Integer type){
         try{
-            CompanyInfo vo = sellerService.getCompanyByUserId(id);
-            Map<String,String> maps = getMapsByCompany(vo);
+            CompanyInfo vo = sellerService.getCompanyByUserId(id,type);
+            if(null == vo ){
+                vo = new CompanyInfo();
+                vo.setUserId(id);
+                vo.setType(type);
+                Long companyId=sellerService.addCompany(vo);
+                vo.setId(companyId);
+            }
+//            Map<String,String> maps = getMapsByCompany(vo);
+            Map<String,Object> maps = Maps.newHashMap();
+
+            Map types = sellerService.getTypes(type);
+            maps.put("user",vo);
+            maps.put("type",types);
             return new ModelAndView("editCompanyInfo",maps);
         }catch (Exception e){
             logger.error("error",e);

@@ -37,7 +37,7 @@ public interface SellerService {
     Map<Integer,String> getTypes(Integer type) throws Exception;
     Long addSeller(SellerVo info) throws Exception;
 
-    boolean addCompany(CompanyInfo info) throws Exception;
+    long addCompany(CompanyInfo info) throws Exception;
 
     boolean fingByPhone(String userName) throws Exception;
 
@@ -45,5 +45,7 @@ public interface SellerService {
 
     long updateSeller(SellerVo info) throws Exception;
 
-    CompanyInfo getCompanyByUserId(Long id) throws Exception;
+    CompanyInfo getCompanyByUserId(Long id, Integer type) throws Exception;
+
+    Long updateCompany(CompanyInfo info)throws Exception;
 }

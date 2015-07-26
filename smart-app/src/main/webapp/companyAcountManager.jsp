@@ -76,13 +76,14 @@ function editUserInfo(id){
 	});
 }
 
-function editCompanyInfo(id){
+function editCompanyInfo(id,type){
 	window.top.$.popWin({
 		title:"编辑商户信息",
 		width:610,
 		height:330,
 		center:true,
-		url:"<%=request.getContextPath()%>/1.0/seller/editCompanyPage/"+id
+		url:"<%=request.getContextPath()%>/1.0/seller/editCompanyPage/"+id+"/"+type
+        <%--url: "<%=request.getContextPath()%>/editCompanyInfo.jsp"--%>
 	});
 }
 </script>
@@ -126,7 +127,7 @@ function editCompanyInfo(id){
                         <td><%=info.getFree()%></td>
                         <td><%=new DateTime(info.getCreateTime()).toString("yyyy-MM-dd HH:mm:ss")%></td>
                         <td><%=info.getRemark()%></td>
-                        <td><div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="editCompanyInfo(<%=info.getId()%>)"><div class="text c1 pdl0">修改商户信息</div></div></td>
+                        <td><div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="editCompanyInfo(<%=info.getId()%>,<%=info.getT()%>)"><div class="text c1 pdl0">修改商户信息</div></div></td>
                     </tr>
                     <%
                             } }

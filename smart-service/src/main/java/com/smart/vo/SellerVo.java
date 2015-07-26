@@ -36,6 +36,7 @@ public class SellerVo {
                 ", userName='" + userName + '\'' +
                 ", pwd='" + pwd + '\'' +
                 ", pwd2='" + pwd2 + '\'' +
+                ", id=" + id +
                 ", type='" + type + '\'' +
                 ", sellerName='" + sellerName + '\'' +
                 ", createTime=" + createTime +

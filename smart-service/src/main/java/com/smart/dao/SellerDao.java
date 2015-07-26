@@ -40,7 +40,7 @@ public interface SellerDao {
    Map<Integer,String> getTypes(Integer type) throws Exception;
     Long addSeller(SellerVo info) throws Exception;
 
-    boolean addCompany(CompanyInfo info) throws Exception;
+    Long addCompany(CompanyInfo info) throws Exception;
 
     boolean findByPhone(String userName) throws Exception;
 
@@ -49,4 +49,8 @@ public interface SellerDao {
     SellerVo getUserById(Long id) throws Exception;
 
     long updateSeller(SellerVo info) throws Exception;
+
+    CompanyInfo getCompanyByUserId(Long id, Integer type) throws Exception;
+
+    Long updateCompany(CompanyInfo info) throws Exception;
 }

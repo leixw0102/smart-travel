@@ -76,7 +76,7 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public boolean addCompany(CompanyInfo info) throws Exception {
+    public long addCompany(CompanyInfo info) throws Exception {
         return sellerDao.addCompany(info);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -96,7 +96,12 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public CompanyInfo getCompanyByUserId(Long id) throws Exception {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public CompanyInfo getCompanyByUserId(Long id, Integer type) throws Exception {
+        return sellerDao.getCompanyByUserId(id,type);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Long updateCompany(CompanyInfo info) throws Exception {
+        return sellerDao.updateCompany(info);  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

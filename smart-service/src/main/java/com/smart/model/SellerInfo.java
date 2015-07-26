@@ -52,6 +52,15 @@ public class SellerInfo {
     private String contactName;
     private Double grade;
     private Long id;
+    private Integer t;
+
+    public Integer getT() {
+        return t;
+    }
+
+    public void setT(Integer t) {
+        this.t = t;
+    }
 
     public Long getId() {
         return id;
