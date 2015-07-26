@@ -22,7 +22,7 @@ $(function(){
     function login(){
         $.ajax({
 
-            type: "GET",
+            type: "Post",
 
             url: "<%=request.getContextPath()%>/1.0/user/login",
 

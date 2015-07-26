@@ -123,18 +123,16 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
     public List<CashUserInfo> searchCashUser(int i, int i1) throws Exception {
-        return super.getBySqlRowMapper("select * from t_user where role=3 order by use_time desc ",new RowMapper<CashUserInfo>() {
+        return super.getBySqlRowMapper("select * from t_user where role=3 order by use_time desc limit "+(i-1)*i1+","+i1,new RowMapper<CashUserInfo>() {
             @Override
             public CashUserInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                if(rs.next()){
                     CashUserInfo info = new CashUserInfo();
                     info.setMark(rs.getString("mark"));
                     info.setContactName(rs.getString("alias"));
                     info.setId(rs.getLong("id"));
                     info.setPwd(rs.getString("pwd"));
                     info.setUserName(rs.getString("user_name"));
-                }
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
+                    return info;
             }
         });  //To change body of implemented methods use File | Settings | File Templates.
     }

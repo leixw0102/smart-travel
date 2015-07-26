@@ -59,7 +59,7 @@ public class UserController extends BaseController {
     }
     @RequestMapping("getCashHome")
     public String getCashUserHome()  {
-        return "finaceAccountManager";
+        return "finaceAcountManager";
     }
 
     @RequestMapping("cashUsers/{page}")
