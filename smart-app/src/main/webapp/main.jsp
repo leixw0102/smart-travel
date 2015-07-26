@@ -48,6 +48,9 @@ function contentWH(){
 	//$(".page-pos").width(document.body.clientWidth - $(".menu").outerWidth(true)-40);
 	$(".page").width(document.body.clientWidth - $(".menu").outerWidth(true));
 }
+function logout(){
+	
+}
 </script>
 <style>
 	body{overflow:hidden}
@@ -58,9 +61,10 @@ function contentWH(){
 <div class="head">
 	<div class="up">
 		<div class="logo"></div>
-		<div class="user-info">
-
+		<div class="user-info" style="display:inline-block;color:#fff;float:right;margin-top:25px;margin-right:60px">
+			您好，王先生
 		</div>
+		<div class="bt_icon bt_icon_b2 fr  pr t8" style="margin-top:13px;margin-right:10px" onClick="logout()"><div class="text clfff pdl0">退出</div></div>
 	</div>
 </div>
 <!--content-->

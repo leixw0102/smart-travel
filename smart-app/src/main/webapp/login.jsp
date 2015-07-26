@@ -14,11 +14,6 @@
 <script type="text/javascript" src="js/plugins/My97DatePicker/WdatePicker.js"></script> 
 <script type="text/javascript" src="js/function.js" ></script>
 <script>
-$(function(){
-	var w=$(".pad20")[0].clientWidth;
-	$(".body_main").width=w;
-})
-
     function login(){
         $.ajax({
 
@@ -46,9 +41,10 @@ $(function(){
         <form id="userLogin">
 		<div class="login-logo fl"></div>
 	
-		<div class="bt_icon bt_icon_b2 fr pd10 r10 pr t8" style="margin-top:13px;" onClick="login()"><div class="text clfff pdl0">登录</div></div>
-		<div class="user-login-wrapper fr"><input name="pwd"  type="password" class="user-login"/></div>
-		<div class="pwd-login-wrapper fr"><input name="userName" type="text" class="pwd-login"/></div>
+		<div class="bt_icon bt_icon_b2 fr  pr t8" style="margin-top:13px;" onClick="login()"><div class="text clfff pdl0">登录</div></div>
+		<div class="pwd-login-wrapper fr"><input name="pwd" type="password" class="pwd-login"/></div>
+		<div class="user-login-wrapper fr"><input name="userName" type="text" class="user-login"/></div>
+		
             </form>
 	</div>
 	<div class="login-bg"></div>
