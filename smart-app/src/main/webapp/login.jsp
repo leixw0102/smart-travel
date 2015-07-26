@@ -43,7 +43,6 @@ $(function(){
 </head>
 <body>
 	<div class="top">
-
         <form id="userLogin">
 		<div class="login-logo fl"></div>
 	

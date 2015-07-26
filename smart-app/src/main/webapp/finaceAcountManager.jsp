@@ -57,7 +57,7 @@
 						trs += "<tr><td align='center'>" + i + "</td><td align='center'>" + n.contactName + "</td><td>" + n.userName + "</td><td>" + n.pwd + "</td><td>" + n.mark + "</td>";
 						trs += '<td align="center">'+
 			                       	'<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">删除</div></div>'+
-			                        '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">密码重置</div></div>'+
+			                        '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="pwdRewrite()"><div class="text c1 pdl0">密码重置</div></div>'+
 			                    '</td></tr>'
 						tbody += trs; 
 					}); 
@@ -86,7 +86,16 @@
 			url:"<%=request.getContextPath()%>/finaceAcountManagerAdd.jsp"
 		});
 	}
-
+    
+    function pwdRewrite(){
+    	window.top.$.popWin({
+			title:"密码重置",
+			width:400,
+			height:240,
+			center:true,
+			url:"<%=request.getContextPath()%>/pwdRewrite.jsp"
+		});
+    }
     </script>
 </head>
 <body>
