@@ -23,6 +23,8 @@
 		var w=$(".pad20")[0].clientWidth;
 		$(".body_main").width=w;
 	})
+
+//        function
     </script>
    
 </head>

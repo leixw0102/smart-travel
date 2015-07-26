@@ -112,5 +112,9 @@ public class UserController extends BaseController {
             throw new ApiException(e);
         }
     }
+    @RequestMapping("financeDeleteById/{id}")
+    public com.smart.common.ResponseBody deleteFinance(@PathVariable Long id){
+        return null;
+    }
 
 }

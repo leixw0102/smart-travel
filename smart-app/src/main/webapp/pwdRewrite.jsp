@@ -12,11 +12,22 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
+    <%
+        Object user = session.getAttribute("userSessionId");
+        if(null == user ){
+            response.sendRedirect("login.jsp");
+
+        }
+    %>
     <script>
 	$(function(){
 		var w=$(".pad20")[0].clientWidth;
 		$(".body_main").width=w;
 	})
+        function reConfirm(){
+            window.top.frames['mainFrame'].pwdRewrite_win.closeWin();
+            window.top.frames['mainFrame'].InitData(1);
+        }
     </script>
    
 </head>
@@ -43,7 +54,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="bt_icon bt_icon_b3 fr r240 pr bd0" style="right:140px"><div class="text c1 pdl0">确定</div></div>
+		<div class="bt_icon bt_icon_b3 fr r240 pr bd0" style="right:140px" onclick="reConfirm()"><div class="text c1 pdl0">确定</div></div>
 	</div>
 	</body>
 </html>
