@@ -41,6 +41,31 @@ public class FinaceAction extends HttpServlet {
 			 System.out.println(ja.toJSONString());
 			 response.getOutputStream().write(ja.toJSONString().getBytes("UTF-8"));  
 			 response.setContentType("text/json; charset=UTF-8");  
+		}else if(type.equalsIgnoreCase("user_search")){
+			JSONArray ja = new JSONArray();
+			 JSONObject object = new JSONObject();
+			 object.put("number","1");
+			 object.put("phoneNumber","111111");
+			 object.put("userName","222222");
+			 object.put("registerDate","3333333");
+			 object.put("mark","4444444");
+			 ja.add(object);
+			 System.out.println(ja.toJSONString());
+			 response.getOutputStream().write(ja.toJSONString().getBytes("UTF-8"));  
+			 response.setContentType("text/json; charset=UTF-8");  
+		}else if(type.equalsIgnoreCase("order_search")){
+			JSONArray ja = new JSONArray();
+			 JSONObject object = new JSONObject();
+			 object.put("number","1");
+			 object.put("orderNumber","111111");
+			 object.put("mappingCompany","222222");
+			 object.put("orderFL","3333333");
+			 object.put("mark","orderStauts");
+			 object.put("orderDate","2015-7-29");
+			 ja.add(object);
+			 System.out.println(ja.toJSONString());
+			 response.getOutputStream().write(ja.toJSONString().getBytes("UTF-8"));  
+			 response.setContentType("text/json; charset=UTF-8");  
 		}
 	}
 
