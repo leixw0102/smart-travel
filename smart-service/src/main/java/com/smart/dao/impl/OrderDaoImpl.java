@@ -19,9 +19,13 @@ package com.smart.dao.impl;/*
 
 import com.smart.dao.OrderDao;
 import com.smart.model.OrderInfo;
+import com.smart.model.UserClientInfo;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -53,5 +57,32 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
     @Override
     public List<OrderInfo> search(Integer page, String from, String to, Integer type, Integer orderType) throws Exception {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Long countUserInfos() throws Exception {
+        return super.getJdbcTemplate().queryForLong("select count(*) from user where roletype=3 and is_delete=0");  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<UserClientInfo> getUsersByPage(Integer page) throws Exception {
+        String sql = "select a.userid,a.username,a.mark,a.createTime,b.name from user as a ,other_msg as b where a.userId=b.user_id and a.roletype=3 and a.is_delete=0 order by a.createtime desc limit "+(page-1)*15+",15";
+        return super.getBySqlRowMapper(sql,new RowMapper<UserClientInfo>() {
+            @Override
+            public UserClientInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                UserClientInfo info = new UserClientInfo();
+                info.setMark(rs.getString("mark")==null?"":rs.getString("mark"));
+                info.setContactName(rs.getString("name"));
+                info.setCreateDate(rs.getTimestamp("createtime"));
+                info.setId(rs.getLong("userId"));
+                info.setUserName(rs.getString("username"));
+                return info;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        }); //To change body of implemented methods use File | Settings | File Templates.
+    }
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    @Override
+    public boolean deleteClientUserById(Long id) throws Exception {
+        return super.update("update user set is_delete=1 where userid= "+id);  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

@@ -18,6 +18,7 @@ package com.smart.service;/*
  */
 
 import com.smart.common.Page;
+import com.smart.model.UserClientInfo;
 
 /**
  * Created by leixw
@@ -28,4 +29,8 @@ import com.smart.common.Page;
  */
 public interface OrderServie {
     Page search(Integer page, String from, String to, Integer type, Integer orderType) throws Exception;
+
+    Page<UserClientInfo> getClientUsers(Integer page) throws Exception;
+
+    boolean deleteClientUserById(Long id) throws Exception;
 }

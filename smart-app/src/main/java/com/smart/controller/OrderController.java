@@ -18,7 +18,9 @@ package com.smart.controller;/*
  */
 
 
+import com.smart.common.Page;
 import com.smart.common.ResponseMsg;
+import com.smart.model.UserClientInfo;
 import com.smart.service.OrderServie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,4 +55,42 @@ public class OrderController extends BaseController {
             throw new ApiException(new ResponseMsg("1004",e.getMessage()));
         }
     }
+    @RequestMapping("userHome")
+    public String getUserOrderHome(){
+        return "userAcountManager";
+    }
+    @RequestMapping("clientUsers/{page}")
+    @ResponseBody
+    public Page<UserClientInfo> getClientUsers(@PathVariable Integer page){
+        try{
+            return orderServie.getClientUsers(page);
+        }catch (Exception e){
+            logger.error("error msg !",e);
+            Page<UserClientInfo> info= new Page<UserClientInfo>(){
+
+                @Override
+                protected String listAlias() {
+                    return null;  //To change body of implemented methods use File | Settings | File Templates.
+                }
+            };
+            info.setCode("2");
+            info.setMessage("查询失败");
+            return info;
+        }
+    }
+    @RequestMapping("delete/{id}")
+    @ResponseBody
+    public ResponseMsg<String> deleteClientUser(@PathVariable Long id){
+        try{
+//            info.setType(Integer.parseInt(request.getSession().getAttribute("userType").toString()));
+            if(orderServie.deleteClientUserById(id)){
+                return  new ResponseMsg();
+            };
+            return  new ResponseMsg("1","删除失败");
+        }catch (Exception e){
+            logger.error("error!",e);
+            return new ResponseMsg("1","删除失败,"+e.getMessage());
+        }
+    }
+
 }

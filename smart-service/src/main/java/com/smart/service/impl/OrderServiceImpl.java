@@ -20,7 +20,9 @@ package com.smart.service.impl;/*
 import com.smart.common.Page;
 import com.smart.dao.OrderDao;
 import com.smart.model.OrderInfo;
+import com.smart.model.UserClientInfo;
 import com.smart.service.OrderServie;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +36,7 @@ import java.util.List;
  */
 @Service
 public class OrderServiceImpl implements OrderServie {
+    @Autowired
     private OrderDao orderDao;
     @Override
     public Page search(Integer page, String from, String to, Integer type, Integer orderType) throws Exception {
@@ -45,11 +48,33 @@ public class OrderServiceImpl implements OrderServie {
             }
         };
         Long total=orderDao.count(from,to,type,orderType);
-        infos.setPageSize(20);
+        infos.setPageSize(15);
         infos.setPageNumber(page);
         infos.setCount(total);
         List<OrderInfo> orders=orderDao.search(page,from,to,type,orderType);
         infos.setMessages(orders);
         return infos;
+    }
+
+    @Override
+    public Page<UserClientInfo> getClientUsers(Integer page) throws Exception {
+        Page<UserClientInfo> infos = new Page<UserClientInfo>() {
+            @Override
+            protected String listAlias() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+        infos.setPageSize(15);
+        infos.setPageNumber(page);
+        Long total = orderDao.countUserInfos();
+        List<UserClientInfo> list = orderDao.getUsersByPage(page);
+        infos.setCount(total);
+        infos.setMessages(list);
+        return infos;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean deleteClientUserById(Long id) throws Exception {
+        return orderDao.deleteClientUserById(id);  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
