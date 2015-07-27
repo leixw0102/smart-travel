@@ -322,28 +322,30 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
                     info.setName(rs.getString("name"));
                     info.setSecondaryType(rs.getInt("type"));
                     info.setUserId(id);
+                    info.setId(rs.getLong("id"));
                     return info;
                 }
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
             }
         });  //To change body of implemented methods use File | Settings | File Templates.
     }
-
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     @Override
     public Long updateCompany(CompanyInfo info) throws Exception {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+       super.update(updateCSql(info.getType(),info));  //To change body of implemented methods use File | Settings | File Templates.
+        return info.getId();
     }
 
     public String getSelectSql(int type,Long id){
         switch (type){
             case 1:
-                return "select a.name,a.grade ,a.contact_name, a.type as type from  hotel as a where user_id="+id;// values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select a.id, a.name,a.grade ,a.contact_name, a.type as type from  hotel as a where user_id="+id;// values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
             case 2:
-                return "select  a.name,a.grade ,a.contact_name, a.view_spot_type as type  from  view_spot as a where user_id="+id;//"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select a.id,  a.name,a.grade ,a.contact_name, a.view_spot_type as type  from  view_spot as a where user_id="+id;//"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
             case 3:
-                return "select  a.name,a.grade ,a.contact_name, a.life_type as type from  life as a where user_id="+id;//"insert into life(user_id,contact_name,life_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select a.id,  a.name,a.grade ,a.contact_name, a.life_type as type from  life as a where user_id="+id;//"insert into life(user_id,contact_name,life_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
             case 4:
-                return "select  a.name,a.grade ,a.contact_name, a.rt_type as type from  restaurant as a where user_id="+id;//"insert into restaurant(user_id,contact_name,rt_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select a.id,  a.name,a.grade ,a.contact_name, a.rt_type as type from  restaurant as a where user_id="+id;//"insert into restaurant(user_id,contact_name,rt_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
             default:
                 return "";
         }

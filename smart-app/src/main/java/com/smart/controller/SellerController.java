@@ -143,7 +143,8 @@ public class SellerController extends BaseController{
 //        return"redirect:getAccountLists";
 
     }
-
+    @RequestMapping("updateCompanyInfo")
+    @ResponseBody
     public com.smart.common.ResponseBody updateCompany(HttpServletRequest request,HttpServletResponse response,CompanyInfo info){
         logger.info(info.toString());
         if(!info.verfiy()){
@@ -207,7 +208,7 @@ public class SellerController extends BaseController{
 
             Map types = sellerService.getTypes(type);
             maps.put("user",vo);
-            maps.put("type",types);
+            maps.put("secondaryTypeInfo",types);
             return new ModelAndView("editCompanyInfo",maps);
         }catch (Exception e){
             logger.error("error",e);

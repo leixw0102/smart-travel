@@ -65,6 +65,7 @@ function popCompanyInfo(){
 }
 
 var editSellerUser_win;
+var editCompany_win
 function editUserInfo(id){
 
     editSellerUser_win=window.top.$.popWin({
@@ -77,7 +78,7 @@ function editUserInfo(id){
 }
 
 function editCompanyInfo(id,type){
-	window.top.$.popWin({
+    editCompany_win=window.top.$.popWin({
 		title:"编辑商户信息",
 		width:610,
 		height:330,

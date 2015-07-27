@@ -19,6 +19,7 @@
 package com.smart.dao;
 
 import com.smart.model.OrderInfo;
+import com.smart.model.UserClientInfo;
 
 import java.util.List;
 
@@ -32,4 +33,10 @@ import java.util.List;
 public interface OrderDao {
     Long count(String from,String to,Integer type,Integer orderType) throws Exception;
     List<OrderInfo> search(Integer page, String from, String to, Integer type, Integer orderType) throws Exception;
+
+    Long countUserInfos() throws Exception;
+
+    List<UserClientInfo> getUsersByPage(Integer page) throws Exception;
+
+    boolean deleteClientUserById(Long id) throws Exception;
 }
