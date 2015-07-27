@@ -76,7 +76,7 @@
 				success: function(data) { 
 					$(".blackbor_table tr:gt(0)").remove(); 
 					var myData = data.messages;
-                    totalPage= data.count/data.pageSize==0? data.count/data.pageSize:(data.count/data.pageSize)+1
+                    totalPage=Math.ceil(data.count/data.pageSize);
                     pageSize=data.pageSize;
 					$.each(myData, function(i, n) { 
 						var trs = ""; 
@@ -95,7 +95,7 @@
 				callback: page_callback, 
 				prev_text: '< 上一页', 
 				next_text: '下一页 >', 
-				items_per_page: pageSize,
+				items_per_page: 1,
 				num_display_entries: 6, 
 				current_page: pageIndex, 
 				num_edge_entries: 2 
