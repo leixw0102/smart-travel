@@ -72,7 +72,7 @@
     }
     //翻页回调
 	function page_callback(page_index, jq){
-   		current_page = page_index + 1;  		
+   		current_page = index + 1;  		
    		var param = {
    				"param.currentPage":current_page,
    				"param.pageSize":pageSize};

@@ -191,3 +191,13 @@ function gw_operate_lr(operatePic,fun){
 		$("div[class^='p_nobody'] div",obj).remove();
 	})
 }
+
+
+function callAPI(purl,param,callback){
+	var _url =  purl; 
+	$.post(_url, param ,function(data){
+		if(callback){
+			callback(data);
+		}
+	},"json");
+}
