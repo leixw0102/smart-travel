@@ -39,7 +39,7 @@ public class OrderServiceImpl implements OrderServie {
     @Autowired
     private OrderDao orderDao;
     @Override
-    public Page search(Integer page, String from, String to, Integer type, Integer orderType) throws Exception {
+    public Page search(Long id, Integer page, String from, String to, Integer type, Integer orderType) throws Exception {
 //        orderDao.search(page,);  //To change body of implemented methods use File | Settings | File Templates.
         Page<OrderInfo> infos = new Page<OrderInfo>() {
             @Override
@@ -47,11 +47,11 @@ public class OrderServiceImpl implements OrderServie {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
             }
         };
-        Long total=orderDao.count(from,to,type,orderType);
+        Long total=orderDao.count(id,from,to,type,orderType);
         infos.setPageSize(15);
         infos.setPageNumber(page);
         infos.setCount(total);
-        List<OrderInfo> orders=orderDao.search(page,from,to,type,orderType);
+        List<OrderInfo> orders=orderDao.search(id,page,from,to,type,orderType);
         infos.setMessages(orders);
         return infos;
     }

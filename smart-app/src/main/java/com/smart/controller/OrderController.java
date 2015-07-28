@@ -44,13 +44,13 @@ import javax.servlet.http.HttpServletResponse;
 public class OrderController extends BaseController {
     @Autowired
     private OrderServie orderServie;
-    @RequestMapping("getOrderLists/{page}/{orderType}")
+    @RequestMapping("getOrderLists/{id}/{type}/{orderType}/{page}")
     @ResponseBody
-    public com.smart.common.Page getList(HttpServletRequest request,HttpServletResponse response,@PathVariable Integer page,
+    public com.smart.common.Page getList(HttpServletRequest request,HttpServletResponse response,@PathVariable Long id,@PathVariable Integer type,@PathVariable Integer page,
                                          @RequestParam(required = false) String from,@RequestParam(required = false) String to,
-                                         @RequestParam(required = false) Integer type,@PathVariable Integer orderType){
+                                         @PathVariable Integer orderType){
         try{
-            return orderServie.search(page,from,to,type,orderType);
+            return orderServie.search(id,page,from,to,type,orderType);
         }catch (Exception e){
             throw new ApiException(new ResponseMsg("1004",e.getMessage()));
         }

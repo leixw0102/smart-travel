@@ -17,6 +17,7 @@ package com.smart.dao.impl;/*
  * under the License.
  */
 
+import com.google.common.base.Strings;
 import com.smart.dao.OrderDao;
 import com.smart.model.OrderInfo;
 import com.smart.model.UserClientInfo;
@@ -39,23 +40,33 @@ import java.util.List;
 @Repository
 public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
     @Override
-    public Long count(String from, String to, Integer type, Integer orderType) throws Exception {
+    public Long count(Long id, String from, String to, Integer type, Integer orderType) throws Exception {
+
+
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    private String getOrderSql(String from, String to, Integer type, Integer orderType){
+    private String getOrderSql(Long id,String from, String to, Integer type, Integer orderType){
+        String cause="";
+        if(!Strings.isNullOrEmpty(from) && !Strings.isNullOrEmpty(to)){
+            cause+=" and create_time >='"+from+"' and create_time<='"+to+"'";
+        }
         switch (type){
             case 2:
-                return "";
+                return " from hotel where buyer_id="+id+cause+" and '";
             case 4:
-                return "";
+                return " from restaurant";
+            case 5:
+                return " from view_spot";
+            case 6:
+                return " from life";
             default:
-                return "";
+                return " from";
         }
     }
 
     @Override
-    public List<OrderInfo> search(Integer page, String from, String to, Integer type, Integer orderType) throws Exception {
+    public List<OrderInfo> search(Long id, Integer page, String from, String to, Integer type, Integer orderType) throws Exception {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

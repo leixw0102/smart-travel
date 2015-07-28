@@ -31,7 +31,7 @@
     <script>
     var orderby = ""; //进行排序的依据 
     $(function(){
-    	InitData(0);	
+    	InitData(1);
  
 		 
 	})
@@ -88,9 +88,9 @@
 										<ul>
 											<li class="text w60 fb c1 pb0">订单分类：</li>
 											<li class="value pb0">
-												<select>
-													<option>酒店</option>
-													<option>景点</option>
+												<select name="type">
+													<option value="2">酒店</option>
+													<option value="">景点</option>
 													<option>餐饮</option>
 													<option>生活</option>
 												</select>
