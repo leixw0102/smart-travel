@@ -44,6 +44,8 @@ public class FinaceAction extends HttpServlet {
 		}else if(type.equalsIgnoreCase("user_search")){
 			JSONArray ja = new JSONArray();
 			 JSONObject object = new JSONObject();
+			 object.put("total_page","90");
+			 object.put("current_page","2");
 			 object.put("number","1");
 			 object.put("phoneNumber","111111");
 			 object.put("userName","222222");
@@ -54,7 +56,9 @@ public class FinaceAction extends HttpServlet {
 			 response.getOutputStream().write(ja.toJSONString().getBytes("UTF-8"));  
 			 response.setContentType("text/json; charset=UTF-8");  
 		}else if(type.equalsIgnoreCase("order_search")){
-			JSONArray ja = new JSONArray();
+			JSONObject object_all = new JSONObject();
+			
+			 JSONArray ja = new JSONArray();
 			 JSONObject object = new JSONObject();
 			 object.put("number","1");
 			 object.put("orderNumber","111111");
@@ -63,8 +67,12 @@ public class FinaceAction extends HttpServlet {
 			 object.put("mark","orderStauts");
 			 object.put("orderDate","2015-7-29");
 			 ja.add(object);
-			 System.out.println(ja.toJSONString());
-			 response.getOutputStream().write(ja.toJSONString().getBytes("UTF-8"));  
+			 object_all.put("list", ja);
+			 object_all.put("total_page", "90");
+			 object_all.put("current_page", "2");
+			 
+			 System.out.println(object_all.toJSONString());
+			 response.getOutputStream().write(object_all.toJSONString().getBytes("UTF-8"));  
 			 response.setContentType("text/json; charset=UTF-8");  
 		}
 	}
@@ -74,7 +82,7 @@ public class FinaceAction extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//dotGet(request, response);
+		doGet(request, response);
 	}
 
 }

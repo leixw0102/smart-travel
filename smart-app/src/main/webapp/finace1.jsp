@@ -67,6 +67,8 @@ function newsSearch(){
 
 </script>
 </head>
+
+<body>
 <div class="head">
 	<div class="up">
 		<div class="logo"></div>
@@ -75,7 +77,6 @@ function newsSearch(){
 		</div>
 	</div>
 </div>
-<body class="pad20">
 		<div class="body_main">
             	<div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">
 					<span class="titleSpan fl">已发布新闻</span>

@@ -34,7 +34,6 @@
     $(function(){
     	//初始化请求数据列表
     	queryThis();
-
 	})
 	function queryThis(){
     	var param = {
@@ -73,7 +72,7 @@
     }
     //翻页回调
 	function page_callback(page_index, jq){
-   		current_page = page_index + 1;  		
+   		current_page = index + 1;  		
    		var param = {
    				"param.currentPage":current_page,
    				"param.pageSize":pageSize};
@@ -98,9 +97,9 @@
 										<ul>
 											<li class="text w60 fb c1 pb0">订单分类：</li>
 											<li class="value pb0">
-												<select name="type">
-													<option value="2">酒店</option>
-													<option value="">景点</option>
+												<select>
+													<option>酒店</option>
+													<option>景点</option>
 													<option>餐饮</option>
 													<option>生活</option>
 												</select>
