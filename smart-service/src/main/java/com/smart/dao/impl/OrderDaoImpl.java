@@ -21,6 +21,7 @@ import com.google.common.base.Strings;
 import com.smart.dao.OrderDao;
 import com.smart.model.OrderInfo;
 import com.smart.model.UserClientInfo;
+import org.joda.time.DateTime;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,33 +42,65 @@ import java.util.List;
 public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
     @Override
     public Long count(Long id, String from, String to, Integer type, Integer orderType) throws Exception {
-
-
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    private String getOrderSql(Long id,String from, String to, Integer type, Integer orderType){
         String cause="";
         if(!Strings.isNullOrEmpty(from) && !Strings.isNullOrEmpty(to)){
-            cause+=" and create_time >='"+from+"' and create_time<='"+to+"'";
+            cause+=" and a.create_time >='"+from+"' and a.create_time<='"+to+"'";
         }
+        logger.info("select count(*) "+ getOrderSql(type) +" where a.buyer_id="+id+cause+" and a.order_status_id="+orderType);
+        return super.getJdbcTemplate().queryForLong("select count(*) "+ getOrderSql(type) +" where a.buyer_id="+id+cause+" and a.order_status_id="+orderType +"  and a.seller_id=b.user_id" );  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    private String getOrderSql( Integer type){
+
         switch (type){
             case 2:
-                return " from hotel where buyer_id="+id+cause+" and '";
+                return " from hotel_order as a,hotel as b ";
             case 4:
-                return " from restaurant";
+                return " from pay_now_order as a,restaurant b ";
             case 5:
-                return " from view_spot";
+                return " from view_spot_order as a,view_spot as b ";
             case 6:
-                return " from life";
+                return " from pay_now_order as a ,life as b";
             default:
-                return " from";
+                return "  " ;
         }
     }
 
     @Override
-    public List<OrderInfo> search(Long id, Integer page, String from, String to, Integer type, Integer orderType) throws Exception {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public List<OrderInfo> search(Long id, Integer page, String from, String to, Integer type, final Integer orderType) throws Exception {
+        String cause="";
+        if(!Strings.isNullOrEmpty(from) && !Strings.isNullOrEmpty(to)){
+            cause+=" and a.create_time >='"+from+"' and a.create_time<='"+to+"'";
+        }
+        logger.info("select a.order_id,a.id,a.create_time,b.name,a.order_status_id "+getOrderSql(type)+" where a.buyer_id="+id+cause+" and a.order_status_id="+orderType +" and a.seller_id=b.user_id");
+        final String sql = "select a.order_id,a.id,a.create_time,b.name,a.order_status_id "+getOrderSql(type)+" where a.buyer_id="+id+cause+" and a.order_status_id="+orderType +" and a.seller_id=b.user_id limit "+(page-1)*5+",5";
+        return super.getBySqlRowMapper(sql,new RowMapper<OrderInfo>() {
+            @Override
+            public OrderInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                OrderInfo info = new OrderInfo();
+                info.setId(rs.getLong("id"));
+                info.setCreateTime(new DateTime(rs.getTimestamp("create_time").getTime()).toString("yyyy-MM-dd HH:mm:ss"));
+                info.setName(rs.getString("name"));
+                info.setOrderId(rs.getLong("order_id"));
+                info.setStatus(getOrderStatus(orderType));
+                return info;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    private String getOrderStatus(int i){
+        switch (i){
+            case 1:
+                return "待支付";
+            case 2:
+                return "已取消";
+            case 4:
+                return "已支付";
+            case 5:
+                return "已退款";
+            default:
+                return "";
+        }
     }
 
     @Override

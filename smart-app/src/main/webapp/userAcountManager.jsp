@@ -182,13 +182,13 @@
 		}
     </script>
     <script type="text/javascript">
-    function popOrderInfo(){
+    function popOrderInfo(id){
 		window.top.$.popWin({
 			title:"订单详情",
 			width:800,
 			height:350,
 			center:true,
-			url:"<%=request.getContextPath()%>/userAcountManager-orderInfo.jsp"
+			url:"<%=request.getContextPath()%>/1.0/order/getUserOrderList/"+id
 		});
 	}
     </script>

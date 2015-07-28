@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderServie {
             }
         };
         Long total=orderDao.count(id,from,to,type,orderType);
-        infos.setPageSize(15);
+        infos.setPageSize(5);
         infos.setPageNumber(page);
         infos.setCount(total);
         List<OrderInfo> orders=orderDao.search(id,page,from,to,type,orderType);

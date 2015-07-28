@@ -25,42 +25,43 @@
             response.sendRedirect("login.jsp");
 
         }
+        Long id=Long.parseLong(request.getAttribute("userId").toString());
     %>
 
     <script>
     var total_page = 0;
     var current_page = 1;
-    var pageSize = 6 ;
+    var pageSize = 10 ;
     $(function(){
     	//初始化请求数据列表
-    	queryThis();
+    	queryThis('<%=id%>',2,1,'','',1);
 
 	})
-	function queryThis(){
+	function queryThis(id,type,orderType,from,to,page){
     	var param = {
-    		"param.pageSize":pageSize,
-    		"param.currentPage":current_page
+    		"from":from,
+    		"to":to
     	};
-    	callAPI("<%=request.getContextPath()%>/FinaceAction?type=order_search",param,queryThis_callback);
+    	callAPI("<%=request.getContextPath()%>/1.0/order/getOrderLists/"+id+"/"+type+"/"+orderType+"/"+page,param,queryThis_callback);
     };
     
     function queryThis_callback(data){
-    	total_page = data.total_page;
-    	current_page = data.current_page;
-    	pageSize = data.pageSize;
-    	var tbody = ""; 
+        total_page = Math.ceil(data.count/data.pageSize);
+        current_page = data.pageNumber;
+        pageSize = data.pageSize;
+    	var tbody = "";
     	$(".blackbor_table.listTable tr:gt(0)").remove(); 
-		var myData = data.list;
-		$.each(myData, function(i, n) { 
+		var myData = data.messages;
+		$.each(myData, function(i, n) {
 			var trs = ""; 
-			trs += "<tr><td align='center'>" + n.number + "</td><td align='center'>" + n.orderNumber + "</td><td>" + n.mappingCompany + "</td><td>" + n.orderFL + "</td><td>" + n.orderStauts + "</td><td>" + n.orderDate + "</td></tr>";
+			trs += "<tr><td align='center'>" +(++i) + "</td><td align='center'>" + n.orderId + "</td><td>" + n.name + "</td><td>" + n.status + "</td><td>" + n.createTime + "</td></tr>";
 			tbody += trs; 
 		}); 
 		$(tbody).appendTo(".blackbor_table.listTable"); 
 		
 		$("#pagination").pagination(total_page,{
 			callback: page_callback,
-			items_per_page : 1,				
+			items_per_page : 1,
 			prev_text:"上一页",
 			next_text:"下一页",
 			num_edge_entries : 3,			//边缘值
@@ -72,23 +73,28 @@
     	
     }
     //翻页回调
-	function page_callback(page_index, jq){
-   		current_page = page_index + 1;  		
+	function page_callback(id,type,orderType,from,to,page, jq){
+   		current_page = page + 1;
    		var param = {
-   				"param.currentPage":current_page,
-   				"param.pageSize":pageSize};
-   		callAPI("<%=request.getContextPath()%>/FinaceAction?type=order_search",param,queryThis_callback);
+   				"from":from,
+   				"to":to};
+   		callAPI("<%=request.getContextPath()%>/1.0/order/getOrderLists/"+id+"/"+type+"/"+orderType+"/"+page,param,queryThis_callback);
 	}
 		
 			
     </script>
     <script type="text/javascript">
+
+        function search(id){
+            <%--alert('${#type-abc}'.val())--%>
+            queryThis(id,$('#type-abc').val(),$('#orderType-abc').val(),$('#from-abc').val(),$('#to-abc').val(),1)
+        }
     </script>
 </head>
 <body>
        <!--content-->
 	<div class="body_main">
-               
+
                <table class="blackbor_table bt0 bb0"  cellspacing="0" cellpadding="0">
 					<tr>
 						<td>
@@ -98,11 +104,11 @@
 										<ul>
 											<li class="text w60 fb c1 pb0">订单分类：</li>
 											<li class="value pb0">
-												<select name="type">
+												<select id="type-abc" name="type">
 													<option value="2">酒店</option>
-													<option value="">景点</option>
-													<option>餐饮</option>
-													<option>生活</option>
+													<option value="5">景点</option>
+													<option value="4">餐饮</option>
+													<option value="6">生活</option>
 												</select>
 											</li>
 										</ul>
@@ -111,13 +117,11 @@
 										<ul>
 											<li class="text w60 fb c1 pb0">订单状态：</li>
 											<li class="value pb0">
-												<select>
-													<option>待支付</option>
-													<option>已取消</option>
-													<option>支付中</option>
-													<option>已支付</option>
-													<option>已退款</option>
-													<option>已完结</option>
+												<select id="orderType-abc" name="orderType">
+													<option value="1">待支付</option>
+													<option value="2">已取消</option>
+													<option value="4">已支付</option>
+													<option value="5">已退款</option>
 												</select>
 											</li>
 										</ul>
@@ -126,17 +130,17 @@
 										<ul>
 											<li class="text w60 fb c1 pb0">订单时间：</li>
 											<li class="value pb0">
-												<input type="text" class="w300 h27 inputStyle" style="width:100px"/>
+												<input id="from-abc" type="text" name="from" class="w300 h27 inputStyle" onfocus="WdatePicker()" style="width:100px"/>
 											</li>
 											<li class="text pb0">-</li>
 											<li class="value pb0">
-												<input type="text" class="w300 h27 inputStyle" style="width:100px"/>
+												<input id="to-abc" type="text" name="to" class="w300 h27 inputStyle" onfocus="WdatePicker()" style="width:100px"/>
 											</li>
 										</ul>
 									</li>
 								</ul>
 							</div>
-							<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">查询</div></div>
+							<div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="search('<%=id%>')"><div class="text c1 pdl0">查询</div></div>
 						</td>
 					</tr>
 				
@@ -146,7 +150,6 @@
 					<td width="5%">序号</td>
                     <td width="15%" >订单号</td>
                     <td width="20%" >订单对应商户</td>
-                    <td width="10%" >订单分类</td>
                     <td width="10%" >订单状态</td>
                     <td width="20%" class="borderright">订单时间</td>
 				</tr>
