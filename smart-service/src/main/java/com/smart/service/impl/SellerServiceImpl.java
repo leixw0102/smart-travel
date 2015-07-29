@@ -18,6 +18,7 @@ package com.smart.service.impl;/*
  */
 
 import com.smart.common.Page;
+import com.smart.common.ResponseMsg;
 import com.smart.dao.SellerDao;
 import com.smart.model.CompanyInfo;
 import com.smart.model.SellerInfo;
@@ -103,5 +104,15 @@ public class SellerServiceImpl implements SellerService {
     @Override
     public Long updateCompany(CompanyInfo info) throws Exception {
         return sellerDao.updateCompany(info);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean deleteCategory(Long typeId) throws Exception {
+        return sellerDao.deleteCategory(typeId);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean updateCategory(Long id, String name) throws Exception {
+        return sellerDao.updateCategory(id,name);  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

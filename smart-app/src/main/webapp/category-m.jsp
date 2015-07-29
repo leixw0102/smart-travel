@@ -55,9 +55,9 @@ $(function(){
 				<li class="list-item-c1 h40">
 					<ul>
 						<li class="title">分类管理</li>
-						<li class="del">删除</li>
-						<li class="edi">编辑</li>
-						<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>
+						<%--<li class="del">删除</li>--%>
+						<%--<li class="edi">编辑</li>--%>
+						<%--<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>--%>
 					</ul>
 				</li>
 				<li class="bg1">
