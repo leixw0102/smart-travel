@@ -18,6 +18,7 @@
  */
 package com.smart.dao;
 
+import com.smart.common.ResponseMsg;
 import com.smart.model.CompanyInfo;
 import com.smart.model.SellerInfo;
 import com.smart.vo.SellerVo;
@@ -53,4 +54,8 @@ public interface SellerDao {
     CompanyInfo getCompanyByUserId(Long id, Integer type) throws Exception;
 
     Long updateCompany(CompanyInfo info) throws Exception;
+
+    boolean deleteCategory(Long typeId) throws Exception;
+
+    boolean updateCategory(Long id, String name) throws Exception;
 }

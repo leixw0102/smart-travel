@@ -31,8 +31,8 @@ import java.util.List;
  * Time: 17:23
  */
 public interface OrderDao {
-    Long count(String from,String to,Integer type,Integer orderType) throws Exception;
-    List<OrderInfo> search(Integer page, String from, String to, Integer type, Integer orderType) throws Exception;
+    Long count(Long id, String from, String to, Integer type, Integer orderType) throws Exception;
+    List<OrderInfo> search(Long id, Integer page, String from, String to, Integer type, Integer orderType) throws Exception;
 
     Long countUserInfos() throws Exception;
 

@@ -18,6 +18,7 @@ package com.smart.dao.impl;/*
  */
 
 import com.google.common.collect.Maps;
+import com.smart.common.ResponseMsg;
 import com.smart.dao.SellerDao;
 import com.smart.model.CompanyInfo;
 import com.smart.model.SellerInfo;
@@ -334,6 +335,16 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
     public Long updateCompany(CompanyInfo info) throws Exception {
        super.update(updateCSql(info.getType(),info));  //To change body of implemented methods use File | Settings | File Templates.
         return info.getId();
+    }
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    @Override
+    public boolean deleteCategory(Long typeId) throws Exception {
+        return super.update("delete from type_config where id="+typeId);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    @Override
+    public boolean updateCategory(Long id, String name) throws Exception {
+        return super.update("update type_config set type_name='"+name+"' where id="+id);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public String getSelectSql(int type,Long id){

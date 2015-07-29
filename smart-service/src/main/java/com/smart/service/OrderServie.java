@@ -28,7 +28,7 @@ import com.smart.model.UserClientInfo;
  * Time: 16:49
  */
 public interface OrderServie {
-    Page search(Integer page, String from, String to, Integer type, Integer orderType) throws Exception;
+    Page search(Long id, Integer page, String from, String to, Integer type, Integer orderType) throws Exception;
 
     Page<UserClientInfo> getClientUsers(Integer page) throws Exception;
 
