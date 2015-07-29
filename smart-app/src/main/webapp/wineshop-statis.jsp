@@ -34,7 +34,7 @@ require(
 	function(ec){
 		//前一周消费
 		var cyChart = ec.init(document.getElementById("cy-statis"));
-		var option = {
+		var option_cy = {
 			color:["#4fd1f1"],
 			title : {
 				text: '前一周消费'
@@ -45,10 +45,7 @@ require(
 			},
 			calculable : false,
 			xAxis : [
-				{
-					type : 'category',
-					data : ['2015-7-21','2015-7-22','2015-7-23','2015-7-24','2015-7-25']
-				}
+				
 			],
 			yAxis : [
 				{
@@ -56,15 +53,27 @@ require(
 				}
 			],
 			series : [
-				{
-					type:'bar',
-					data:[120, 40, 95, 60, 55]
-					
-				}
+				
 			]
 		};
-                    
-		cyChart.setOption(option);
+        
+		 $.ajax({
+	            type: "get",//使用get方法访问后台
+	            dataType: "json",//返回json格式的数据
+	            url: "<%=request.getContextPath()%>/FinaceAction?type=chars",//要访问的后台地址
+	            success: function(msg){//msg为返回的数据，在这里做数据绑定
+	            	$.each(msg, function(i, n) { 
+	            		if(i == 0){
+	            			option_cy.xAxis.push(n.xAxis);
+	            		}else if(i == 1){
+	            			option_cy.series.push(n.series);
+	            		}
+	            	})
+	            	cyChart.setOption(option_cy);
+	    		}
+		 });
+		
+		
 		
 		//后一周预定
 		var gwChart = ec.init(document.getElementById("gw-statis"));
@@ -167,10 +176,8 @@ function contentWH(){
 <script type="text/javascript">
 	// 百度地图API功能
 	var map = new BMap.Map("l-map");
-	var point = new BMap.Point(100.944716,37.973845);
-  	var point1 = new BMap.Point(100.259491,38.183462);
-	map.centerAndZoom(point, 10)
-	var marker = new BMap.Marker(point);// 创建标注
+
+	/*var marker = new BMap.Marker(point);// 创建标注
 	map.addOverlay(marker);             // 将标注添加到地图中
 	marker.disableDragging();           // 不可拖拽
 	var label = new BMap.Label("50人",{offset:new BMap.Size(20,-10)});
@@ -178,5 +185,24 @@ function contentWH(){
   	var marker1 = new BMap.Marker(point1);// 创建标注
   	map.addOverlay(marker1);
 	var label1 = new BMap.Label("57人",{offset:new BMap.Size(20,-10)});
-	marker1.setLabel(label1);
+	marker1.setLabel(label1);*/
+	
+	
+	
+	$.ajax({
+        type: "get",//使用get方法访问后台
+        dataType: "json",//返回json格式的数据
+        url: "<%=request.getContextPath()%>/FinaceAction?type=mapData",//要访问的后台地址
+        success: function(msg){//msg为返回的数据，在这里做数据绑定
+        	$.each(msg, function(i, n) { 
+        		var point = new BMap.Point(n.lon,n.lat);
+        		map.centerAndZoom(point, 10);
+        		var marker = new BMap.Marker(point);// 创建标注
+        		map.addOverlay(marker);             // 将标注添加到地图中
+        		marker.disableDragging();           // 不可拖拽
+        		var label = new BMap.Label(n.number,{offset:new BMap.Size(20,-10)});
+        		marker.setLabel(label);
+        	})
+		}
+ });
 </script>

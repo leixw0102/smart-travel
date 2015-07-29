@@ -1,11 +1,15 @@
 package com.smart.ui.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.alibaba.fastjson.*;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * Servlet implementation class FinaceAction
@@ -73,6 +77,56 @@ public class FinaceAction extends HttpServlet {
 			 
 			 System.out.println(object_all.toJSONString());
 			 response.getOutputStream().write(object_all.toJSONString().getBytes("UTF-8"));  
+			 response.setContentType("text/json; charset=UTF-8");  
+		}else if (type.equalsIgnoreCase("chars")){
+			ArrayList<String> strArray = new ArrayList<String> ();
+			strArray.add("2015-8-5");
+			strArray.add("2015-8-6");
+			strArray.add("2015-8-7");
+			strArray.add("2015-8-8");
+			strArray.add("2015-8-9");
+			
+			ArrayList<String> strArray1 = new ArrayList<String> ();
+			strArray1.add("185");
+			strArray1.add("79");
+			strArray1.add("53");
+			strArray1.add("26");
+			strArray1.add("89");
+			JSONArray ja = new JSONArray();
+			JSONObject object = new JSONObject();
+			JSONObject object_xAxis = new JSONObject();
+			object.put("type","category");
+			object.put("data",strArray);
+			object_xAxis.put("xAxis",object);
+			JSONObject object1 = new JSONObject();
+			JSONObject object_series = new JSONObject();
+			object1.put("type","bar");
+			object1.put("data",strArray1);
+			object_series.put("series",object1);
+			
+			ja.add(object_xAxis);
+			ja.add(object_series);
+			
+			System.out.println(ja.toJSONString());
+			response.getOutputStream().write(ja.toJSONString().getBytes("UTF-8"));  
+			response.setContentType("text/json; charset=UTF-8");  
+
+		}else if (type.equalsIgnoreCase("mapData")){
+			JSONArray ja = new JSONArray();
+			 JSONObject object = new JSONObject();
+			 object.put("lon","100.944716");
+			 object.put("lat","37.973845");
+			 object.put("number","100人");
+			 
+			 JSONObject object1 = new JSONObject();
+			 object1.put("lon","100.259491");
+			 object1.put("lat","38.183462");
+			 object1.put("number","80人");
+			 ja.add(object);
+			 ja.add(object1);
+			 
+			 System.out.println(ja.toJSONString());
+			 response.getOutputStream().write(ja.toJSONString().getBytes("UTF-8"));  
 			 response.setContentType("text/json; charset=UTF-8");  
 		}
 	}
