@@ -17,8 +17,15 @@ package com.smart.controller;/*
  * under the License.
  */
 
+import com.alibaba.fastjson.JSON;
+import com.smart.common.Page;
+import com.smart.common.ResponseMsg;
+import com.smart.service.StatisticsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by leixw
@@ -30,6 +37,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/1.0/*")
 public class StatisticsController extends BaseController {
+    @Autowired
+    private StatisticsService statisticsService;
 
+    @RequestMapping("vs/lastWeek")
+    @ResponseBody
+    public com.smart.common.ResponseBody getLastVSXY(@RequestParam(required = false)Integer type){
+        try{
+            com.smart.common.ResponseBody responseMsg= statisticsService.getVsXy(1,type);
+            logger.info(JSON.toJSONString(responseMsg));
+            return responseMsg;
+        }catch (Exception e){
+            logger.error("error",e);
+            return new ResponseMsg("2","查询出错");
+        }
+    }
 
+    @RequestMapping("vs/nextWeek")
+    @ResponseBody
+    public com.smart.common.ResponseBody getNextVSXY(@RequestParam(required = false)Integer type){
+        try{
+            return statisticsService.getVsXy(2,type);
+        }catch (Exception e){
+            logger.error("error",e);
+            return new ResponseMsg("2","查询出错");
+        }
+    }
+    @RequestMapping("vs/getMapData")
+    public ResponseMsg getMapView(){
+        try{
+
+        }catch (Exception e){
+            return new ResponseMsg("2","查询出错");
+        }
+        return null;
+    }
 }
