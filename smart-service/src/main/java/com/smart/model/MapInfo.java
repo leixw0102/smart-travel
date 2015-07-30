@@ -1,4 +1,4 @@
-/*
+package com.smart.model;/*
  * Copyright 2015 Future TV, Inc.
  *
  * The contents of this file are subject to the terms
@@ -16,21 +16,40 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.smart.service;
-
-import com.smart.common.ResponseBody;
-import com.smart.common.ResponseMsg;
 
 /**
  * Created by leixw
  * <p/>
  * Author: leixw
  * Date: 2015/07/30
- * Time: 09:46
+ * Time: 14:58
  */
-public interface StatisticsService {
+public class MapInfo {
+    private String x;
+    private String y;
+    private String info;
 
-    ResponseBody getHotelXy(int i, Integer type) throws Exception;
+    public String getInfo() {
+        return info;
+    }
 
-    ResponseBody getHotelMap() throws Exception;
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String getX() {
+        return x;
+    }
+
+    public void setX(String x) {
+        this.x = x;
+    }
+
+    public String getY() {
+        return y;
+    }
+
+    public void setY(String y) {
+        this.y = y;
+    }
 }

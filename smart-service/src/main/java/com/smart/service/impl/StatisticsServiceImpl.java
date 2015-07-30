@@ -17,11 +17,11 @@ package com.smart.service.impl;/*
  * under the License.
  */
 
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.smart.common.Page;
 import com.smart.common.ResponseBody;
 import com.smart.dao.StatisticsDao;
+import com.smart.model.MapInfo;
 import com.smart.model.XY;
 import com.smart.model.XYModel;
 import com.smart.service.StatisticsService;
@@ -44,7 +44,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     private StatisticsDao statisticsDao;
     @Override
-    public ResponseBody getVsXy(int i, Integer type) throws Exception {
+    public ResponseBody getHotelXy(int i, Integer type) throws Exception {
         Page<XY> msg = new Page<XY>() {
             @Override
             protected String listAlias() {
@@ -53,7 +53,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         };
         List<String> x= Lists.newArrayList();
         List<String> y = Lists.newArrayList();
-        List<XYModel> models=statisticsDao.getXY(i,type);
+        List<XYModel> models=statisticsDao.getHotelXY(i, type);
         for(XYModel model:models){
             x.add(model.getDay());
             y.add(model.getValue());
@@ -68,6 +68,19 @@ public class StatisticsServiceImpl implements StatisticsService {
 
         msg.setMessages(i1);
         return msg;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public ResponseBody getHotelMap() throws Exception {
+        Page<MapInfo> maps = new Page<MapInfo>() {
+            @Override
+            protected String listAlias() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+        List<MapInfo> infos = statisticsDao.getHotelMap();
+        maps.setMessages(infos);
+        return maps;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());

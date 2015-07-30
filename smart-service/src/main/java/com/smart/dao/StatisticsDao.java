@@ -18,6 +18,7 @@
  */
 package com.smart.dao;
 
+import com.smart.model.MapInfo;
 import com.smart.model.XYModel;
 
 import java.util.List;
@@ -30,5 +31,7 @@ import java.util.List;
  * Time: 10:09
  */
 public interface StatisticsDao {
-    List getXY(int i, Integer type) throws Exception;
+    List getHotelXY(int i, Integer type) throws Exception;
+
+    List<MapInfo> getHotelMap() throws Exception;
 }

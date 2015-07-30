@@ -18,7 +18,6 @@ package com.smart.controller;/*
  */
 
 import com.alibaba.fastjson.JSON;
-import com.smart.common.Page;
 import com.smart.common.ResponseMsg;
 import com.smart.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +39,11 @@ public class StatisticsController extends BaseController {
     @Autowired
     private StatisticsService statisticsService;
 
-    @RequestMapping("vs/lastWeek")
+    @RequestMapping("hotel/lastWeek")
     @ResponseBody
     public com.smart.common.ResponseBody getLastVSXY(@RequestParam(required = false)Integer type){
         try{
-            com.smart.common.ResponseBody responseMsg= statisticsService.getVsXy(1,type);
+            com.smart.common.ResponseBody responseMsg= statisticsService.getHotelXy(1, type);
             logger.info(JSON.toJSONString(responseMsg));
             return responseMsg;
         }catch (Exception e){
@@ -53,23 +52,23 @@ public class StatisticsController extends BaseController {
         }
     }
 
-    @RequestMapping("vs/nextWeek")
+    @RequestMapping("hotel/nextWeek")
     @ResponseBody
     public com.smart.common.ResponseBody getNextVSXY(@RequestParam(required = false)Integer type){
         try{
-            return statisticsService.getVsXy(2,type);
+            return statisticsService.getHotelXy(2, type);
         }catch (Exception e){
             logger.error("error",e);
             return new ResponseMsg("2","查询出错");
         }
     }
-    @RequestMapping("vs/getMapData")
-    public ResponseMsg getMapView(){
+    @RequestMapping("hotel/getMapData")
+    @ResponseBody
+    public com.smart.common.ResponseBody getMapView(){
         try{
-
+            return statisticsService.getHotelMap();
         }catch (Exception e){
             return new ResponseMsg("2","查询出错");
         }
-        return null;
     }
 }

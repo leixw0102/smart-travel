@@ -18,6 +18,7 @@ package com.smart.dao.impl;/*
  */
 
 import com.smart.dao.StatisticsDao;
+import com.smart.model.MapInfo;
 import com.smart.model.XYModel;
 import org.joda.time.DateTime;
 import org.springframework.jdbc.core.RowMapper;
@@ -39,9 +40,9 @@ import java.util.List;
 @Repository
 public class StatisticsDaoImpl extends BaseDaoImpl implements StatisticsDao {
     @Override
-    public List<XYModel> getXY(int i, Integer type) throws Exception {
+    public List<XYModel> getHotelXY(int i, Integer type) throws Exception {
 
-        String sql=getXYSql(i, type);
+        String sql= getHotelSql(i, type);
 
         return super.getBySqlRowMapper(sql,new RowMapper<XYModel>() {
             @Override
@@ -54,13 +55,27 @@ public class StatisticsDaoImpl extends BaseDaoImpl implements StatisticsDao {
         });  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    private String getXYSql(int i, Integer type) {
+    @Override
+    public List<MapInfo> getHotelMap() throws Exception {
+        return super.getBySqlRowMapper("select sum(a.num) as total,b.x,b.y from hotel_order as a,hotel as b where a.hotel_id = b.id ", new RowMapper<MapInfo>() {
+            @Override
+            public MapInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                MapInfo info = new MapInfo();
+                info.setInfo(rs.getString("total"));
+                info.setX(rs.getString("x"));
+                info.setY(rs.getString("y"));
+                return info;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    private String getHotelSql(int i, Integer type) {
         //i==1 实际 i==2下周
         if(i==1){
-            return "select sum(total_price) as total,to_time as time from view_spot_order where order_status_id=4 and order_pay_type_id=3 and to_time>='"+getDay(-7)+"'  and  to_time<'"+getDay(-1)+"' group by to_time desc ";
+            return "select sum(total_price) as total,to_time as time from hotel_order where order_status_id=4 and order_pay_type_id=3 and to_time>='"+getDay(-7)+"'  and  to_time<'"+getDay(-1)+"' group by to_time desc ";
         }
         if(i==2){
-            return "select sum(total_price) as total,from_time as time from view_spot_order where order_status_id=4 and order_pay_type_id=3 and from_time>='"+getDay(1)+"'  and  from_time<'"+getDay(7)+"' group by from_time desc ";
+            return "select sum(total_price) as total,from_time as time from hotel_order where order_status_id=4 and order_pay_type_id=3 and from_time>='"+getDay(1)+"'  and  from_time<'"+getDay(7)+"' group by from_time desc ";
         }
         return null;  //To change body of created methods use File | Settings | File Templates.
     }
