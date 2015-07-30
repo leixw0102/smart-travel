@@ -57,7 +57,7 @@ public class StatisticsDaoImpl extends BaseDaoImpl implements StatisticsDao {
     private String getXYSql(int i, Integer type) {
         //i==1 实际 i==2下周
         if(i==1){
-            return "select sum(total_price) as total,to_time as time from view_spot_order where order_status_id=4 and order_pay_type_id=3  group by to_time desc ";
+            return "select sum(total_price) as total,to_time as time from view_spot_order where order_status_id=4 and order_pay_type_id=3 and to_time>='"+getDay(-7)+"'  and  to_time<'"+getDay(-1)+"' group by to_time desc ";
         }
         if(i==2){
             return "select sum(total_price) as total,from_time as time from view_spot_order where order_status_id=4 and order_pay_type_id=3 and from_time>='"+getDay(1)+"'  and  from_time<'"+getDay(7)+"' group by from_time desc ";
