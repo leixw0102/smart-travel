@@ -62,22 +62,11 @@ public class StatisticsServiceImpl implements StatisticsService {
         x_.setData(x);
         XY y_ = new XY("line");
         y_.setData(y);
-//        JSONObject obj = new JSONObject();
-//        obj.put("type","category");
-//        obj.put("data",x);
-//        JSONObject obj1 = new JSONObject();
-//        obj1.put("type","line");
-//        obj1.put("data",y);
-//        JSONObject objx = new JSONObject();
-//        objx.put("xAxis",obj);
-//        JSONObject objx = new JSONObject();
         List<XY> i1=Lists.newArrayList();
         i1.add(x_);
         i1.add(y_);
 
         msg.setMessages(i1);
-        logger.info(msg.toString()+"\r\n"+ JSON.toJSONString(i1));
-
         return msg;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
