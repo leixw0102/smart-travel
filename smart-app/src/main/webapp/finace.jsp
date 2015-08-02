@@ -78,7 +78,7 @@
 		$.each(myData, function(i, n) {
 
 			var trs = ""; 
-			trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.type + "</td><td>" + n.name + "</td><td>" + n.contaceName + "</td><td>" + n.phoneNumber + "</td><td>" + new Date(n.time).Format("yyyy-MM-dd hh:mm:ss") + "</td><td>" + n.money + "</td><td>" + getfinish(n.finishTime)+ "</td>";
+			trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.type + "</td><td>" + n.name + "</td><td>" + n.contactName + "</td><td>" + n.phoneNumber + "</td><td>" + new Date(n.time).Format("yyyy-MM-dd hh:mm:ss") + "</td><td>" + n.money + "</td><td>" + getfinish(n.finishTime)+ "</td>";
 			trs += '<td align="center">'
                     if(n.status==1){
                         trs += '<div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="confirm('+n.id+')"><div class="text c1 pdl0">兑现</div></div>'+
