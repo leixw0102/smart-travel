@@ -97,7 +97,7 @@
 				next_text: '下一页 >', 
 				items_per_page: 1,
 				num_display_entries: 6, 
-				current_page: pageIndex, 
+				current_page: pageIndex-1,
 				num_edge_entries: 2 
 			}); 
 		} 	
