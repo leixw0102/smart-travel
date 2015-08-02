@@ -50,8 +50,8 @@
 	<div class="login-bg"></div>
 	<div class="login-bts">
 		<div class="jd-tj" onclick="window.location.href='<%=request.getContextPath()%>/wineshop-statis.jsp'"></div>
-		<div class="jdd-tj" ></div>
-		<div class="cy-tj"></div>
+		<div class="jdd-tj" onclick="window.location.href='<%=request.getContextPath()%>/vs-statis.jsp'"></div>
+		<div class="cy-tj" onclick="window.location.href='<%=request.getContextPath()%>/life-statis.jsp'"></div>
 		<div class="sh-tj" onclick="window.location.href='<%=request.getContextPath()%>/life-statis.jsp'"></div>
 	</div>
 	<div class="login-footer">
