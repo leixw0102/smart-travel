@@ -85,6 +85,18 @@ public class FinanceController extends BaseController {
         }
     }
 
+    @RequestMapping("getList/{type}/{page}")
+    @ResponseBody
+    public Page getResultList(HttpServletRequest request,HttpServletResponse response,@PathVariable Integer page,
+                          @RequestParam(required = false) String from,@RequestParam(required = false) String to,
+                          @PathVariable Integer type){
+        try{
+            return  financeService.search(page,from,to,type);
+        }catch (Exception e){
+            throw new ApiException(new ResponseMsg("1004",e.getMessage()));
+        }
+    }
+
     public static void main(String []args) throws Exception {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         FinanceService financeService1=context.getBean(FinanceService.class);

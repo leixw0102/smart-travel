@@ -19,9 +19,12 @@ package com.smart.dao.impl;/*
 
 import com.google.common.base.Strings;
 import com.smart.dao.OrderDao;
+import com.smart.model.Apply;
 import com.smart.model.OrderInfo;
 import com.smart.model.UserClientInfo;
 import org.joda.time.DateTime;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -128,5 +131,96 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
     @Override
     public boolean deleteClientUserById(Long id) throws Exception {
         return super.update("update user set is_delete=1 where userid= "+id);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String[] getApplyTime(Long id) throws Exception {
+       List<Apply> applies= super.getBySqlRowMapper("select create_time from cash_apply where user_id="+id + " order by create_time desc",new RowMapper<Apply>() {
+            @Override
+            public Apply mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Apply apply = new Apply();
+                apply.setTime(rs.getTimestamp("create_time"));
+
+                return apply;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });  //To change body of implemented methods use File | Settings | File Templates.
+        if(applies.size()==0){
+            return new String[]{};
+        }                    if(applies.size()==1){
+            return new String[]{applies.get(0).getTime()+""};
+        } else {
+            return new String[]{applies.get(0).getTime()+"",applies.get(1).getTime()+""};
+
+        }
+    }
+
+    @Override
+    public int getTypeById(Long id) throws Exception {
+        return super.getJdbcTemplate().query("select roletype from user where userid="+id,new ResultSetExtractor<Integer>() {
+            @Override
+            public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+                if(rs.next()){
+                    return rs.getInt("roletype");
+                };  //To change body of implemented methods use File | Settings | File Templates.
+                return -1;
+            }
+        });  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Long count(Long id, String[] times, int type, int type1, int orderType) throws Exception {
+
+        return super.getJdbcTemplate().queryForLong("select count(*) "+ getOrderSql1(type,times) +" and a.buyer_id="+id+"  and a.seller_id=b.user_id" );
+    }
+
+    private String getOrderSql1(int type, String[] times) {
+        String ab="";
+        if(type==2){
+            ab="a.use_time";
+        }else{
+            ab="a.pay_time";
+        }
+        String cause="";
+        if(times==null ||times.length==0){
+
+        }else{
+            if(times.length==1){
+                cause+= " and "+ab+"<='"+new DateTime(Long.parseLong(times[0])).toString("yyyy-MM-dd HH:mm:ss")+"'";
+            }else{
+                cause+=" and "+ab+"<='"+new DateTime(Long.parseLong(times[0])).toString("yyyy-MM-dd HH:mm:ss") +"' "+ab+">='"+new DateTime(times[1]).toString("yyyy-MM-dd HH:mm:ss")+"'";
+            }
+
+        }
+        switch (type){
+            case 2:
+                return " from hotel_order as a,hotel as b where 1=1 "+cause;
+            case 4:
+                return " from pay_now_order as a,restaurant b where 1=1 "+cause+" and a.order_pay_type_id=3 ";
+            case 5:
+                return " from view_spot_order as a,view_spot as b where 1=1 "+cause +" and a.order_pay_type_id=3 ";
+            case 6:
+                return " from pay_now_order as a ,life as b where 1=1"+cause+" and a.order_pay_type_id=3 ";
+            default:
+                return "  " ;
+        }
+    }
+
+
+    @Override
+    public List<OrderInfo> search(Long id, Integer page, String[] times, int type, int type1, int orderType) throws Exception {
+
+        final String sql = "select a.order_id,a.id,a.create_time,b.name,a.order_status_id "+getOrderSql1(type,times)+" and a.buyer_id="+id+"  and a.seller_id=b.user_id limit "+(page-1)*5+",5";
+        return super.getBySqlRowMapper(sql,new RowMapper<OrderInfo>() {
+            @Override
+            public OrderInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                OrderInfo info = new OrderInfo();
+                info.setId(rs.getLong("id"));
+                info.setCreateTime(new DateTime(rs.getTimestamp("create_time").getTime()).toString("yyyy-MM-dd HH:mm:ss"));
+                info.setName(rs.getString("name"));
+                info.setOrderId(rs.getLong("order_id"));
+                info.setStatus(getOrderStatus(rs.getInt("order_status_id")));
+                return info;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

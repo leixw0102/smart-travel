@@ -17,6 +17,7 @@ package com.smart.controller;/*
  * under the License.
  */
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.smart.common.Page;
 import com.smart.common.ResponseMsg;
@@ -49,6 +50,19 @@ public class SellerController extends BaseController{
     @Autowired
     private SellerService sellerService;
 
+    @RequestMapping("code/{id}")
+    public String getCode(HttpServletRequest request,HttpServletResponse response,@PathVariable Long id){
+
+        try {
+            JSONObject ob = sellerService.getCode(id);
+            request.setAttribute("abcd",ob.toJSONString());
+        } catch (Exception e) {
+            logger.error("error1",e);
+
+
+        }
+        return "abc";
+    }
     @RequestMapping("getAccountLists")
     public String getHome(HttpServletRequest request,HttpServletResponse response,@RequestParam Integer page) throws Exception{
         request.setAttribute("msgs",sellerService.getSellers(page));

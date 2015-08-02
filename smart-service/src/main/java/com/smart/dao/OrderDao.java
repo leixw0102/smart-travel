@@ -39,4 +39,14 @@ public interface OrderDao {
     List<UserClientInfo> getUsersByPage(Integer page) throws Exception;
 
     boolean deleteClientUserById(Long id) throws Exception;
+
+
+    String[] getApplyTime(Long id) throws Exception;
+
+
+    int getTypeById(Long id) throws Exception;
+
+    Long count(Long id, String[] times, int type, int type1, int orderType) throws Exception;
+
+    List<OrderInfo> search(Long id, Integer page, String[] times, int type, int type1, int orderType) throws Exception;
 }

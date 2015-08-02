@@ -17,6 +17,7 @@ package com.smart.service;/*
  * under the License.
  */
 
+import com.alibaba.fastjson.JSONObject;
 import com.smart.common.Page;
 import com.smart.common.ResponseMsg;
 import com.smart.model.CompanyInfo;
@@ -53,4 +54,6 @@ public interface SellerService {
     boolean deleteCategory(Long typeId) throws Exception;
 
     boolean updateCategory(Long id, String name) throws Exception;
+
+    JSONObject getCode(Long id) throws Exception;
 }

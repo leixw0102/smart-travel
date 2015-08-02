@@ -17,6 +17,7 @@ package com.smart.dao.impl;/*
  * under the License.
  */
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.smart.common.ResponseMsg;
 import com.smart.dao.SellerDao;
@@ -345,6 +346,44 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
     @Override
     public boolean updateCategory(Long id, String name) throws Exception {
         return super.update("update type_config set type_name='"+name+"' where id="+id);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public JSONObject getCode(Long id) throws Exception {
+        JSONObject object=super.getJdbcTemplate().query("select a.userId,a.roletype from user as a where userid="+id,new ResultSetExtractor<JSONObject>() {
+             @Override
+             public JSONObject extractData(ResultSet rs) throws SQLException, DataAccessException {
+                 if(rs.next()){
+
+                     JSONObject object = new JSONObject();
+                     object.put("sellerId",rs.getLong("userid"));
+                     object.put("sellerType",rs.getInt("roletype"));
+                     return object;
+                 }
+                 return null;  //To change body of implemented methods use File | Settings | File Templates.
+             }
+         });  //To change body of implemented methods use File | Settings | File Templates.
+        if(null ==object)  {
+            return null;
+        }
+        long whereId=super.getJdbcTemplate().queryForLong("select id from "+getTypeSql(object.getInteger("sellerType")) +" where user_id="+id);
+        object.put("whereId",whereId);
+        return object;
+    }
+
+    public String getTypeSql(int i){
+        switch (i){
+            case 2:
+                return "hotel";
+            case 4:
+                return "restaurant";
+            case 5:
+                return "view_spot";
+            case 6:
+                return "life";
+            default:
+                return "";
+        }
     }
 
     public String getSelectSql(int type,Long id){

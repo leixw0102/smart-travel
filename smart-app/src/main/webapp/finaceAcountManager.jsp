@@ -84,6 +84,7 @@
 						trs += '<td align="center">'+
 			                       	'<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="deleteMsg('+ n.id+')"><div class="text c1 pdl0">删除</div></div>'+
 			                        '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="pwdRewrite('+ n.id+')"><div class="text c1 pdl0">密码重置</div></div>'+
+
 			                    '</td></tr>'
 						tbody += trs; 
 					}); 
@@ -124,6 +125,7 @@
 			url:"<%=request.getContextPath()%>/1.0/user/getUpdatePwdPage/"+id
 		});
     }
+
     </script>
 </head>
 <body class="pad20">

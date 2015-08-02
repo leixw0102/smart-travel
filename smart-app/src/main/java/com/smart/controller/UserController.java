@@ -213,4 +213,9 @@ public class UserController extends BaseController {
         return msg;
     }
 
+    @RequestMapping("getOrderMsgPage/{id}")
+    public String getOrderMsgPage(HttpServletRequest request,HttpServletResponse response,@PathVariable Long id){
+        request.setAttribute("userForOrderId",id);
+        return "test";
+    }
 }

@@ -93,27 +93,18 @@
                 }
             });
         }
-    </script>
-    <script type="text/javascript">
-        function search(){
-            alert(0)
-            alert($('#abcType').val())
-//            $.ajax({
-//
-//                type: "GET",
-//
-//                url: "/smart-app/FinaceAction",
-//
-//                data: "type=search",
-//
-//                success: function(msg){
-//                    alert("search sucess");
-//                }
-//
-//            });
-        }
 
+        function orderMsg(id){
+            window.top.$.popWin({
+                title:"密码重置",
+                width:1000,
+                height:500,
+                center:true,
+                url:"<%=request.getContextPath()%>/1.0/user/getOrderMsgPage/"+id
+            });
+        }
     </script>
+
 </head>
 <div class="head">
     <div class="up">
