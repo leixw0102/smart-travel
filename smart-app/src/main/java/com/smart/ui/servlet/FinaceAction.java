@@ -3,6 +3,7 @@ package com.smart.ui.servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -128,6 +129,12 @@ public class FinaceAction extends HttpServlet {
 			 System.out.println(ja.toJSONString());
 			 response.getOutputStream().write(ja.toJSONString().getBytes("UTF-8"));  
 			 response.setContentType("text/json; charset=UTF-8");  
+		}else if(type.equalsIgnoreCase("addNewCategory")){
+			RequestDispatcher dispatcher=request.getRequestDispatcher("/addNewCategory.jsp");
+	        dispatcher.forward(request, response);
+		}else if(type.equalsIgnoreCase("editCategoryName")){
+			RequestDispatcher dispatcher=request.getRequestDispatcher("/editCategoryName.jsp");
+	        dispatcher.forward(request, response);
 		}
 	}
 

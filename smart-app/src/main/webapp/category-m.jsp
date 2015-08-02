@@ -25,28 +25,41 @@ $(function(){
 	
 	})
 	
-	
-	$(".level li ul li.edi").click(function(){
-		$(this).parents("ul:eq(0)").find("li.secondName :text").removeClass("input-style1").addClass("input-style2").unbind("focus").removeAttr("readonly");
-	})
-	
-	$(".level li ul li.del").click(function(){
+	$(".level").delegate(".del","click",function(){
 		$(this).parents("li:eq(0)").remove();
 	})
 	
-	$(".level li ul li.ok").click(function(){
-		$(this).parents("ul:eq(0)").find("li.secondName :text").removeClass("input-style2").addClass("input-style1").bind("focus",function(){
-			this.blur();
-		}).attr("readonly","true");
+	$(".addnew").bind("click",function(){
+		add_new_category(this);
 	})
-	
-	$(".level li ul li.cancel").click(function(){
-		var that = $(this);
-		$(this).parents("ul:eq(0)").find("li.secondName :text").removeClass("input-style2").addClass("input-style1").bind("focus",function(){
-			this.blur();
-		}).attr("readonly","true").val($(this).parents("ul:eq(0)").find("li.secondName :text").attr("ov"));
+	$(".level").delegate(".edi","click",function(){
+		edit_new_category(this);
 	})
 })
+var new_category_win,
+	edit_category_win,
+	that,that_edit;
+function add_new_category(obj){
+	new_category_win = window.top.$.popWin({
+		title:"新增分类",
+		width:400,
+		height:140,
+		center:true,
+		url:"<%=request.getContextPath()%>/FinaceAction?type=addNewCategory"
+	})
+	that = obj;
+}
+
+function edit_new_category(obj){
+	edit_category_win = window.top.$.popWin({
+		title:"编辑分类",
+		width:400,
+		height:140,
+		center:true,
+		url:"<%=request.getContextPath()%>/FinaceAction?type=editCategoryName"
+	})
+	that_edit = obj;
+}
 </script>
 </head>
 <body class="pad20">
@@ -62,7 +75,7 @@ $(function(){
 				</li>
 				<li class="bg1">
 					<ul class="h40">
-						<li class="toggle_bt">酒店</li>
+						<li class="toggle_bt category-name">酒店</li>
 						<li class="del">删除</li>
 						<li class="edi">编辑</li>
 						<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>
@@ -71,9 +84,7 @@ $(function(){
                     	<li class="bg2">
                             <ul>
                                 <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName"><input  type="text" class="input-style1 w80 c1" ov="精品酒店" value="精品酒店" readonly="true"/></li>
-                                <li class="ok ml10">确定</li>
-                                <li class="cancel ml10">取消</li>
+                                <li class="ml20 secondName category-name">精品酒店</li>
                                 <li class="del">删除</li>
                                 <li class="edi">编辑</li>
                             </ul>
@@ -81,9 +92,7 @@ $(function(){
                         <li class="bg2">
                             <ul>
                                 <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName"><input  type="text" class="input-style1 w80" ov="公寓" value="公寓" readonly="true"/></li>
-                                <li class="ok ml10">确定</li>
-                                <li class="cancel ml10">取消</li>
+                                <li class="ml20 secondName category-name">公寓</li>
                                 <li class="del">删除</li>
                                 <li class="edi">编辑</li>
                             </ul>
@@ -96,7 +105,7 @@ $(function(){
 				
 				<li class="bg1">
 					<ul class="h40">
-						<li class="toggle_bt">餐饮</li>
+						<li class="toggle_bt category-name">餐饮</li>
 						<li class="del">删除</li>
 						<li class="edi">编辑</li>
 						<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>
@@ -105,9 +114,7 @@ $(function(){
                         <li class="bg2">
                             <ul>
                                 <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName"><input  type="text" class="input-style1 w80 c1" ov="人文景点" value="人文景点" readonly="true"/></li>
-                                <li class="ok ml10">确定</li>
-                                <li class="cancel ml10">取消</li>
+                                <li class="ml20 secondName category-name">人文景点</li>
                                 <li class="del">删除</li>
                                 <li class="edi">编辑</li>
                             </ul>
@@ -115,9 +122,7 @@ $(function(){
                         <li class="bg2">
                             <ul>
                                 <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName"><input  type="text" class="input-style1 w80" ov="自然景点" value="自然景点" readonly="true"/></li>
-                                <li class="ok ml10">确定</li>
-                                <li class="cancel ml10">取消</li>
+                                <li class="ml20 secondName category-name">自然景点</li>
                                 <li class="del">删除</li>
                                 <li class="edi">编辑</li>
                             </ul>
@@ -128,7 +133,7 @@ $(function(){
 				
 				<li class="bg1">
 					<ul class="h40">
-						<li class="toggle_bt">生活</li>
+						<li class="toggle_bt category-name">生活</li>
 						<li class="del">删除</li>
 						<li class="edi">编辑</li>
 						<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>
@@ -138,9 +143,7 @@ $(function(){
                     	<li class="bg2">
                             <ul>
                                 <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName"><input  type="text" class="input-style1 w80 c1" ov="人文景点" value="人文景点" readonly="true"/></li>
-                                <li class="ok ml10">确定</li>
-                                <li class="cancel ml10">取消</li>
+                                <li class="ml20 secondName category-name">人文景点</li>
                                 <li class="del">删除</li>
                                 <li class="edi">编辑</li>
                             </ul>
@@ -148,9 +151,7 @@ $(function(){
                         <li class="bg2">
                             <ul>
                                 <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName"><input  type="text" class="input-style1 w80" ov="自然景点" value="自然景点" readonly="true"/></li>
-                                <li class="ok ml10">确定</li>
-                                <li class="cancel ml10">取消</li>
+                                <li class="ml20 secondName category-name">自然景点</li>
                                 <li class="del">删除</li>
                                 <li class="edi">编辑</li>
                             </ul>
@@ -164,7 +165,7 @@ $(function(){
 				
 				<li class="bg1">
 					<ul class="h40">
-						<li class="toggle_bt">服务类型设置</li>
+						<li class="toggle_bt category-name">服务类型设置</li>
 						<li class="del">删除</li>
 						<li class="edi">编辑</li>
 						<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>
@@ -173,12 +174,8 @@ $(function(){
                     	<li class="bg2">
                             <ul>
                                 <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName"><input  type="text" class="input-style1 w80 c1" ov="VIP" value="VIP" readonly="true"/></li>
-                                <li class="ok ml10">确定</li>
-                                <li class="cancel ml10">取消</li>
-                                <li class="ml20 secondName"><input  type="text" class="input-style1 w80 c1" ov="其它" value="其它" readonly="true"/></li>
-                                <li class="ok ml10">确定</li>
-                                <li class="cancel ml10">取消</li>
+                                <li class="ml20 secondName category-name">VIP</li>
+                                <li class="ml20 secondName category-name">其它</li>
                                 <li class="del">删除</li>
                                 <li class="edi">编辑</li>
                             </ul>
@@ -186,9 +183,7 @@ $(function(){
                         <li class="bg2">
                             <ul>
                                 <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName"><input  type="text" class="input-style1 w80" ov="VIP" value="VIP" readonly="true"/></li>
-                                <li class="ok ml10">确定</li>
-                                <li class="cancel ml10">取消</li>
+                                <li class="ml20 secondName category-name">VIP</li>
                                 <li class="del">删除</li>
                                 <li class="edi">编辑</li>
                             </ul>
