@@ -60,8 +60,8 @@
 			<div class="bt-border-s1 fl">服务</div>
 			<div class="bt-border-s1 fl">客服</div>
 			<div class="fl">隐私</div>
-			<div class="fr">英文</div>
-			<div class="bt-border-s1 fr">中文</div>
+			<%--<div class="fr">英文</div>--%>
+			<%--<div class="bt-border-s1 fr">中文</div>--%>
 		</div>
 		<div class="cp">© 1998 - 2015 Tencent Inc,All Rights Reserved</div>
 	</div>		

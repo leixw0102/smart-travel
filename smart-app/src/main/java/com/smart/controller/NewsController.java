@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,6 +62,7 @@ public class NewsController extends BaseController {
                 Iterator<String> ite = multiRequest.getFileNames();
                 String af="";
                 File localDir ;
+                File news;
                 List<String> paths= Lists.newArrayList();
                 title = multiRequest.getParameter("title");
                 abs= multiRequest.getParameter("abs");
@@ -70,6 +72,10 @@ public class NewsController extends BaseController {
                     if(!localDir.exists()){
                         localDir.mkdirs();
                     }
+                    news = new File(localDir,config.getPath());
+                    if(!news.exists()){
+                        news.mkdirs();
+                    }
                     while(ite.hasNext()){
                         String name = ite.next();
                         MultipartFile file = multiRequest.getFile(name);
@@ -77,10 +83,10 @@ public class NewsController extends BaseController {
                             File localFile=null;
                             try {
                                 String serverFileName=System.nanoTime()+"_"+file.getOriginalFilename();
-                                localFile = new File(localDir,serverFileName);
-                                logger.debug("af = "+af +" ;localdir = "+localDir.getAbsolutePath()+" ; file = "+localFile.getAbsolutePath());
+                                localFile = new File(news,serverFileName);
+                                logger.debug("af = "+af +" ;localdir = "+localDir.getAbsolutePath()+" ; file = "+localFile.getAbsolutePath()+"news"+news.getAbsolutePath());
                                 file.transferTo(localFile); //将上传文件写到服务器上指定的文件
-                                paths.add(config.getUrl()+File.separator+localDir.getName()+File.separator+serverFileName);
+                                paths.add(config.getUrl()+File.separator+config.getPath()+File.separator+serverFileName);
                             } catch (IllegalStateException e) {
                                 e.printStackTrace();
                                 logger.error("error msg!",e);
@@ -138,6 +144,16 @@ public class NewsController extends BaseController {
         request.setAttribute("msgs",userService.userNewsList(page,10));
         return "publicNews";
 
+    }
+    @RequestMapping("lists/{page}")
+    @ResponseBody
+    public com.smart.common.ResponseBody getNewsList(HttpServletRequest request,HttpServletResponse response,@PathVariable Long page, @RequestParam(required = false) String time){
+        try{
+            return userService.userNewsList(page,10,time);
+        } catch (Exception e){
+            logger.error("ds",e);
+            return new ResponseMsg<>("10","error!"+e.getMessage());
+        }
     }
 
 }

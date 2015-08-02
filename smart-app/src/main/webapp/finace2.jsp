@@ -33,16 +33,43 @@
     var pageSize = 6 ;
     $(function(){
     	//初始化请求数据列表
-    	queryThis(2,1);
+    	queryThis();
 	})
-	function queryThis(type,page){
+
+    Date.prototype.Format = function(fmt)
+    { //author: meizz
+        var o = {
+            "M+" : this.getMonth()+1,                 //月份
+            "d+" : this.getDate(),                    //日
+            "h+" : this.getHours(),                   //小时
+            "m+" : this.getMinutes(),                 //分
+            "s+" : this.getSeconds(),                 //秒
+            "q+" : Math.floor((this.getMonth()+3)/3), //季度
+            "S"  : this.getMilliseconds()             //毫秒
+        };
+        if(/(y+)/.test(fmt))
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+            if(new RegExp("("+ k +")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        return fmt;
+    }
+	function queryThis(){
     	var param = {
     		"param.pageSize":pageSize,
     		"param.currentPage":current_page
     	};
-    	callAPI("<%=request.getContextPath()%>/1.0/finance/getList/"+type+"/"+page,param,queryThis_callback);
+    	callAPI("<%=request.getContextPath()%>/1.0/finance/getList/"+$("#abcType").val()+"/"+current_page+"?from="+$("#from-a").val()+"&to="+$("#to-a").val(),param,queryThis_callback);
     };
-    
+
+    function getfinish(exp){
+        if (!exp && typeof(exp)=="undefined" && exp!=0)
+        {
+            return "";
+        }else{
+            return new Date(exp).Format("yyyy-MM-dd hh:mm:ss")
+        }
+    }
     function queryThis_callback(data){
         total_page = Math.ceil(data.count/data.pageSize);
         current_page = data.pageNumber;
@@ -53,11 +80,16 @@
 		$.each(myData, function(i, n) {
 
 			var trs = ""; 
-			trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.type + "</td><td>" + n.name + "</td><td>" + n.contaceName + "</td><td>" + n.phoneNumber + "</td><td>" + n.time + "</td><td>" + n.money + "</td><td>" + + "</td>";
-			trs += '<td align="center">'+
-			'<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">显示订单</div></div>'+
-            '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">订单详情</div></div>'+
-            '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">删除</div></div>'+
+			trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.type + "</td><td>" + n.name + "</td><td>" + n.contaceName + "</td><td>" + n.phoneNumber + "</td><td>" + new Date(n.time).Format("yyyy-MM-dd hh:mm:ss") + "</td><td>" + n.money + "</td><td>" + getfinish(n.finishTime)+ "</td>";
+			trs += '<td align="center">'
+                    if(n.status==1){
+                        trs += '<div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="confirm('+n.id+')"><div class="text c1 pdl0">兑现</div></div>'+
+            '<div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="refuse('+ n.id+')"><div class="text c1 pdl0">拒绝</div></div>'
+                    }else if(n.status==2){
+                        trs +='<div class="text c1 pdl0">已兑现</div>';
+                    } else if(n.status=3){
+                        trs+='<div class="text c1 pdl0">已拒绝</div>';
+                    }
             '</td></tr>'
 			tbody += trs; 
 		}); 
@@ -76,13 +108,50 @@
 		});
     	
     }
+    function confirm(id){
+        var methodType = 'Get';
+        $.ajax({
+            url: "<%=request.getContextPath()%>/1.0/finance/confirm/"+id,
+            type: methodType,
+//            data: $('#companyInfo').serialize(),
+            contentType:"application/json;charset=utf-8",
+
+            success: function (result) {
+
+                if (result.code==0){
+                    alert("success");
+//                    location.href=
+                }else{
+                    alert(result.message)
+                }
+            }
+        });
+    }
+    function refuse(id){
+        var methodType = 'Get';
+        $.ajax({
+            url: "<%=request.getContextPath()%>/1.0/finance/refuse/"+id,
+            type: methodType,
+//            data: $('#companyInfo').serialize(),
+            contentType:"application/json;charset=utf-8",
+
+            success: function (result) {
+
+                if (result.code==0){
+                    alert("success");
+                }else{
+                    alert(result.message)
+                }
+            }
+        });
+    }
     //翻页回调
 	function page_callback(page_index, jq){
-   		current_page = page_index + 1;  		
+   		current_page = page_index + 1;
    		var param = {
    				"param.currentPage":current_page,
    				"param.pageSize":pageSize};
-   		callAPI("<%=request.getContextPath()%>/FinaceAction?type=order_search",param,queryThis_callback);
+   		callAPI("<%=request.getContextPath()%>/1.0/finance/getList/"+$("#abcType").val()+"/"+current_page+"?from="+$("#from-a").val()+"&to="+$("#to-a").val(),param,queryThis_callback);
 	}
 		
 			
@@ -113,11 +182,11 @@
                                 <ul>
                                     <li class="text w60 fb c1 pb0">提现申请日期：</li>
                                     <li class="value pb0">
-                                        <input name="from" type="text" class="w300 h27 inputStyle" onfocus="WdatePicker()"/>
+                                        <input id="from-a" name="from" type="text" class="w300 h27 inputStyle" onfocus="WdatePicker()"/>
                                     </li>
                                     <li class="text pb0">-</li>
                                     <li class="value pb0">
-                                        <input name="to" type="text" class="w300 h27 inputStyle"  onfocus="WdatePicker()"/>
+                                        <input id="to-a" name="to" type="text" class="w300 h27 inputStyle"  onfocus="WdatePicker()"/>
                                     </li>
                                 </ul>
                             </li>
