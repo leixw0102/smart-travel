@@ -61,9 +61,14 @@ public class FinanceDaoImpl extends BaseDaoImpl implements FinanceDao {
 //        if(type!=0){
             where+=" and b.roleType="+type;
 //        }
-        if(!Strings.isNullOrEmpty(from) && !Strings.isNullOrEmpty(to)){
+        if(!Strings.isNullOrEmpty(from) ){
+
+            where +=" and a.create_time>'"+from+"' ";
+        }
+
+        if( !Strings.isNullOrEmpty(to)){
             String tonew= DateUtils.plusDay(to,1);
-            where +=" and a.create_time>'"+from+"' and a.create_time<='"+tonew+"'";
+            where+=" and a.create_time<='"+tonew+"'";
         }
 
         return super.getJdbcTemplate().queryForLong(sql+where);  //To change body of implemented methods use File | Settings | File Templates.
@@ -76,9 +81,14 @@ public class FinanceDaoImpl extends BaseDaoImpl implements FinanceDao {
         if(i!=null || i!=0){
             where +=" and  c.roletype="+i ;
         }
-        if(!Strings.isNullOrEmpty(from) && !Strings.isNullOrEmpty(to)){
+        if(!Strings.isNullOrEmpty(from) ){
+
+            where +=" and a.create_time>'"+from+"' ";
+        }
+
+        if( !Strings.isNullOrEmpty(to)){
             String tonew= DateUtils.plusDay(to,1);
-          where +=" and a.create_time>'"+from+"' and a.create_time<='"+tonew+"'";
+            where+=" and a.create_time<='"+tonew+"'";
         }
 
         switch (i){
