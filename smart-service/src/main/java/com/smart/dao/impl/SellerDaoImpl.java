@@ -368,6 +368,8 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
         }
         long whereId=super.getJdbcTemplate().queryForLong("select id from "+getTypeSql(object.getInteger("sellerType")) +" where user_id="+id);
         object.put("whereId",whereId);
+        String v=object.remove("sellerType").toString();
+        object.put("sellerType",Integer.parseInt(getRole(Integer.parseInt(v))));
         return object;
     }
 
@@ -408,9 +410,9 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
             case 5:
                 return "2";
             case 6:
-                return "3";
-            case 4:
                 return "4";
+            case 4:
+                return "3";
             default:
                 return "0";
         }

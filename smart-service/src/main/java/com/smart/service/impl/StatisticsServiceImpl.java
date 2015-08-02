@@ -46,7 +46,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     private StatisticsDao statisticsDao;
     @Override
-    public ResponseBody getHotelXy(int i, Integer type) throws Exception {
+    public ResponseBody getHotelXy(int i, Integer type, Integer totalType) throws Exception {
         Page<XY> msg = new Page<XY>() {
             @Override
             protected String listAlias() {
@@ -55,7 +55,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         };
         List<String> x= Lists.newArrayList();
         List<String> y = Lists.newArrayList();
-        List<XYModel> models=statisticsDao.getHotelXY(i, type);
+        List<XYModel> models=statisticsDao.getHotelXY(i, type,totalType);
         for(XYModel model:models){
             x.add(model.getDay());
             y.add(model.getValue());

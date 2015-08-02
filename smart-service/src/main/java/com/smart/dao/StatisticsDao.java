@@ -32,7 +32,7 @@ import java.util.List;
  * Time: 10:09
  */
 public interface StatisticsDao {
-    List getHotelXY(int i, Integer type) throws Exception;
+    List getHotelXY(int i, Integer type, Integer totalType) throws Exception;
 
     List<MapInfo> getHotelMap(int type) throws Exception;
 

@@ -1,3 +1,4 @@
+<%@ page import="java.net.URLEncoder" %>
 <%--
   Created by IntelliJ IDEA.
   User: lenovo
@@ -8,11 +9,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <%String abc = request.getAttribute("abcd").toString();%>
+    <%String abc = request.getAttribute("abcd").toString();
+    System.out.println(abc);
+    %>
     <title></title>
 </head>
 
 <body>
-<img src="http://qr.liantu.com/api.php?text=<%=abc%>">
+<img src='http://qr.liantu.com/api.php?text=<%=abc%>'>
 </body>
 </html>

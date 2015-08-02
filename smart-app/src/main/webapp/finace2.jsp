@@ -33,26 +33,27 @@
     var pageSize = 6 ;
     $(function(){
     	//初始化请求数据列表
-    	queryThis();
+    	queryThis(2,1);
 	})
-	function queryThis(){
+	function queryThis(type,page){
     	var param = {
     		"param.pageSize":pageSize,
     		"param.currentPage":current_page
     	};
-    	callAPI("<%=request.getContextPath()%>/FinaceAction?type=order_search",param,queryThis_callback);
+    	callAPI("<%=request.getContextPath()%>/1.0/finance/getList/"+type+"/"+page,param,queryThis_callback);
     };
     
     function queryThis_callback(data){
-    	total_page = data.total_page;
-    	current_page = data.current_page;
-    	pageSize = data.pageSize;
+        total_page = Math.ceil(data.count/data.pageSize);
+        current_page = data.pageNumber;
+        pageSize = data.pageSize;
     	var tbody = ""; 
     	$(".blackbor_table.listTable tr:gt(0)").remove(); 
-		var myData = data.list;
-		$.each(myData, function(i, n) { 
+		var myData = data.messages;
+		$.each(myData, function(i, n) {
+
 			var trs = ""; 
-			trs += "<tr><td align='center'>" + n.number + "</td><td align='center'>" + n.orderNumber + "</td><td>" + n.mappingCompany + "</td><td>" + n.orderFL + "</td><td>" + n.orderStauts + "</td><td>" + n.orderDate + "</td><td>" + "-" + "</td><td>" + "-" + "</td>";
+			trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.type + "</td><td>" + n.name + "</td><td>" + n.contaceName + "</td><td>" + n.phoneNumber + "</td><td>" + n.time + "</td><td>" + n.money + "</td><td>" + + "</td>";
 			trs += '<td align="center">'+
             '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">订单详情</div></div>'+
             '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">删除</div></div>'+
