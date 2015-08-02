@@ -42,9 +42,9 @@ public class StatisticsController extends BaseController {
 
     @RequestMapping("hotel/lastWeek")
     @ResponseBody
-    public com.smart.common.ResponseBody getLastVSXY(@RequestParam(required = false)Integer type){
+    public com.smart.common.ResponseBody getLastVSXY(@RequestParam(required = false) Integer totalType,@RequestParam(required = false)Integer type){
         try{
-            com.smart.common.ResponseBody responseMsg= statisticsService.getHotelXy(1, type);
+            com.smart.common.ResponseBody responseMsg= statisticsService.getHotelXy(1, type,totalType);
             logger.info(JSON.toJSONString(responseMsg));
             return responseMsg;
         }catch (Exception e){
@@ -55,9 +55,9 @@ public class StatisticsController extends BaseController {
 
     @RequestMapping("hotel/nextWeek")
     @ResponseBody
-    public com.smart.common.ResponseBody getNextVSXY(@RequestParam(required = false)Integer type){
+    public com.smart.common.ResponseBody getNextVSXY(@RequestParam(required = false) Integer totalType,@RequestParam(required = false)Integer type){
         try{
-            return statisticsService.getHotelXy(2, type);
+            return statisticsService.getHotelXy(2, type, totalType);
         }catch (Exception e){
             logger.error("error",e);
             return new ResponseMsg("2","查询出错");

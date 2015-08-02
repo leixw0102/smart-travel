@@ -30,7 +30,7 @@ import com.smart.common.ResponseMsg;
  */
 public interface StatisticsService {
 
-    ResponseBody getHotelXy(int i, Integer type) throws Exception;
+    ResponseBody getHotelXy(int i, Integer type, Integer totalType) throws Exception;
 
     ResponseBody getHotelMap(int type) throws Exception;
 

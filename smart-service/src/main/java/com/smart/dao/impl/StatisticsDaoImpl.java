@@ -19,7 +19,6 @@ package com.smart.dao.impl;/*
 
 import com.smart.dao.StatisticsDao;
 import com.smart.model.MapInfo;
-import com.smart.model.TotalInfo;
 import com.smart.model.XYModel;
 import org.joda.time.DateTime;
 import org.springframework.jdbc.core.RowMapper;
@@ -41,9 +40,9 @@ import java.util.List;
 @Repository
 public class StatisticsDaoImpl extends BaseDaoImpl implements StatisticsDao {
     @Override
-    public List<XYModel> getHotelXY(int i, Integer type) throws Exception {
+    public List<XYModel> getHotelXY(int i, Integer type, Integer totalType) throws Exception {
 
-        String sql= getHotelSql(i, type);
+        String sql= getHotelSql(i, type,totalType);
 
         return super.getBySqlRowMapper(sql,new RowMapper<XYModel>() {
             @Override
@@ -168,7 +167,7 @@ public class StatisticsDaoImpl extends BaseDaoImpl implements StatisticsDao {
     }
 
 
-    private String getHotelSql(int i, Integer type) {
+    private String getHotelSql(int i, Integer type, Integer totalType) {
         //i==1 实际 i==2下周
         if(i==1){
             return "select sum(total_price) as total,to_time as time from hotel_order where order_status_id=4 and order_pay_type_id=3 and to_time>='"+getDay(-7)+"'  and  to_time<'"+getDay(-1)+"' group by to_time desc ";
