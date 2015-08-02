@@ -57,7 +57,7 @@
                 "param.pageSize":pageSize,
                 "param.currentPage":current_page
             };
-            callAPI("<%=request.getContextPath()%>/1.0/news/lists/"+current_page,param,queryThis_callback);
+            callAPI("<%=request.getContextPath()%>/FinaceAction?type=order_search",param,queryThis_callback);
         };
 
         function getfinish(exp){
@@ -69,19 +69,18 @@
             }
         }
         function queryThis_callback(data){
-            total_page = Math.ceil(data.count/data.pageSize);
-            current_page = data.pageNumber;
-            pageSize = data.pageSize;
+        	total_page = data.total_page;
+        	current_page = data.current_page;
+        	pageSize = data.pageSize;
             var tbody = "";
-            $(".blackbor_table tr:gt(0)").remove();
-            var myData = data.messages;
+            $(".blackbor_table.listTable tr:gt(0)").remove();
+            var myData = data.list;
             $.each(myData, function(i, n) {
-                var trs = "";
-                trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.title + "</td><td><img src='"+ n.picture+"'></td><td>" + n.abs + "</td><td>" + n.createTime + "</td><td>"+ n.content+ "</td>";
-                '</tr>'
-                tbody += trs;
+            	var trs = ""; 
+    			trs += "<tr><td align='center'>" + n.number + "</td><td align='center'>" + n.orderNumber + "</td><td>" + n.mappingCompany + "</td><td>" + n.orderFL + "</td><td>" + n.orderStauts + "</td><td>" + n.orderDate + "</td></tr>";
+    			tbody += trs; 
             });
-            $(tbody).appendTo(".blackbor_table");
+            $(tbody).appendTo(".blackbor_table.listTable");
 
             $("#pagination").pagination(total_page,{
                 callback: page_callback,
@@ -100,7 +99,7 @@
                 var param = {
                     "param.currentPage":current_page,
                     "param.pageSize":pageSize};
-                callAPI("<%=request.getContextPath()%>/1.0/news/lists/"+current_page,param,queryThis_callback);
+                callAPI("<%=request.getContextPath()%>/FinaceAction?type=order_search",param,queryThis_callback);
             }
         }
         function popCompanyInfo(){
@@ -115,7 +114,16 @@
 
     </script>
 </head>
-<body class="pad20">
+<body>
+<!--head-->
+<div class="head">
+	<div class="up">
+		<div class="logo"></div>
+		<div class="user-info">
+
+		</div>
+	</div>
+</div>
 <div class="body_main">
     <div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">
         <span class="titleSpan fl">已发布新闻</span>
@@ -147,11 +155,10 @@
     </table>
 
 
-    <table class="blackbor_table"  cellspacing="0" cellpadding="0">
+    <table class="blackbor_table listTable"  cellspacing="0" cellpadding="0">
         <tr class="trup">
             <td width="10%">序号</td>
             <td width="10%">标题</td>
-            <td width="20%">图片</td>
             <td width="20%">简介</td>
             <td width="15%" >创建日期</td>
             <td width="45%">内容 </td>

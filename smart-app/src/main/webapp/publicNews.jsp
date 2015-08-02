@@ -30,10 +30,6 @@
      Page<NewsInfo> pag1= (Page<NewsInfo>) request.getAttribute("msgs");%>
 <script>
 $(function(){
-	var w=$(".pad20")[0].clientWidth;
-	$(".body_main").width=w;
-})
-$(function(){
 var initPagination = function() {
 	var total_page = $("#hiddenresult div.result").length;
 	var total_page1 = $("#hiddenresult div.result1").length;
@@ -77,10 +73,28 @@ function popCompanyInfo(){
 		url:"<%=request.getContextPath()%>/publicNews-edit.jsp"
 	});
 }
+var viewInfoPop;
+function viewInfo(){
+	viewInfoPop = window.top.$.popWin({
+		title:"查看新闻",
+		width:610,
+		height:430,
+		center:true,
+		url:"<%=request.getContextPath()%>/viewNews.jsp"
+	});
+}
 
 </script>
 </head>
-<body class="pad20">
+<body>
+<div class="head">
+	<div class="up">
+		<div class="logo"></div>
+		<div class="user-info">
+
+		</div>
+	</div>
+</div>
 		<div class="body_main">
             	<div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">
 					<span class="titleSpan fl">已发布新闻</span>
@@ -116,7 +130,6 @@ function popCompanyInfo(){
 					<tr class="trup">
 					    <td width="10%">序号</td>
 						<td width="10%">标题</td>
-						<td width="20%">图片</td>
 						<td width="20%">简介</td>
 						<td width="15%" >创建日期</td>
 						<td width="45%">内容 </td>
@@ -132,8 +145,7 @@ function popCompanyInfo(){
 						   %>
 					  <tr>
 						<td ><%=id%></td>
-						<td class="list-link"><%=info.getTitle()%></td>
-						<td><img height="100" width="100" src=<%=info.getPicture()%> /></td>
+						<td class="list-link" onclick="viewInfo()" style="cursor:pointer"><%=info.getTitle()%></td>
 						<td><%=info.getAbs()%></td>
 						<td ><%=info.getCreateTime()%></td>
 						<td ><%=info.getContent()%></td>

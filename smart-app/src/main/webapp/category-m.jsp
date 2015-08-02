@@ -35,6 +35,63 @@ $(function(){
 	$(".level").delegate(".edi","click",function(){
 		edit_new_category(this);
 	})
+	
+	
+	
+	 $.ajax({
+         url: "<%=request.getContextPath()%>/FinaceAction?type=category-m",
+         type: "Get",
+//         data: $('#companyInfo').serialize(),
+         contentType:"application/json;charset=utf-8",
+
+         success: function (result) {
+        	 
+        	 $.each(result, function(i, n) {
+			
+					if(i == 0){
+						 $.each(n.jd, function(j, nn) {
+							 var newRow = $('<li class="bg2">'+
+				        			    '<ul>'+
+				        			    '<li ><input type="checkbox"/></li>'+
+				        			    '<li class="ml20 secondName category-name"></li>'+
+				        			    '<li class="del">删除</li>'+
+				        			    '<li class="edi">编辑</li>'+
+				        			'</ul>'+
+				        			'</li>');
+							 newRow.find(".category-name").text(nn);
+							 newRow.appendTo(".jd");
+						 })
+					}else if(i == 1){
+						 $.each(n.cy, function(k, nnn) {
+							 var newRow = $('<li class="bg2">'+
+				        			    '<ul>'+
+				        			    '<li ><input type="checkbox"/></li>'+
+				        			    '<li class="ml20 secondName category-name"></li>'+
+				        			    '<li class="del">删除</li>'+
+				        			    '<li class="edi">编辑</li>'+
+				        			'</ul>'+
+				        			'</li>');
+							 newRow.find(".category-name").text(nnn);
+							 newRow.appendTo(".cy");
+						 })
+					}else if(i == 2){
+						 $.each(n.sh, function(m, nnnn) {
+							 var newRow = $('<li class="bg2">'+
+				        			    '<ul>'+
+				        			    '<li ><input type="checkbox"/></li>'+
+				        			    '<li class="ml20 secondName category-name"></li>'+
+				        			    '<li class="del">删除</li>'+
+				        			    '<li class="edi">编辑</li>'+
+				        			'</ul>'+
+				        			'</li>');
+							 newRow.find(".category-name").text(nnnn);
+							 newRow.appendTo(".sh");
+						 })
+					}
+				
+     		}); 
+         }
+     });
 })
 var new_category_win,
 	edit_category_win,
@@ -80,23 +137,8 @@ function edit_new_category(obj){
 						<%--<li class="edi">编辑</li>--%>
 						<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>
 					</ul>
-                    <ul class="second-item">
-                    	<li class="bg2">
-                            <ul>
-                                <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName category-name">精品酒店</li>
-                                <li class="del">删除</li>
-                                <li class="edi">编辑</li>
-                            </ul>
-                   	 	</li>
-                        <li class="bg2">
-                            <ul>
-                                <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName category-name">公寓</li>
-                                <li class="del">删除</li>
-                                <li class="edi">编辑</li>
-                            </ul>
-                        </li>
+                    <ul class="second-item jd">
+                    	
                     
                     </ul>
 				</li>
@@ -110,23 +152,8 @@ function edit_new_category(obj){
 						<%--<li class="edi">编辑</li>--%>
 						<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>
 					</ul>
-                    <ul class="second-item">
-                        <li class="bg2">
-                            <ul>
-                                <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName category-name">人文景点</li>
-                                <li class="del">删除</li>
-                                <li class="edi">编辑</li>
-                            </ul>
-                        </li>
-                        <li class="bg2">
-                            <ul>
-                                <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName category-name">自然景点</li>
-                                <li class="del">删除</li>
-                                <li class="edi">编辑</li>
-                            </ul>
-                        </li>
+                    <ul class="second-item cy">
+                        
                     </ul>
 				</li>
 				
@@ -138,24 +165,7 @@ function edit_new_category(obj){
 						<%--<li class="edi">编辑</li>--%>
 						<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>
 					</ul>
-                    <ul class="second-item">
-                    
-                    	<li class="bg2">
-                            <ul>
-                                <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName category-name">人文景点</li>
-                                <li class="del">删除</li>
-                                <li class="edi">编辑</li>
-                            </ul>
-                        </li>
-                        <li class="bg2">
-                            <ul>
-                                <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName category-name">自然景点</li>
-                                <li class="del">删除</li>
-                                <li class="edi">编辑</li>
-                            </ul>
-                        </li>
+                    <ul class="second-item sh">
                     
                     
                     </ul>

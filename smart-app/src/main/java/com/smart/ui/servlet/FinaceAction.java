@@ -207,6 +207,35 @@ public class FinaceAction extends HttpServlet {
 		}else if(type.equalsIgnoreCase("editCategoryName")){
 			RequestDispatcher dispatcher=request.getRequestDispatcher("/editCategoryName.jsp");
 	        dispatcher.forward(request, response);
+		}else if (type.equalsIgnoreCase("category-m")){
+			
+			JSONObject object = new JSONObject();
+			ArrayList<String> jd = new ArrayList<String> ();
+			jd.add("精品酒店");
+			jd.add("公寓");
+			ArrayList<String> cy = new ArrayList<String> ();
+			cy.add("人文景点");
+			cy.add("自然景点");
+			ArrayList<String> sh = new ArrayList<String> ();
+			sh.add("人文景点");
+			sh.add("自然景点");
+			
+			JSONArray ja = new JSONArray();
+			JSONObject object_jd = new JSONObject();
+			JSONObject object_cy = new JSONObject();
+			JSONObject object_sh = new JSONObject();
+			object_jd.put("jd",jd);
+			object_cy.put("cy",cy);
+			object_sh.put("sh",sh);
+			
+			ja.add(object_jd);
+			ja.add(object_cy);
+			ja.add(object_sh);
+			
+			System.out.println(ja.toJSONString());
+			response.getOutputStream().write(ja.toJSONString().getBytes("UTF-8"));  
+			response.setContentType("text/json; charset=UTF-8");  
+
 		}
 	}
 
