@@ -77,11 +77,12 @@
     }
     //翻页回调
 	function page_callback(page_index, jq){
+        alert($("#abcType").val())
    		current_page = page_index + 1;  		
    		var param = {
    				"param.currentPage":current_page,
    				"param.pageSize":pageSize};
-   		callAPI("<%=request.getContextPath()%>/FinaceAction?type=order_search",param,queryThis_callback);
+   		callAPI("<%=request.getContextPath()%>/1.0/finance/getList/"+$("#abcType").val()+"/"+current_page,param,queryThis_callback);
 	}
 		
 			
