@@ -135,6 +135,21 @@
 	background:url(../images/yy-userAcount-h.png) no-repeat 20px center;
 	background-color:#b98f55;
 }
+.menu .items > ul.menu-items > li.no-level.news{
+	list-style-image:none;
+	background:url(../images/yy-news.png) no-repeat 20px center;
+	height:30px;
+	margin-top:30px;
+	cursor:pointer;
+}
+.menu .items > ul.menu-items > li.no-level.news.down{
+	background:url(../images/yy-news-h.png) no-repeat 20px center;
+	background-color:#b98f55;
+}
+.menu .items > ul.menu-items > li.no-level.news:hover{
+	background:url(../images/yy-news-h.png) no-repeat 20px center;
+	background-color:#b98f55;
+}
 .menu .items > ul.menu-items > li a.select{
 	color : #33a0ff;
 	display:block;

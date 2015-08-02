@@ -32,6 +32,8 @@ public class FinaceAction extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String type = request.getParameter("type");
+		String  selectType = request.getParameter("selectType");
+		System.out.println(selectType);
 		if(type.equalsIgnoreCase("finace_main")){
 			request.getRequestDispatcher("finace1.jsp").forward(request, response);
 		}else if(type.equalsIgnoreCase("search")){
@@ -80,6 +82,76 @@ public class FinaceAction extends HttpServlet {
 			 response.getOutputStream().write(object_all.toJSONString().getBytes("UTF-8"));  
 			 response.setContentType("text/json; charset=UTF-8");  
 		}else if (type.equalsIgnoreCase("chars")){
+			ArrayList<String> strArray = new ArrayList<String> ();
+			strArray.add("2015-8-5");
+			strArray.add("2015-8-6");
+			strArray.add("2015-8-7");
+			strArray.add("2015-8-8");
+			strArray.add("2015-8-9");
+			
+			ArrayList<String> strArray1 = new ArrayList<String> ();
+			strArray1.add("185");
+			strArray1.add("79");
+			strArray1.add("53");
+			strArray1.add("26");
+			strArray1.add("89");
+			JSONArray ja = new JSONArray();
+			JSONObject object = new JSONObject();
+			JSONObject object_xAxis = new JSONObject();
+			object.put("type","category");
+			object.put("data",strArray);
+			object_xAxis.put("xAxis",object);
+			JSONObject object1 = new JSONObject();
+			JSONObject object_series = new JSONObject();
+			object1.put("type","bar");
+			object1.put("data",strArray1);
+			object_series.put("series",object1);
+			
+			ja.add(object_xAxis);
+			ja.add(object_series);
+			
+			System.out.println(ja.toJSONString());
+			response.getOutputStream().write(ja.toJSONString().getBytes("UTF-8"));  
+			response.setContentType("text/json; charset=UTF-8");  
+
+		}else if (type.equalsIgnoreCase("select-chars") && selectType.equalsIgnoreCase("otherCategory")){
+			
+			
+			ArrayList<String> strArray = new ArrayList<String> ();
+			strArray.add("2015-10-5");
+			strArray.add("2015-10-6");
+			strArray.add("2015-10-7");
+			strArray.add("2015-10-8");
+			strArray.add("2015-10-9");
+			
+			ArrayList<String> strArray1 = new ArrayList<String> ();
+			strArray1.add("385");
+			strArray1.add("126");
+			strArray1.add("78");
+			strArray1.add("90");
+			strArray1.add("18");
+			JSONArray ja = new JSONArray();
+			JSONObject object = new JSONObject();
+			JSONObject object_xAxis = new JSONObject();
+			object.put("type","category");
+			object.put("data",strArray);
+			object_xAxis.put("xAxis",object);
+			JSONObject object1 = new JSONObject();
+			JSONObject object_series = new JSONObject();
+			object1.put("type","bar");
+			object1.put("data",strArray1);
+			object_series.put("series",object1);
+			
+			ja.add(object_xAxis);
+			ja.add(object_series);
+			
+			System.out.println(ja.toJSONString());
+			response.getOutputStream().write(ja.toJSONString().getBytes("UTF-8"));  
+			response.setContentType("text/json; charset=UTF-8");  
+
+		}else if (type.equalsIgnoreCase("select-chars") && selectType.equalsIgnoreCase("lifeCategory")){
+			
+			
 			ArrayList<String> strArray = new ArrayList<String> ();
 			strArray.add("2015-8-5");
 			strArray.add("2015-8-6");

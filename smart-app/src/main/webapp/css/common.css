@@ -1,11 +1,11 @@
-ï»¿d@charset "utf-8";
+d@charset "utf-8";
 
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, iframe {
 	padding:0;
 	margin:0;
 }
 body {
-	font:12px/20px Arial,"Microsoft YaHei","å®‹ä½“",sans-serif;
+	font:12px/20px Arial,"Microsoft YaHei","ËÎÌå",sans-serif;
 	color:#333;
 }
 a {
@@ -45,7 +45,7 @@ table {
 .noBorder {
 	border:none !important;
 }
-.nohandle { /*-- å»é™¤é“¾æ¥å°æ‰‹æŒ‡é’ˆ --*/
+.nohandle { /*-- È¥³ıÁ´½ÓĞ¡ÊÖÖ¸Õë --*/
 	cursor:default;
 }
 .floatLeft {
@@ -54,15 +54,15 @@ table {
 .floatRight {
 	float:right !important;
 }
-.setCenter { /*-- è®¾ç½®å…ƒç´ å±…ä¸­å¯¹é½ --*/
+.setCenter { /*-- ÉèÖÃÔªËØ¾ÓÖĞ¶ÔÆë --*/
 	clear: both;
 	float: none !important;
 	text-align: center;
 }
-.clearfix { /*-- æ¸…é™¤æ ·å¼position: fixæµ®åŠ¨ --*/
+.clearfix { /*-- Çå³ıÑùÊ½position: fix¸¡¶¯ --*/
 	clear:both;
 }
-.clearfloat { /*-- æ¸…é™¤æ ·å¼æµ®åŠ¨ --*/
+.clearfloat { /*-- Çå³ıÑùÊ½¸¡¶¯ --*/
 	clear:both;
 	display:inline-block;
 }
@@ -73,7 +73,7 @@ table {
     height: 0;
     visibility: hidden;
 }
-.js_hidden { /*-- ä¾›Javascript éšè—å±‚ --*/
+.js_hidden { /*-- ¹©Javascript Òş²Ø²ã --*/
 	display:none !important;
 }
 
@@ -153,6 +153,9 @@ table {
 }
 .red{
 	color: #FF0000;
+}
+.w70{
+	width: 70px;
 }
 .w140{
 	width: 160px;
