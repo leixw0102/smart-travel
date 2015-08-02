@@ -76,8 +76,8 @@ function edit_new_category(obj){
 				<li class="bg1">
 					<ul class="h40">
 						<li class="toggle_bt category-name">酒店</li>
-						<li class="del">删除</li>
-						<li class="edi">编辑</li>
+						<%--<li class="del">删除</li>--%>
+						<%--<li class="edi">编辑</li>--%>
 						<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>
 					</ul>
                     <ul class="second-item">
@@ -106,8 +106,8 @@ function edit_new_category(obj){
 				<li class="bg1">
 					<ul class="h40">
 						<li class="toggle_bt category-name">餐饮</li>
-						<li class="del">删除</li>
-						<li class="edi">编辑</li>
+						<%--<li class="del">删除</li>--%>
+						<%--<li class="edi">编辑</li>--%>
 						<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>
 					</ul>
                     <ul class="second-item">
@@ -134,8 +134,8 @@ function edit_new_category(obj){
 				<li class="bg1">
 					<ul class="h40">
 						<li class="toggle_bt category-name">生活</li>
-						<li class="del">删除</li>
-						<li class="edi">编辑</li>
+						<%--<li class="del">删除</li>--%>
+						<%--<li class="edi">编辑</li>--%>
 						<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>
 					</ul>
                     <ul class="second-item">
@@ -163,39 +163,39 @@ function edit_new_category(obj){
 				
 				
 				
-				<li class="bg1">
-					<ul class="h40">
-						<li class="toggle_bt category-name">服务类型设置</li>
-						<li class="del">删除</li>
-						<li class="edi">编辑</li>
-						<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>
-					</ul>
-                    <ul class="second-item">
-                    	<li class="bg2">
-                            <ul>
-                                <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName category-name">VIP</li>
-                                <li class="ml20 secondName category-name">其它</li>
-                                <li class="del">删除</li>
-                                <li class="edi">编辑</li>
-                            </ul>
-                        </li>
-                        <li class="bg2">
-                            <ul>
-                                <li ><input type="checkbox"/></li>
-                                <li class="ml20 secondName category-name">VIP</li>
-                                <li class="del">删除</li>
-                                <li class="edi">编辑</li>
-                            </ul>
-                        </li>
-                    
-                    </ul>
-				</li>
+				<%--<li class="bg1">--%>
+					<%--<ul class="h40">--%>
+						<%--<li class="toggle_bt category-name">服务类型设置</li>--%>
+						<%--<li class="del">删除</li>--%>
+						<%--<li class="edi">编辑</li>--%>
+						<%--<li class="addnew"><div class="bt_icon bt_icon_b1 addCat_bt"><div class="addCat_bt"></div><div class="text">新增分类</div></div></li>--%>
+					<%--</ul>--%>
+                    <%--<ul class="second-item">--%>
+                    	<%--<li class="bg2">--%>
+                            <%--<ul>--%>
+                                <%--<li ><input type="checkbox"/></li>--%>
+                                <%--<li class="ml20 secondName category-name">VIP</li>--%>
+                                <%--<li class="ml20 secondName category-name">其它</li>--%>
+                                <%--<li class="del">删除</li>--%>
+                                <%--<li class="edi">编辑</li>--%>
+                            <%--</ul>--%>
+                        <%--</li>--%>
+                        <%--<li class="bg2">--%>
+                            <%--<ul>--%>
+                                <%--<li ><input type="checkbox"/></li>--%>
+                                <%--<li class="ml20 secondName category-name">VIP</li>--%>
+                                <%--<li class="del">删除</li>--%>
+                                <%--<li class="edi">编辑</li>--%>
+                            <%--</ul>--%>
+                        <%--</li>--%>
+                    <%----%>
+                    <%--</ul>--%>
+				<%--</li>--%>
 				
 				
 				
 				
-			</ul>
-		</div>
+			<%--</ul>--%>
+		<%--</div>--%>
 	</body>
 </html>
