@@ -2,6 +2,7 @@ package com.smart.service.impl;
 
 import com.smart.common.Page;
 import com.smart.common.DateUtils;
+import com.smart.common.ResponseBody;
 import com.smart.dao.UserDao;
 import com.smart.model.*;
 import com.smart.service.UserService;
@@ -149,6 +150,24 @@ public class UserServiceImpl  implements UserService {
     @Override
     public NewsUserInfo searchNewsUser(NewsUserInfo info) throws Exception {
         return userDao.searchNewsUser(info);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public ResponseBody userNewsList(Long page1, int i, String time) throws Exception {
+        Page<NewsInfo> page = new Page<NewsInfo>() {
+
+            @Override
+            protected String listAlias() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+        page.setPageNumber(i);
+        page.setPageSize(10);
+        Long total = userDao.count(time);
+        List<NewsInfo> list = userDao.userNewsList(page1, i,time);
+        page.setCount(total);
+        page.setMessages(list);
+        return page;   //To change body of implemented methods use File | Settings | File Templates.
     }
 
 

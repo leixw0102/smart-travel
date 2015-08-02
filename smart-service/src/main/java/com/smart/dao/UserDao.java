@@ -44,4 +44,8 @@ public interface UserDao {
 
     boolean saveNewsUser(NewsUserInfo info) throws Exception;
     NewsUserInfo searchNewsUser(NewsUserInfo info) throws Exception;
+
+    Long count(String time)throws Exception;
+
+    List<NewsInfo> userNewsList(Long page1, int i, String time) throws Exception;
 }

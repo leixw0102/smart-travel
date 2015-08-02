@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -138,6 +139,16 @@ public class NewsController extends BaseController {
         request.setAttribute("msgs",userService.userNewsList(page,10));
         return "publicNews";
 
+    }
+    @RequestMapping("lists/{page}")
+    @ResponseBody
+    public com.smart.common.ResponseBody getNewsList(HttpServletRequest request,HttpServletResponse response,@PathVariable Long page, @RequestParam(required = false) String time){
+        try{
+            return userService.userNewsList(page,10,time);
+        } catch (Exception e){
+            logger.error("ds",e);
+            return new ResponseMsg<>("10","error!"+e.getMessage());
+        }
     }
 
 }

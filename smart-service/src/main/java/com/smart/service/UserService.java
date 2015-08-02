@@ -1,6 +1,7 @@
 package com.smart.service;
 
 
+import com.smart.common.ResponseBody;
 import com.smart.model.*;
 import com.smart.vo.UserVo;
 
@@ -35,4 +36,6 @@ public interface UserService {
 
     boolean saveNewsUser(NewsUserInfo info) throws Exception;
     NewsUserInfo searchNewsUser(NewsUserInfo info) throws Exception;
+
+    ResponseBody userNewsList(Long page, int i, String time) throws Exception;
 }

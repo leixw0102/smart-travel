@@ -1,6 +1,7 @@
 package com.smart.dao.impl;
 
 
+import com.google.common.base.Strings;
 import com.smart.common.Page;
 import com.smart.dao.UserDao;
 import com.smart.model.CashUserInfo;
@@ -118,7 +119,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
     public Long count() throws Exception {
-        return super.getJdbcTemplate().queryForObject("select count(*) from news ", Long.class);  //To change body of implemented methods use File | Settings | File Templates.
+        return super.getJdbcTemplate().queryForObject("select count(*) from news where del=0", Long.class);  //To change body of implemented methods use File | Settings | File Templates.
 
     }
 
@@ -250,6 +251,44 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
             }
         });    //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Long count(String time) throws Exception {
+        if(Strings.isNullOrEmpty(time)){
+            return super.getJdbcTemplate().queryForObject("select count(*) from news where del=0", Long.class);
+        } else{
+            return super.getJdbcTemplate().queryForObject("select count(*) from news where del=0 and date(create_time)='"+time+"'", Long.class);
+        }
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<NewsInfo> userNewsList(Long page1, int i, String time) throws Exception {
+        String where="";
+        if(!Strings.isNullOrEmpty(time)){
+            where+=" and date(create_time)='"+time+"'";
+        }
+        String sql="select * from news where del=0 "+where+"  order by create_time desc limit "+(page1-1)*i+","+i ;
+        logger.debug(sql);
+        return jdbcTemplate.query(sql, new RowMapper<NewsInfo>(){
+
+            @Override
+            public NewsInfo mapRow(ResultSet rs, int arg1)
+                    throws SQLException {
+                // TODO Auto-generated method stub
+//                if(rs.next()){
+                NewsInfo info = new NewsInfo();
+                info.setId(rs.getLong("id"));
+                info.setTitle(rs.getString("title"));
+                info.setAbs(rs.getString("abs"));
+                info.setCreateTime(rs.getDate("create_time"));
+                info.setPicture(rs.getString("picture"));
+                info.setContent(rs.getString("content"));
+                return info;
+//                }
+//                return null;
+            }});  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Transactional(readOnly = false,rollbackFor = Exception.class)
