@@ -55,6 +55,7 @@
 			var trs = ""; 
 			trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.type + "</td><td>" + n.name + "</td><td>" + n.contaceName + "</td><td>" + n.phoneNumber + "</td><td>" + n.time + "</td><td>" + n.money + "</td><td>" + + "</td>";
 			trs += '<td align="center">'+
+			'<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">显示订单</div></div>'+
             '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">订单详情</div></div>'+
             '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">删除</div></div>'+
             '</td></tr>'
