@@ -27,12 +27,16 @@
 <%--//            size = applies.getCount()/applies.getPageSize()==0?applies.getCount()/applies.getPageSize()+1:applies.getCount()/applies.getPageSize();--%>
          <%--%>--%>
     <script>
+        var total_page = 0;
+        var current_page = 1;
+        var pageSize = 6 ;
+        var orderby = ""; //进行排序的依据
         $(function(){
             var w=$(".pad20")[0].clientWidth;
             $(".body_main").width=w;
         })
         $(function(){
-           InitData(1);
+            queryThis(2,1);
         })
 
 
@@ -73,9 +77,7 @@
                 }
             });
         }
-        function page_callback(page_index, jq){
-            InitData(page_index);
-        }
+
         function orderMsg(id){
             window.top.$.popWin({
                 title:"密码重置",
@@ -86,45 +88,109 @@
             });
 
         }
-        var totalPage=0;
-        var pageSize=20;
-        function InitData(pageIndex) {
-            var tbody = ""; //声明表格中body部分
-            $.ajax({ //这里使用到Jquery的ajax方法，具体使用在这里不详细叙述
-                type: "get",
-                dataType: "json",
-                url: '<%=request.getContextPath()%>/1.0/finance/getList/2/'+pageIndex, //请求的处理数据
-//				data: "pageIndex=" + (pageIndex + 1) + "&sortType=" + orderby,
-                //传入的参数，第一个参数就是分页的页数，第二个参数为排序的依据
-                //下面的操作就是成功返回数据以后，进行数据的绑定
-                success: function(data) {
-                    $(".blackbor_table tr:gt(0)").remove();
-                    var myData = data.messages;
-                    totalPage=Math.ceil(data.count/data.pageSize);
-                    pageSize=data.pageSize;
-                    $.each(myData, function(i, n) {
-                        var trs = "";
-                        trs += "<tr><td align='center'>" + i + "</td><td align='center'>" + n.type + "</td><td>" + n.name + "</td><td>" + n.contactName + "</td><td>" + n.phoneNumber + "</td><td>" + n.time + "</td><td>" + n.money + "</td><td>" + n.finshTime + "</td>";
-                        trs += '<td align="center">'+
-                                '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="deleteMsg('+ n.id+')"><div class="text c1 pdl0">删除</div></div>'+
-                                '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="pwdRewrite('+ n.id+')"><div class="text c1 pdl0">密码重置</div></div>'+
+        <%--var totalPage=0;--%>
+        <%--var pageSize=20;--%>
+        <%--function InitData(pageIndex) {--%>
+            <%--var tbody = ""; //声明表格中body部分--%>
+            <%--$.ajax({ //这里使用到Jquery的ajax方法，具体使用在这里不详细叙述--%>
+                <%--type: "get",--%>
+                <%--dataType: "json",--%>
+                <%--url: '<%=request.getContextPath()%>/1.0/finance/getList/2/'+pageIndex, //请求的处理数据--%>
+<%--//				data: "pageIndex=" + (pageIndex + 1) + "&sortType=" + orderby,--%>
+                <%--//传入的参数，第一个参数就是分页的页数，第二个参数为排序的依据--%>
+                <%--//下面的操作就是成功返回数据以后，进行数据的绑定--%>
+                <%--success: function(data) {--%>
+                    <%--$(".blackbor_table tr:gt(0)").remove();--%>
+                    <%--var myData = data.messages;--%>
+                    <%--totalPage=Math.ceil(data.count/data.pageSize);--%>
+                    <%--pageSize=data.pageSize;--%>
+                    <%--$.each(myData, function(i, n) {--%>
+                        <%--var trs = "";--%>
+                        <%--trs += "<tr><td align='center'>" + i + "</td><td align='center'>" + n.type + "</td><td>" + n.name + "</td><td>" + n.contactName + "</td><td>" + n.phoneNumber + "</td><td>" + n.time + "</td><td>" + n.money + "</td><td>" + n.finshTime + "</td>";--%>
+                        <%--trs += '<td align="center">'+--%>
+                                <%--'<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="deleteMsg('+ n.id+')"><div class="text c1 pdl0">删除</div></div>'+--%>
+                                <%--'<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="pwdRewrite('+ n.id+')"><div class="text c1 pdl0">密码重置</div></div>'+--%>
 
-                                '</td></tr>'
-                        tbody += trs;
-                    });
-                    $(tbody).appendTo(".blackbor_table");
-                }
+                                <%--'</td></tr>'--%>
+                        <%--tbody += trs;--%>
+                    <%--});--%>
+                    <%--$(tbody).appendTo(".blackbor_table");--%>
+                <%--}--%>
+            <%--});--%>
+            <%--//加入分页的绑定--%>
+            <%--$("#pagination").pagination(totalPage, {--%>
+                <%--callback: page_callback,--%>
+                <%--prev_text: '< 上一页',--%>
+                <%--next_text: '下一页 >',--%>
+                <%--items_per_page: 1,--%>
+                <%--num_display_entries: 6,--%>
+                <%--current_page: pageIndex-1,--%>
+                <%--num_edge_entries: 2--%>
+            <%--});--%>
+        <%--}--%>
+        function queryThis(type,page){
+            var param = {
+                "param.pageSize":pageSize,
+                "param.currentPage":current_page
+            };                                               //finance/getList/2/'+pageIndex
+            callAPI("<%=request.getContextPath()%>/1.0/finance/getList/"+type+"/"+page,param,queryThis_callback);
+        };
+        Date.prototype.Format = function(fmt)
+        { //author: meizz
+            var o = {
+                "M+" : this.getMonth()+1,                 //月份
+                "d+" : this.getDate(),                    //日
+                "h+" : this.getHours(),                   //小时
+                "m+" : this.getMinutes(),                 //分
+                "s+" : this.getSeconds(),                 //秒
+                "q+" : Math.floor((this.getMonth()+3)/3), //季度
+                "S"  : this.getMilliseconds()             //毫秒
+            };
+            if(/(y+)/.test(fmt))
+                fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+            for(var k in o)
+                if(new RegExp("("+ k +")").test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+            return fmt;
+        }
+        function queryThis_callback(data){
+            total_page = Math.ceil(data.count/data.pageSize);
+            current_page = data.pageNumber;
+            pageSize = data.pageSize;
+            var tbody = "";
+            $(".blackbor_table tr:gt(0)").remove();
+            var myData = data.messages;
+            $.each(myData, function(i, n) {
+                var trs = "";
+                trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.type + "</td><td>" + n.name + "</td><td>" + n.contactName + "</td><td>" + n.phoneNumber + "</td><td>" + new Date(n.time).Format("yyyy-MM-dd hh:mm:ss") + "</td><td>" + n.money+ "</td><td>" + n.finishTime+ "</td>";
+                trs += '<td align="center">'+
+                        '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="popOrderInfo('+ n.id+')"><div class="text c1 pdl0">订单详情</div></div>'+
+                        '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="deleteData('+n.id+')"><div class="text c1 pdl0">删除</div></div>'+
+                        '</td></tr>'
+                tbody += trs;
             });
-            //加入分页的绑定
-            $("#pagination").pagination(totalPage, {
+            $(tbody).appendTo(".blackbor_table");
+
+            $("#pagination").pagination(total_page,{
                 callback: page_callback,
-                prev_text: '< 上一页',
-                next_text: '下一页 >',
-                items_per_page: 1,
-                num_display_entries: 6,
-                current_page: pageIndex-1,
-                num_edge_entries: 2
+                items_per_page : 1,
+                prev_text:"上一页",
+                next_text:"下一页",
+                num_edge_entries : 3,			//边缘值
+                ellipse_text : '...',			//边缘显示
+                num_display_entries : 5	,		//显示条数
+                current_page : current_page - 1,
+                link_to : 'javascript:void(0)'
             });
+
+        }
+        //翻页回调
+        function page_callback(page_index,type, jq){
+            current_page = page_index + 1;
+            var param = {
+                "param.currentPage":current_page,
+                "param.pageSize":pageSize};
+            callAPI("<%=request.getContextPath()%>/1.0/finance/getList/"+type+"/"+current_page,param,queryThis_callback);
         }
     </script>
 
