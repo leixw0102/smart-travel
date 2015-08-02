@@ -18,6 +18,7 @@ package com.smart.service.impl;/*
  */
 
 import com.smart.common.Page;
+import com.smart.common.ResponseBody;
 import com.smart.dao.OrderDao;
 import com.smart.model.OrderInfo;
 import com.smart.model.UserClientInfo;
@@ -77,4 +78,24 @@ public class OrderServiceImpl implements OrderServie {
     public boolean deleteClientUserById(Long id) throws Exception {
         return orderDao.deleteClientUserById(id);  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    @Override
+    public ResponseBody searchUserOrder(Long id, Integer page) throws Exception {
+       String[] times = orderDao.getApplyTime(id);
+        Page<OrderInfo> infos = new Page<OrderInfo>() {
+            @Override
+            protected String listAlias() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+        int type=orderDao.getTypeById(id);
+        Long total=orderDao.count(id,times,type,4,9);
+        infos.setPageSize(5);
+        infos.setPageNumber(page);
+        infos.setCount(total);
+        List<OrderInfo> orders=orderDao.search(id,page,times,type,4,9) ;
+        infos.setMessages(orders);
+        return infos;
+    }
+
 }

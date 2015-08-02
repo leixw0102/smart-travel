@@ -18,6 +18,7 @@ package com.smart.service;/*
  */
 
 import com.smart.common.Page;
+import com.smart.common.ResponseBody;
 import com.smart.model.UserClientInfo;
 
 /**
@@ -33,4 +34,6 @@ public interface OrderServie {
     Page<UserClientInfo> getClientUsers(Integer page) throws Exception;
 
     boolean deleteClientUserById(Long id) throws Exception;
+
+    ResponseBody searchUserOrder(Long id, Integer page) throws Exception;
 }

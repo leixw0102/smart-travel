@@ -18,6 +18,7 @@
  */
 package com.smart.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.smart.common.ResponseMsg;
 import com.smart.model.CompanyInfo;
 import com.smart.model.SellerInfo;
@@ -58,4 +59,6 @@ public interface SellerDao {
     boolean deleteCategory(Long typeId) throws Exception;
 
     boolean updateCategory(Long id, String name) throws Exception;
+
+    JSONObject getCode(Long id) throws Exception;
 }

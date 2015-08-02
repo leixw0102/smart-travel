@@ -4,6 +4,7 @@ package com.smart.dao.impl;
 import com.smart.common.Page;
 import com.smart.dao.UserDao;
 import com.smart.model.CashUserInfo;
+import com.smart.model.NewsUserInfo;
 import com.smart.model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -202,6 +203,53 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
             }
         });  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<NewsUserInfo> searchNewsUser(int page, Integer size) throws Exception {
+        return super.getBySqlRowMapper("select * from t_user where role=2 order by id desc limit "+(page-1)*size+","+size,new RowMapper<CashUserInfo>() {
+            @Override
+            public CashUserInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                CashUserInfo info = new CashUserInfo();
+                info.setMark(rs.getString("mark"));
+                info.setContactName(rs.getString("alias"));
+                info.setId(rs.getLong("id"));
+                info.setPwd(rs.getString("pwd"));
+                info.setUserName(rs.getString("user_name"));
+                return info;
+            }
+        }); //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Long countNewsUser() throws Exception {
+        return super.getJdbcTemplate().queryForLong("select count(*) from t_user where role=3");  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    @Override
+    public boolean saveNewsUser(NewsUserInfo info) throws Exception {
+        return super.update("insert into t_user(user_name,pwd,phone,alias,mark,role) values('"+info.getUserName()+"','"+info.getPwd()+"','"+info.getPhone()+"','"+info.getContactName()+"','"+info.getMark()+"',2)");//To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public NewsUserInfo searchNewsUser(NewsUserInfo info) throws Exception {
+        return super.getJdbcTemplate().query("select * from t_user where user_name='"+info.getUserName()+"' and pwd='"+info.getPwd()+"'",new ResultSetExtractor<NewsUserInfo>() {
+            @Override
+            public NewsUserInfo extractData(ResultSet rs) throws SQLException, DataAccessException {
+                if(rs.next()){
+                    NewsUserInfo info = new NewsUserInfo();
+                    info.setMark(rs.getString("mark"));
+                    info.setUserName(rs.getString("user_name"));
+                    info.setPwd(rs.getString("pwd"));
+                    info.setId(rs.getLong("id"));
+                    info.setContactName(rs.getString("alias"));
+                    info.setPhone(rs.getString("phone"));
+                    return info;
+                }
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });    //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Transactional(readOnly = false,rollbackFor = Exception.class)

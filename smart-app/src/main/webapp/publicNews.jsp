@@ -86,30 +86,30 @@ function popCompanyInfo(){
 					<span class="titleSpan fl">已发布新闻</span>
 					<div class="bt_icon bt_icon_b2 fr pd10 r10 pr t8" onClick="popCompanyInfo()"><div class="text clfff pdl0">新闻发布</div></div>
                 </div>
-				<table class="blackbor_table bt0 bb0"  cellspacing="0" cellpadding="0">
-					<tr>
-						<td>
-							<div class="fieldsContainer fl">
-								<ul class="fields search pdt0 pdb0 bg2" style="width:100% ">
-									<li class="pr9 pb0">
-										<ul>
-											<li class="text w60 fb c1 pb0">发布日期：</li>
-											<li class="value pb0">
-												<input type="text" class="w300 h27 inputStyle"/>
-											</li>
-											<li class="text pb0">-</li>
-											<li class="value pb0">
-												<input type="text" class="w300 h27 inputStyle"/>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</div>
-							<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">查询</div></div>
-						</td>
-					</tr>
-				
-				</table>
+				<%--<table class="blackbor_table bt0 bb0"  cellspacing="0" cellpadding="0">--%>
+					<%--<tr>--%>
+						<%--<td>--%>
+							<%--<div class="fieldsContainer fl">--%>
+								<%--<ul class="fields search pdt0 pdb0 bg2" style="width:100% ">--%>
+									<%--<li class="pr9 pb0">--%>
+										<%--<ul>--%>
+											<%--<li class="text w60 fb c1 pb0">发布日期：</li>--%>
+											<%--<li class="value pb0">--%>
+												<%--<input type="text" class="w300 h27 inputStyle"/>--%>
+											<%--</li>--%>
+											<%--<li class="text pb0">-</li>--%>
+											<%--<li class="value pb0">--%>
+												<%--<input type="text" class="w300 h27 inputStyle"/>--%>
+											<%--</li>--%>
+										<%--</ul>--%>
+									<%--</li>--%>
+								<%--</ul>--%>
+							<%--</div>--%>
+							<%--<div class="bt_icon bt_icon_b3 fr r10 pr bd0"><div class="text c1 pdl0">查询</div></div>--%>
+						<%--</td>--%>
+					<%--</tr>--%>
+				<%----%>
+				<%--</table>--%>
 				
                 
 				<table class="blackbor_table"  cellspacing="0" cellpadding="0">

@@ -17,6 +17,7 @@ import com.smart.common.ResponseConstantCode;
 import com.smart.common.ResponseMsg;
 import com.smart.model.Apply;
 import com.smart.model.CashUserInfo;
+import com.smart.model.NewsUserInfo;
 import com.smart.model.UserInfo;
 import com.smart.service.UserService;
 import com.smart.vo.UserVo;
@@ -35,6 +36,30 @@ public class UserController extends BaseController {
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private UserService userService;
+
+    @RequestMapping("addNewsUser")
+    @ResponseBody
+    public com.smart.common.ResponseBody addNewsUser(HttpServletResponse response,HttpServletRequest request,NewsUserInfo info){
+        if(info.check()){
+            throw new ApiException(new ResponseMsg("10","填写信息错误"));
+        }
+        try{
+
+            NewsUserInfo find= userService.searchNewsUser(info);
+            if(null != find){
+                return new ResponseMsg("1","用户已经存在");
+            }
+
+            if(userService.saveNewsUser(info)){
+                return new ResponseMsg();
+            };
+            return new ResponseMsg("1","插入失败");
+        }catch (Exception e){
+            logger.error("add finance user error!" ,e);
+            return new ResponseMsg("1","插入失败"+e.getMessage());
+        }
+    }
+
 
     @RequestMapping("addFinanceUser")
     @ResponseBody
@@ -58,6 +83,7 @@ public class UserController extends BaseController {
             return new ResponseMsg("1","插入失败"+e.getMessage());
         }
     }
+
     @RequestMapping("getCashHome")
     public String getCashUserHome()  {
         return "finaceAcountManager";
@@ -68,6 +94,20 @@ public class UserController extends BaseController {
     public Page<CashUserInfo> getCashUsers(HttpServletResponse response,HttpServletRequest request,@PathVariable Integer page){
         try {
             Page<CashUserInfo> financeUsers=userService.searchCashUser(page,20);
+            return financeUsers;
+//            request.setAttribute("financeUsers",financeUsers);
+//            return "finaceAccountManager" ;
+        } catch (Exception e) {
+            throw new ApiException(new ResponseMsg(ResponseConstantCode.DATA_CANT_FOUND_CODE,ResponseConstantCode.DATA_CANT_FOUND_DESC));
+        }
+
+    }
+
+    @RequestMapping("newsUsers/{page}")
+    @ResponseBody
+    public Page<NewsUserInfo> getNewsUsers(HttpServletResponse response,HttpServletRequest request,@PathVariable Integer page){
+        try {
+            Page<NewsUserInfo> financeUsers=userService.searchNewsUser(page, 20);
             return financeUsers;
 //            request.setAttribute("financeUsers",financeUsers);
 //            return "finaceAccountManager" ;
@@ -126,6 +166,20 @@ public class UserController extends BaseController {
         }
 
     }
+
+    @RequestMapping("newsDeleteById/{id}")
+    @ResponseBody
+    public com.smart.common.ResponseBody deleteUser(@PathVariable Long id){
+        try{
+            if(userService.deleteById(id)){
+                return new ResponseMsg();
+            }
+            return new ResponseMsg("1","删除失败");
+        }catch (Exception e){
+            return new ResponseMsg("1","删除失败");
+        }
+
+    }
     @RequestMapping("updatePwd/{id}")
     @ResponseBody
     public   com.smart.common.ResponseBody updatePwd(@PathVariable Long id,@RequestParam String old,@RequestParam String newPwd) {
@@ -159,4 +213,9 @@ public class UserController extends BaseController {
         return msg;
     }
 
+    @RequestMapping("getOrderMsgPage/{id}")
+    public String getOrderMsgPage(HttpServletRequest request,HttpServletResponse response,@PathVariable Long id){
+        request.setAttribute("userForOrderId",id);
+        return "test";
+    }
 }

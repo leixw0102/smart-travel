@@ -19,6 +19,7 @@
 package com.smart.dao;
 
 import com.smart.model.MapInfo;
+import com.smart.model.TotalInfo;
 import com.smart.model.XYModel;
 
 import java.util.List;
@@ -33,5 +34,16 @@ import java.util.List;
 public interface StatisticsDao {
     List getHotelXY(int i, Integer type) throws Exception;
 
-    List<MapInfo> getHotelMap() throws Exception;
+    List<MapInfo> getHotelMap(int type) throws Exception;
+
+    List<XYModel> getLifeXY(Integer module) throws Exception;
+
+    String[] getTotal(Integer type) throws Exception;
+
+    public String total()throws Exception;
+
+    List<XYModel> getVsXY(int i, Integer type) throws Exception;
+
+    List<XYModel> getCateXY(Integer type) throws Exception
+            ;
 }

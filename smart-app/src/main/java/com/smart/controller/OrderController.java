@@ -44,6 +44,17 @@ import javax.servlet.http.HttpServletResponse;
 public class OrderController extends BaseController {
     @Autowired
     private OrderServie orderServie;
+    @RequestMapping("getUserOrder/{id}/{page}")
+    @ResponseBody
+    public com.smart.common.ResponseBody getUserOrder(HttpServletRequest request,HttpServletResponse response,@PathVariable Long id,@PathVariable Integer page){
+        try{
+            return orderServie.searchUserOrder(id,page);
+        }catch (Exception e){
+            logger.error("e",e);
+            return new ResponseMsg("1004",e.getMessage());
+        }
+    }
+
     @RequestMapping("getOrderLists/{id}/{type}/{orderType}/{page}")
     @ResponseBody
     public com.smart.common.ResponseBody getList(HttpServletRequest request,HttpServletResponse response,@PathVariable Long id,@PathVariable Integer type,@PathVariable Integer page,

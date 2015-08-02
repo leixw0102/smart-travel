@@ -1,11 +1,9 @@
 package com.smart.service;
 
 
-import com.smart.model.Apply;
-import com.smart.model.CashUserInfo;
-import com.smart.model.UserInfo;
+import com.smart.model.*;
 import com.smart.vo.UserVo;
-import com.smart.model.NewsInfo;
+
 import java.util.List;
 import java.util.Date;
 import com.smart.common.Page;
@@ -32,4 +30,9 @@ public interface UserService {
     boolean updateById(Long id, String old, String newPwd) throws Exception;
 
     CashUserInfo findUserByIdAndPwd(Long id, String old) throws Exception;
+
+    Page<NewsUserInfo> searchNewsUser(Integer page, int i) throws Exception;
+
+    boolean saveNewsUser(NewsUserInfo info) throws Exception;
+    NewsUserInfo searchNewsUser(NewsUserInfo info) throws Exception;
 }

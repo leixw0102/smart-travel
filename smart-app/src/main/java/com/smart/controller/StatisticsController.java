@@ -22,6 +22,7 @@ import com.smart.common.ResponseMsg;
 import com.smart.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -62,13 +63,69 @@ public class StatisticsController extends BaseController {
             return new ResponseMsg("2","查询出错");
         }
     }
-    @RequestMapping("hotel/getMapData")
+    @RequestMapping("getMapData/{type}")
     @ResponseBody
-    public com.smart.common.ResponseBody getMapView(){
+    public com.smart.common.ResponseBody getMapView(@PathVariable Integer type){
         try{
-            return statisticsService.getHotelMap();
+            return statisticsService.getHotelMap(type);
         }catch (Exception e){
             return new ResponseMsg("2","查询出错");
         }
     }
+
+    @RequestMapping("cate/getXy/{type}")
+    @ResponseBody
+    public com.smart.common.ResponseBody getCateXY(@PathVariable Integer type){
+        try{
+            return statisticsService.getCateXy(type);
+        }catch (Exception e){
+            logger.error("er",e);
+            return new ResponseMsg("2","查询出错");
+        }
+    }
+
+    @RequestMapping("vs/lastWeek")
+    @ResponseBody
+    public com.smart.common.ResponseBody getLastXY(@RequestParam(required = false)Integer type){
+        try{
+            com.smart.common.ResponseBody responseMsg= statisticsService.getVsXy(1, type);
+            logger.info(JSON.toJSONString(responseMsg));
+            return responseMsg;
+        }catch (Exception e){
+            logger.error("error",e);
+            return new ResponseMsg("2","查询出错");
+        }
+    }
+
+    @RequestMapping("vs/nextWeek")
+    @ResponseBody
+    public com.smart.common.ResponseBody getNextXY(@RequestParam(required = false)Integer type){
+        try{
+            return statisticsService.getVsXy(2, type);
+        }catch (Exception e){
+            logger.error("error",e);
+            return new ResponseMsg("2","查询出错");
+        }
+    }
+    @RequestMapping("life/getXy/{module}")
+    @ResponseBody
+    public com.smart.common.ResponseBody getLifeXY(@PathVariable Integer module,@RequestParam(required = false)Integer type){
+        try{
+            return statisticsService.getLifeXy(module);
+        }catch (Exception e){
+            logger.error("error",e);
+            return new ResponseMsg("2","查询出错");
+        }
+    }
+    @RequestMapping("getTotal")
+    @ResponseBody
+    public com.smart.common.ResponseBody getTotal(){
+        try{
+            return statisticsService.getTotal(0);
+        }catch (Exception e){
+            logger.error("e!",e);
+            return new ResponseMsg("2","查询出错");
+        }
+    }
+
 }

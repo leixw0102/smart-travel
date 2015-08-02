@@ -46,7 +46,7 @@
 
             type: "Post",
 
-            url: "<%=request.getContextPath()%>/1.0/user/financeDeleteById/"+id,
+            url: "<%=request.getContextPath()%>/1.0/user/newsDeleteById/"+id,
 
 //            data: $('#userLogin').serialize(),
 
@@ -69,7 +69,7 @@
 			$.ajax({ //这里使用到Jquery的ajax方法，具体使用在这里不详细叙述 
 				type: "get", 
 				dataType: "json", 
-				url: '<%=request.getContextPath()%>/1.0/user/cashUsers/'+pageIndex, //请求的处理数据
+				url: '<%=request.getContextPath()%>/1.0/user/newsUsers/'+pageIndex, //请求的处理数据
 //				data: "pageIndex=" + (pageIndex + 1) + "&sortType=" + orderby,
 				//传入的参数，第一个参数就是分页的页数，第二个参数为排序的依据 
 				//下面的操作就是成功返回数据以后，进行数据的绑定 
@@ -84,7 +84,6 @@
 						trs += '<td align="center">'+
 			                       	'<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="deleteMsg('+ n.id+')"><div class="text c1 pdl0">删除</div></div>'+
 			                        '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="pwdRewrite('+ n.id+')"><div class="text c1 pdl0">密码重置</div></div>'+
-
 			                    '</td></tr>'
 						tbody += trs; 
 					}); 
@@ -108,11 +107,11 @@
         var addFinance_win;
     function popCompanyInfo(){
         addFinance_win=window.top.$.popWin({
-			title:"添加财务用户",
+			title:"添加新闻用户",
 			width:610,
 			height:380,
 			center:true,
-			url:"<%=request.getContextPath()%>/finaceAcountManagerAdd.jsp"
+			url:"<%=request.getContextPath()%>/newsAcountManagerAdd.jsp"
 		});
 	}
 
@@ -125,14 +124,13 @@
 			url:"<%=request.getContextPath()%>/1.0/user/getUpdatePwdPage/"+id
 		});
     }
-
     </script>
 </head>
 <body class="pad20">
        <!--content-->
 	<div class="body_main">
            	<div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">
-				<span class="titleSpan fl">财务账号管理</span>
+				<span class="titleSpan fl">新闻账号管理</span>
 				<div class="bt_icon bt_icon_b2 fr pd10 r10 pr t8" onClick="popCompanyInfo()"><div class="text clfff pdl0">添加用户</div></div>
                </div>
                

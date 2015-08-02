@@ -3,9 +3,7 @@ package com.smart.service.impl;
 import com.smart.common.Page;
 import com.smart.common.DateUtils;
 import com.smart.dao.UserDao;
-import com.smart.model.CashUserInfo;
-import com.smart.model.SellerInfo;
-import com.smart.model.UserInfo;
+import com.smart.model.*;
 import com.smart.service.UserService;
 import com.smart.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import com.smart.model.NewsInfo;
 import java.util.List;
 @Service
 public class UserServiceImpl  implements UserService {
@@ -125,6 +122,33 @@ public class UserServiceImpl  implements UserService {
     @Override
     public CashUserInfo findUserByIdAndPwd(Long id, String old) throws Exception {
         return userDao.findUserByIdAndPwd(id,old);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Page<NewsUserInfo> searchNewsUser(Integer page, int i) throws Exception {
+        Page<NewsUserInfo> infos = new Page<NewsUserInfo>() {
+            @Override
+            protected String listAlias() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+        Long total = userDao.countNewsUser();
+        infos.setCount(total);
+        List<NewsUserInfo> users= userDao.searchNewsUser(page,i);  //To change body of implemented methods use File | Settings | File Templates.
+        infos.setMessages(users);
+        infos.setPageSize(page);
+        infos.setPageNumber(i);
+        return infos;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean saveNewsUser(NewsUserInfo info) throws Exception {
+        return userDao.saveNewsUser(info);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public NewsUserInfo searchNewsUser(NewsUserInfo info) throws Exception {
+        return userDao.searchNewsUser(info);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 

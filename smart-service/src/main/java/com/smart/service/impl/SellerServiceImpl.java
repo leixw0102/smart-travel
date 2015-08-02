@@ -17,6 +17,7 @@ package com.smart.service.impl;/*
  * under the License.
  */
 
+import com.alibaba.fastjson.JSONObject;
 import com.smart.common.Page;
 import com.smart.common.ResponseMsg;
 import com.smart.dao.SellerDao;
@@ -114,5 +115,10 @@ public class SellerServiceImpl implements SellerService {
     @Override
     public boolean updateCategory(Long id, String name) throws Exception {
         return sellerDao.updateCategory(id,name);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public JSONObject getCode(Long id) throws Exception {
+        return sellerDao.getCode(id);  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
