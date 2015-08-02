@@ -54,10 +54,15 @@
 
 			var trs = ""; 
 			trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.type + "</td><td>" + n.name + "</td><td>" + n.contaceName + "</td><td>" + n.phoneNumber + "</td><td>" + n.time + "</td><td>" + n.money + "</td><td>" + + "</td>";
-			trs += '<td align="center">'+
-			'<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">显示订单</div></div>'+
-            '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">订单详情</div></div>'+
-            '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick=""><div class="text c1 pdl0">删除</div></div>'+
+			trs += '<td align="center">'
+                    if(n.status==1){
+                        trs += '<div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="confirm('+n.id+')"><div class="text c1 pdl0">兑现</div></div>'+
+            '<div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="refuse('+ n.id+')"><div class="text c1 pdl0">拒绝</div></div>'
+                    }else if(n.status==2){
+                        trs +='<div class="text c1 pdl0">已兑现</div>';
+                    } else if(n.status=3){
+                        trs+='<div class="text c1 pdl0">已拒绝</div>';
+                    }
             '</td></tr>'
 			tbody += trs; 
 		}); 
