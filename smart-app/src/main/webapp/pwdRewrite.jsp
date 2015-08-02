@@ -59,7 +59,7 @@
         <ul class="fields search pdt0 pdb0">
             <li class="pr9">
                 <ul>
-                    <li class="text w60 fb c1">新密码：</li>
+                    <li class="text w60 fb c1">原始密码：</li>
                     <li class="">
                         <input type="password" name="old"  class="w300 h27 inputStyle"/>
                     </li>
@@ -67,7 +67,7 @@
             </li>
             <li class="ml15 pr9">
                 <ul>
-                    <li class="text w60 fb c1">确认密码：</li>
+                    <li class="text w60 fb c1">新密码：</li>
                     <li class="">
                         <input type="password" name="newPwd" class="w300 h27 inputStyle"/>
                     </li>
