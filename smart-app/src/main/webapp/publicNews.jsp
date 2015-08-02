@@ -133,7 +133,7 @@ function popCompanyInfo(){
 					  <tr>
 						<td ><%=id%></td>
 						<td class="list-link"><%=info.getTitle()%></td>
-						<td><img src=<%=info.getPicture()%> height="100" width="100" /></td>
+						<td><img height="100" width="100" src=<%=info.getPicture()%> /></td>
 						<td><%=info.getAbs()%></td>
 						<td ><%=info.getCreateTime()%></td>
 						<td ><%=info.getContent()%></td>
