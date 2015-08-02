@@ -669,7 +669,27 @@
 	margin:30px auto;
 	color:#999;
 }
-
+.refresh{
+	background:url(../images/refresh.png) no-repeat;
+	width:18px;
+	height:17px;
+	margin-top:25px;
+}
+.life-statis-icon{
+	background:url(../images/life-statis.png) no-repeat;
+	width:15px;
+	height:15px;
+}
+.scence-statis-icon{
+	background:url(../images/scence-statis.png) no-repeat;
+	width:15px;
+	height:12px;
+}
+.user-statis-icon{
+	background:url(../images/user-statis.png) no-repeat;
+	width:15px;
+	height:12px;
+}
 
 
 
