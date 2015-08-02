@@ -203,7 +203,7 @@
         </div>
     </div>
 </div>
-<body class="pad20">
+<body>
 <div class="body_main">
     <div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">
         <span class="titleSpan fl">财务管理</span>
