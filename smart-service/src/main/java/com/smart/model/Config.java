@@ -31,8 +31,18 @@ import org.springframework.stereotype.Component;
 public class Config {
     @Value("#{config['news.url']}")
     private String url;
-    @Value("#{config['pic.path']}")
+    @Value("#{config['pic.root']}")
     private String rootPath;
+    @Value("#{config['pic.news']}")
+    private String path;
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     public String getRootPath() {
         return rootPath;

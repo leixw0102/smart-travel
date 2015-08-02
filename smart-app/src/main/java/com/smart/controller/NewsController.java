@@ -62,6 +62,7 @@ public class NewsController extends BaseController {
                 Iterator<String> ite = multiRequest.getFileNames();
                 String af="";
                 File localDir ;
+                File news;
                 List<String> paths= Lists.newArrayList();
                 title = multiRequest.getParameter("title");
                 abs= multiRequest.getParameter("abs");
@@ -71,6 +72,10 @@ public class NewsController extends BaseController {
                     if(!localDir.exists()){
                         localDir.mkdirs();
                     }
+                    news = new File(localDir,config.getPath());
+                    if(!news.exists()){
+                        news.mkdirs();
+                    }
                     while(ite.hasNext()){
                         String name = ite.next();
                         MultipartFile file = multiRequest.getFile(name);
@@ -78,10 +83,10 @@ public class NewsController extends BaseController {
                             File localFile=null;
                             try {
                                 String serverFileName=System.nanoTime()+"_"+file.getOriginalFilename();
-                                localFile = new File(localDir,serverFileName);
-                                logger.debug("af = "+af +" ;localdir = "+localDir.getAbsolutePath()+" ; file = "+localFile.getAbsolutePath());
+                                localFile = new File(news,serverFileName);
+                                logger.debug("af = "+af +" ;localdir = "+localDir.getAbsolutePath()+" ; file = "+localFile.getAbsolutePath()+"news"+news.getAbsolutePath());
                                 file.transferTo(localFile); //将上传文件写到服务器上指定的文件
-                                paths.add(config.getUrl()+File.separator+localDir.getName()+File.separator+serverFileName);
+                                paths.add(config.getUrl()+File.separator+config.getPath()+File.separator+serverFileName);
                             } catch (IllegalStateException e) {
                                 e.printStackTrace();
                                 logger.error("error msg!",e);
