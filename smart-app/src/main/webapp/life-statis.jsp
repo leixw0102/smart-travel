@@ -289,11 +289,11 @@ function contentWH(){
 	<div class="page">
         <div style="margin:20px">
         	<div style="width:100%;">
-            	<div style="display:inline-block">统计类型</div>
-            	<select id="totalType" style="display:inline-block" onchange="testChange(this)">
-                	<option value="1">订单数量</option>
-                    <option value="2">消费额度</option>
-                </select>
+            	<%--<div style="display:inline-block">统计类型</div>--%>
+            	<%--<select id="totalType" style="display:inline-block" onchange="testChange(this)">--%>
+                	<%--<option value="1">订单数量</option>--%>
+                    <%--<option value="2">消费额度</option>--%>
+                <%--</select>--%>
             </div>
         	<div style="width:100%;">
             	<div style="display:inline-block;width:45%;height:290px;border:1px solid #ccc;position: relative">
