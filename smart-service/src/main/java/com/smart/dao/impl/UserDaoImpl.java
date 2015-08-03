@@ -298,6 +298,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         return super.getJdbcTemplate().query("select * from news where id="+id,new ResultSetExtractor<NewsInfo>() {
             @Override
             public NewsInfo extractData(ResultSet rs) throws SQLException, DataAccessException {
+                if(rs.next()){
                 NewsInfo info = new NewsInfo();
                 info.setId(rs.getLong("id"));
                 info.setTitle(rs.getString("title"));
@@ -306,6 +307,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 info.setPicture(rs.getString("picture"));
                 info.setContent(rs.getString("content"));
                 return info;//To change body of implemented methods use File | Settings | File Templates.
+                }
+                return null;
             }
         });  //To change body of implemented methods use File | Settings | File Templates.
     }

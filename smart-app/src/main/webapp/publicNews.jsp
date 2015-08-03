@@ -19,11 +19,11 @@
     <script src="<%=request.getContextPath()%>/js/plugins/jquery-ui-1.10.4.custom.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="<%=request.getContextPath()%>/js/plugins/popWin/js/jquery.window.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
-    <%--<%   Object user = session.getAttribute("userSessionId");--%>
-    <%--if(null == user ){--%>
-    <%--response.sendRedirect("login.jsp");--%>
+    <%   Object user = session.getAttribute("userSessionId");
+    if(null == user ){
+    response.sendRedirect("login.jsp");
 
-    <%--}--%>
+    } %>
     <%--Page<NewsInfo> pag1= (Page<NewsInfo>) request.getAttribute("msgs");%>--%>
     <script>
         var total_page = 0;
@@ -79,7 +79,11 @@
             var myData = data.messages;
             $.each(myData, function(i, n) {
             	var trs = ""; 
-    			trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.title + "</td><td>" + n.abs + "</td><td>" + n.createTime + "</td><td>" + n.content + "</td></tr>";
+    			trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.title + "</td><td>" + n.abs + "</td><td>" + n.createTime + "</td><td>" + n.content + "</td>" +
+                        '<td align="center">'+
+                        '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="updateNews('+n.id+')"><div class="text c1 pdl0">编辑</div></div>'+
+                        '</td>'
+                        "</tr>";
     			tbody += trs; 
             });
             $(tbody).appendTo(".blackbor_table.listTable");
@@ -116,7 +120,15 @@
                 url:"<%=request.getContextPath()%>/publicNews-edit.jsp"
             });
         }
-
+        function updateNews(id){
+            window.top.$.popWin({
+                title:"编辑发布新闻页",
+                width:610,
+                height:430,
+                center:true,
+                url:"<%=request.getContextPath()%>/publicNews-edit-news.jsp?id="+id
+            });
+        }
     </script>
 </head>
 <body>
@@ -168,7 +180,7 @@
             <td width="20%">简介</td>
             <td width="15%" >创建日期</td>
             <td width="45%">内容 </td>
-
+            <td width="10%">操作</td>
         </tr>
 
     </table>

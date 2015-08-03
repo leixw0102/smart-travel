@@ -44,6 +44,7 @@ public class NewsController extends BaseController {
     @Resource(name="configImg")
     private Config config;
     @RequestMapping("view/{id}")
+    @ResponseBody
     public ResponseMsg view(@PathVariable Long id,HttpServletRequest request,HttpServletResponse response) {
         try{
             return userService.view(id);

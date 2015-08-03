@@ -141,7 +141,7 @@ public class UserController extends BaseController {
                     if(type==1){
                         msg.setInfo("/1.0/seller/main");
                     }else if(type==2){
-                        msg.setInfo("/1.0/news/list?page=1");
+                        msg.setInfo("/publicNews.jsp");
                     } else if(type==3){
                         msg.setInfo("/finace-main.jsp");
                     }
