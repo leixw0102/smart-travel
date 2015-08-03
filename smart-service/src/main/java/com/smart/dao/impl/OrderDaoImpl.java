@@ -247,7 +247,7 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
             cause+=" and b.name like '%"+name+"%'";
         }
         logger.info(getSqlForCompleted(type)+" where 1=1 "+cause+" and a.order_pay_type_id in (3,4) and a.seller_id=b.user_id");
-        final String sql = getSqlForCompleted(type)+" where 1=1 "+cause+" and a.order_pay_type_id in (3,4) and a.seller_id=b.user_id limit "+(page-1)*15+",15";
+        final String sql = getSqlForCompleted(type)+" where 1=1 "+cause+" and a.order_pay_type_id in (3,4) and a.seller_id=b.user_id limit "+(page-1)*10+",10";
         return super.getBySqlRowMapper(sql,new RowMapper<OrderInfo>() {
             @Override
             public OrderInfo mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -47,7 +47,8 @@
                         $('#title1').attr("value",msg.title);
                         $('#abs').text(msg.abs);
                         $('#content').text(msg.content)
-                        $("#file1").text(msg.picture)
+                        $("#file1").val(msg.picture)
+//                        $("input[type='file']").val(msg.picture);
                     }else{
                         alert(result.message)
                     }

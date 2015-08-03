@@ -85,6 +85,9 @@ public class NewsController extends BaseController {
                 while(ite.hasNext()){
                     String name = ite.next();
                     MultipartFile file = multiRequest.getFile(name);
+                    if(!Strings.isNullOrEmpty(file.getOriginalFilename())){
+                        continue;
+                    }
                     if(file!=null){
                         File localFile=null;
                         try {

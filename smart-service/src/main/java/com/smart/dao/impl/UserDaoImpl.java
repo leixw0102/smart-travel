@@ -284,7 +284,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 info.setId(rs.getLong("id"));
                 info.setTitle(rs.getString("title"));
                 info.setAbs(rs.getString("abs"));
-                info.setCreateTime(rs.getDate("create_time"));
+                info.setCreateTime(rs.getTimestamp("create_time"));
                 info.setPicture(rs.getString("picture"));
                 info.setContent(rs.getString("content"));
                 return info;
