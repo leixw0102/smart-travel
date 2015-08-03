@@ -2,6 +2,7 @@ package com.smart.service;
 
 
 import com.smart.common.ResponseBody;
+import com.smart.common.ResponseMsg;
 import com.smart.model.*;
 import com.smart.vo.UserVo;
 
@@ -38,4 +39,8 @@ public interface UserService {
     NewsUserInfo searchNewsUser(NewsUserInfo info) throws Exception;
 
     ResponseBody userNewsList(Long page, int i, String time, String to) throws Exception;
+
+    ResponseMsg view(Long id) throws Exception;
+
+    boolean update(String join, String title, String content, String abs, Long id) throws Exception;
 }

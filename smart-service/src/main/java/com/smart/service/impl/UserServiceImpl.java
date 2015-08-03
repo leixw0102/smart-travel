@@ -3,6 +3,7 @@ package com.smart.service.impl;
 import com.smart.common.Page;
 import com.smart.common.DateUtils;
 import com.smart.common.ResponseBody;
+import com.smart.common.ResponseMsg;
 import com.smart.dao.UserDao;
 import com.smart.model.*;
 import com.smart.service.UserService;
@@ -168,6 +169,19 @@ public class UserServiceImpl  implements UserService {
         page.setCount(total);
         page.setMessages(list);
         return page;   //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public ResponseMsg view(Long id) throws Exception {
+        ResponseMsg msg = new ResponseMsg();
+        NewsInfo info = userDao.view(id);
+        msg.setInfo(info);
+        return msg;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean update(String join, String title, String content, String abs, Long id) throws Exception {
+        return userDao.update(join,title,content,abs,id);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 

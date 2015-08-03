@@ -293,6 +293,28 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }});  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public NewsInfo view(Long id) throws Exception {
+        return super.getJdbcTemplate().query("select * from news where id="+id,new ResultSetExtractor<NewsInfo>() {
+            @Override
+            public NewsInfo extractData(ResultSet rs) throws SQLException, DataAccessException {
+                NewsInfo info = new NewsInfo();
+                info.setId(rs.getLong("id"));
+                info.setTitle(rs.getString("title"));
+                info.setAbs(rs.getString("abs"));
+                info.setCreateTime(rs.getDate("create_time"));
+                info.setPicture(rs.getString("picture"));
+                info.setContent(rs.getString("content"));
+                return info;//To change body of implemented methods use File | Settings | File Templates.
+            }
+        });  //To change body of implemented methods use File | Settings | File Templates.
+    }
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    @Override
+    public boolean update(String join, String title, String content, String abs, Long id) throws Exception {
+        return super.update("update news set title='"+title+"',content='"+content+"',abs='"+abs+"',picture='"+join+"' where id="+id);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     @Transactional(readOnly = false,rollbackFor = Exception.class)
     @Override
     public boolean create(String join, String title, String content, String abs) throws Exception {

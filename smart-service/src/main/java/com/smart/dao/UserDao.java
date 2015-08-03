@@ -48,4 +48,8 @@ public interface UserDao {
     Long count(String time)throws Exception;
 
     List<NewsInfo> userNewsList(Long page1, int i, String time, String to) throws Exception;
+
+    NewsInfo view(Long id) throws Exception;
+
+    boolean update(String join, String title, String content, String abs, Long id) throws Exception;
 }

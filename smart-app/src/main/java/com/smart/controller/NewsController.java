@@ -43,12 +43,90 @@ public class NewsController extends BaseController {
     private UserService userService;
     @Resource(name="configImg")
     private Config config;
+    @RequestMapping("view/{id}")
+    public ResponseMsg view(@PathVariable Long id,HttpServletRequest request,HttpServletResponse response) {
+        try{
+            return userService.view(id);
+        }catch (Exception e){
+            logger.error("er",e);
+            return new ResponseMsg("100"," 预览失败"+e.getMessage());
+        }
+    }
+    @RequestMapping(value = "update")
+    @ResponseBody
+    public ResponseMsg updateNews(HttpServletRequest request,HttpServletResponse response) {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        multipartResolver.setDefaultEncoding("utf-8");
+        logger.info(multipartResolver.isMultipart(request)+"");
+        String title=null, abs=null,content=null;
+        Long id;
+        if(multipartResolver.isMultipart(request))  {
+            MultipartHttpServletRequest multiRequest = multipartResolver.resolveMultipart(request);
 
+            Iterator<String> ite = multiRequest.getFileNames();
+            String af="";
+            File localDir ;
+            File news;
+            List<String> paths= Lists.newArrayList();
+            title = multiRequest.getParameter("title");
+            abs= multiRequest.getParameter("abs");
+            id = Long.parseLong(multiRequest.getParameter("id"));
+            content = multiRequest.getParameter("content");
+            try{
+                localDir= new File(config.getRootPath());
+                if(!localDir.exists()){
+                    localDir.mkdirs();
+                }
+                news = new File(localDir,config.getPath());
+                if(!news.exists()){
+                    news.mkdirs();
+                }
+                while(ite.hasNext()){
+                    String name = ite.next();
+                    MultipartFile file = multiRequest.getFile(name);
+                    if(file!=null){
+                        File localFile=null;
+                        try {
+                            String serverFileName=System.nanoTime()+"_"+file.getOriginalFilename();
+                            localFile = new File(news,serverFileName);
+                            logger.debug("af = "+af +" ;localdir = "+localDir.getAbsolutePath()+" ; file = "+localFile.getAbsolutePath()+"news"+news.getAbsolutePath());
+                            file.transferTo(localFile); //将上传文件写到服务器上指定的文件
+                            paths.add(config.getUrl()+File.separator+config.getPath()+File.separator+serverFileName);
+                        } catch (IllegalStateException e) {
+                            e.printStackTrace();
+                            logger.error("error msg!",e);
+                            e.printStackTrace();
+                            throw new Exception("upload error!");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            logger.error("error msg!",e);
+                            throw new Exception("upload error");
+                        }
+                    }
+                }
 
+            }catch(Exception e){
+                logger.error("error!",e);
+                return new ResponseMsg("1","error!"+e.getMessage());
+            }
+            logger.debug(Joiner.on(";").join(paths));
+            //update
+            try {
+                if(userService.update(Joiner.on(";").join(paths), title, content, abs,id)){
+                    return new ResponseMsg();
+                };
+                Files.deleteDirectoryContents(localDir);
+                return new ResponseMsg("12","上传失败！检查用户相关信息");
+            } catch (Exception e) {
+                logger.error("upload error msg!",e);
+                return new ResponseMsg("12","update hote msg error!");
+            }
+        }
+        return  new ResponseMsg("12","update hote msg error!");
+    }
 
     @RequestMapping(value = "create")
     @ResponseBody
-
     public ResponseMsg newsCreate(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
             // JSONObject obj = getJsonObject(request);
             // String body = readRequestBody(request);
