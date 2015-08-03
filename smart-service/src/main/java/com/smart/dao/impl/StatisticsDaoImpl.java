@@ -95,34 +95,34 @@ public class StatisticsDaoImpl extends BaseDaoImpl implements StatisticsDao {
 //       String day=DateTime.now().toYearMonthDay();
         String current=DateTime.now().plusMonths(type).toString("yyyy-MM");
         String next=DateTime.now().plusMonths(type+1).toString("yyyy-MM");
-       Double hotel_total=super.getJdbcTemplate().queryForObject("select sum(total_price) from hotel_order where create_time<='"+next+"' and create_time>'"+current+"'",Double.class);
-        Double vs_total=super.getJdbcTemplate().queryForObject("select sum(total_price) from view_spot_order where create_time<='"+next+"' and create_time>'"+current+"'",Double.class);
-        Double pay_total=super.getJdbcTemplate().queryForObject("select sum(total_price) from pay_now_order where create_time<='"+next+"' and create_time>'"+current+"'",Double.class);
+        Float hotel_total=super.getJdbcTemplate().queryForObject("select sum(total_price) from hotel_order where create_time<='"+next+"' and create_time>'"+current+"'",Float.class);
+        Float vs_total=super.getJdbcTemplate().queryForObject("select sum(total_price) from view_spot_order where create_time<='"+next+"' and create_time>'"+current+"'",Float.class);
+        Float pay_total=super.getJdbcTemplate().queryForObject("select sum(total_price) from pay_now_order where create_time<='"+next+"' and create_time>'"+current+"'",Float.class);
         if(null == hotel_total){
-            hotel_total=0d;
+            hotel_total=0f;
         }
         if(null == vs_total){
-            vs_total=0d;
+            vs_total=0f;
         }
         if(pay_total==null){
-            pay_total=0d;
+            pay_total=0f;
         }
         return new String[]{current,(hotel_total+vs_total+pay_total)+""};
     }
 
     @Override
     public String total() throws Exception {
-        Double hotel_total=super.getJdbcTemplate().queryForObject("select sum(total_price) from hotel_order ",Double.class);
-        Double vs_total=super.getJdbcTemplate().queryForObject("select sum(total_price) from view_spot_order ",Double.class);
-        Double pay_total=super.getJdbcTemplate().queryForObject("select sum(total_price) from pay_now_order ",Double.class);
+        Float hotel_total=super.getJdbcTemplate().queryForObject("select sum(total_price) from hotel_order ",Float.class);
+        Float vs_total=super.getJdbcTemplate().queryForObject("select sum(total_price) from view_spot_order ",Float.class);
+        Float pay_total=super.getJdbcTemplate().queryForObject("select sum(total_price) from pay_now_order ",Float.class);
         if(null == hotel_total){
-            hotel_total=0d;
+            hotel_total=0f;
         }
         if(null == vs_total){
-            vs_total=0d;
+            vs_total=0f;
         }
         if(pay_total==null){
-            pay_total=0d;
+            pay_total=0f;
         }
         return (hotel_total+vs_total+pay_total)+"";
     }
@@ -145,7 +145,13 @@ public class StatisticsDaoImpl extends BaseDaoImpl implements StatisticsDao {
 
     @Override
     public List<XYModel> getCateXY(Integer type) throws Exception {
-        return super.getBySqlRowMapper("select count(a.id) as total ,date(a.create_time) as time from pay_now_order  as a, restaurant as b where b.id=a.where_id  and a.where_type_id =3 and a.create_time>='"+getDay(-30)+"' group by date(a.create_time) desc ",new RowMapper<XYModel>() {
+        String sql="";
+        if(type==1){
+            sql="select count(a.id) as total ,date(a.create_time) as time from pay_now_order  as a, restaurant as b where b.id=a.where_id  and a.where_type_id =3 and a.create_time>='"+getDay(-30)+"' group by date(a.create_time) desc ";
+        }else if(type==2){
+           sql = "select count(a.total_price) as total ,date(a.create_time) as time from pay_now_order  as a, restaurant as b where b.id=a.where_id  and a.where_type_id =3 and a.create_time>='"+getDay(-30)+"' group by date(a.create_time) desc ";
+        }
+        return super.getBySqlRowMapper(sql,new RowMapper<XYModel>() {
             @Override
             public XYModel mapRow(ResultSet rs, int rowNum) throws SQLException {
                 XYModel model = new XYModel();

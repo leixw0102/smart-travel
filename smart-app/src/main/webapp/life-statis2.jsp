@@ -69,7 +69,7 @@ require(
         $.ajax({
             type: "get",//使用get方法访问后台
             dataType: "json",//返回json格式的数据
-            url: "<%=request.getContextPath()%>/1.0/cate/getXy/1",//要访问的后台地址
+            url: "<%=request.getContextPath()%>/1.0/cate/getXy/"+$("#totalType").val(),//要访问的后台地址
             success: function(msg){//msg为返回的数据，在这里做数据绑定
                 if(msg.code==0){
                     option.xAxis.push(msg.messages[0]);

@@ -107,7 +107,7 @@ function editCompanyInfo(id,type){
 						<td width="5%">商户类型</td>
 						<%--<td width="20%" >商户名称</td>--%>
                         <%--<td width="10%" >联系人</td>--%>
-                        <td width="5%" >服务费比例</td>
+                        <%--<td width="5%" >服务费比例</td>--%>
                         <td width="10%" >创建日期</td>
 						<td width="10%" class="borderright">备注</td>
 						<td width="20%" class="borderright">操作</td>
@@ -128,7 +128,7 @@ function editCompanyInfo(id,type){
                         <td><%=info.getType()%></td>
                         <%--<td ><%=info.getSellerName()%></td>--%>
                         <%--<td ><%=info.getContactName()%></td>--%>
-                        <td><%=info.getFree()%></td>
+                        <%--<td><%=info.getFree()%></td>--%>
                         <td><%=new DateTime(info.getCreateTime()).toString("yyyy-MM-dd HH:mm:ss")%></td>
                         <td><%=info.getRemark()%></td>
                         <td><div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="editCompanyInfo(<%=info.getId()%>,<%=info.getT()%>)"><div class="text c1 pdl0">修改商户信息</div></div>
