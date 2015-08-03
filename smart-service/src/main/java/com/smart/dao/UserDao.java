@@ -22,7 +22,7 @@ public interface UserDao {
 
     public List<NewsInfo> userNewsList(int pageNumber, int pageSize)throws Exception;
     public NewsInfo userNewsDetail(int id)throws Exception;
-    public Long count() throws Exception;
+    public Long count(String time, String to) throws Exception;
 
     List<CashUserInfo> searchCashUser(int i, int i1) throws Exception;
 
@@ -47,5 +47,5 @@ public interface UserDao {
 
     Long count(String time)throws Exception;
 
-    List<NewsInfo> userNewsList(Long page1, int i, String time) throws Exception;
+    List<NewsInfo> userNewsList(Long page1, int i, String time, String to) throws Exception;
 }

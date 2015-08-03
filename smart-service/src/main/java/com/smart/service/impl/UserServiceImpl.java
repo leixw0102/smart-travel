@@ -60,7 +60,7 @@ public class UserServiceImpl  implements UserService {
         };
         page.setPageNumber(pageNumber);
         page.setPageSize(10);
-        Long total = userDao.count();
+        Long total = userDao.count("", "");
         List<NewsInfo> list = userDao.userNewsList(pageNumber, pageSize);
         page.setCount(total);
         page.setMessages(list);
@@ -153,7 +153,7 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
-    public ResponseBody userNewsList(Long page1, int i, String time) throws Exception {
+    public ResponseBody userNewsList(Long page1, int i, String time,String to) throws Exception {
         Page<NewsInfo> page = new Page<NewsInfo>() {
 
             @Override
@@ -163,8 +163,8 @@ public class UserServiceImpl  implements UserService {
         };
         page.setPageNumber(i);
         page.setPageSize(10);
-        Long total = userDao.count(time);
-        List<NewsInfo> list = userDao.userNewsList(page1, i,time);
+        Long total = userDao.count(time,to);
+        List<NewsInfo> list = userDao.userNewsList(page1, i,time,to);
         page.setCount(total);
         page.setMessages(list);
         return page;   //To change body of implemented methods use File | Settings | File Templates.

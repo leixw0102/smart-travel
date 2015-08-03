@@ -2,7 +2,6 @@ package com.smart.dao.impl;
 
 
 import com.google.common.base.Strings;
-import com.smart.common.Page;
 import com.smart.dao.UserDao;
 import com.smart.model.CashUserInfo;
 import com.smart.model.NewsUserInfo;
@@ -10,7 +9,6 @@ import com.smart.model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -118,8 +116,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public Long count() throws Exception {
-        return super.getJdbcTemplate().queryForObject("select count(*) from news where del=0", Long.class);  //To change body of implemented methods use File | Settings | File Templates.
+    public Long count(String time, String to) throws Exception {
+        String where ="";
+        if(!Strings.isNullOrEmpty(time) && Strings.isNullOrEmpty(to)){
+            where+="date(create_time)>='"+time+"' and date(create_time)<="+to+"'";
+        }
+        return super.getJdbcTemplate().queryForObject("select count(*) from news where del=0 "+where, Long.class);  //To change body of implemented methods use File | Settings | File Templates.
 
     }
 
@@ -264,10 +266,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public List<NewsInfo> userNewsList(Long page1, int i, String time) throws Exception {
-        String where="";
-        if(!Strings.isNullOrEmpty(time)){
-            where+=" and date(create_time)='"+time+"'";
+    public List<NewsInfo> userNewsList(Long page1, int i, String time,String to) throws Exception {
+        String where ="";
+        if(!Strings.isNullOrEmpty(time) && Strings.isNullOrEmpty(to)){
+            where+="date(create_time)>='"+time+"' and date(create_time)<="+to+"'";
         }
         String sql="select * from news where del=0 "+where+"  order by create_time desc limit "+(page1-1)*i+","+i ;
         logger.debug(sql);

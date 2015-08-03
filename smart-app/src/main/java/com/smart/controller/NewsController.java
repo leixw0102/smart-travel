@@ -147,9 +147,9 @@ public class NewsController extends BaseController {
     }
     @RequestMapping("lists/{page}")
     @ResponseBody
-    public com.smart.common.ResponseBody getNewsList(HttpServletRequest request,HttpServletResponse response,@PathVariable Long page, @RequestParam(required = false) String time){
+    public com.smart.common.ResponseBody getNewsList(HttpServletRequest request,HttpServletResponse response,@PathVariable Long page, @RequestParam(required = false) String from,@RequestParam(required = false) String to){
         try{
-            return userService.userNewsList(page,10,time);
+            return userService.userNewsList(page,10,from,to);
         } catch (Exception e){
             logger.error("ds",e);
             return new ResponseMsg<>("10","error!"+e.getMessage());

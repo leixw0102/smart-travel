@@ -37,5 +37,5 @@ public interface UserService {
     boolean saveNewsUser(NewsUserInfo info) throws Exception;
     NewsUserInfo searchNewsUser(NewsUserInfo info) throws Exception;
 
-    ResponseBody userNewsList(Long page, int i, String time) throws Exception;
+    ResponseBody userNewsList(Long page, int i, String time, String to) throws Exception;
 }
