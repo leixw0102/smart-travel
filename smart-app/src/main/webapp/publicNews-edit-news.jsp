@@ -43,7 +43,7 @@
                 success: function(result){
                     if (result.code==0){
                         var msg = result.info;
-                        alert(msg.title);
+//                        alert(msg.title);
                         $('#title1').attr("value",msg.title);
                         $('#abs').text(msg.abs);
                         $('#content').text(msg.content)
@@ -58,10 +58,10 @@
 
         function update(){
 //            alert($('#newsInfo').serialize())
-            alert($('#title1').val())
-            alert($('#abs').val())
-            alert('<%=id%>')
-            alert($('#content').val())
+            <%--alert($('#title1').val())--%>
+            <%--alert($('#abs').val())--%>
+            <%--alert('<%=id%>')--%>
+            <%--alert($('#content').val())--%>
             $.ajaxFileUpload
             (
                     {
