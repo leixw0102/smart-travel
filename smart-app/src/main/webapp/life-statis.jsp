@@ -244,6 +244,34 @@ function contentWH(){
 	$(".page").width(document.body.clientWidth - $(".menu").outerWidth(true));
 }
 </script>
+<script type="text/javascript">
+    function testChange(obj){
+        function cyStatis(obj){
+            var val = $(obj).val();
+            $.ajax({
+                type: "get",//使用get方法访问后台
+                dataType: "json",//返回json格式的数据
+                url: "<%=request.getContextPath()%>/FinaceAction?type=select-chars",//要访问的后台地址
+                data:{
+                    selectType:val
+                },
+                success: function(msg){//msg为返回的数据，在这里做数据绑定
+                    option.xAxis = [];
+                    option.series = [];
+                    $.each(msg, function(i, n) {
+                        if(i==0){
+                            option.xAxis.push(n.xAxis);
+                        }else{
+                            option.series.push(n.series);
+                        }
+
+                    });
+                    cyChart.setOption(option);
+                }
+            });
+        }
+    }
+</script>
 </head>
 
 <body>
@@ -261,11 +289,11 @@ function contentWH(){
 	<div class="page">
         <div style="margin:20px">
         	<div style="width:100%;">
-            	<%--<div style="display:inline-block">统计类型</div>--%>
-            	<%--<select style="display:inline-block">--%>
-                	<%--<option>订单数量</option>--%>
-                    <%--<option>消费额度</option>--%>
-                <%--</select>--%>
+            	<div style="display:inline-block">统计类型</div>
+            	<select id="totalType" style="display:inline-block" onchange="testChange(this)">
+                	<option value="1">订单数量</option>
+                    <option value="2">消费额度</option>
+                </select>
             </div>
         	<div style="width:100%;">
             	<div style="display:inline-block;width:45%;height:290px;border:1px solid #ccc;position: relative">

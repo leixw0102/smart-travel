@@ -47,7 +47,7 @@ function contentWH(){
 <!--content-->
 <div class="content">
 	<div class="page" style="width:100%">
-		<iframe src="publicNews.jsp" frameborder="0" allowTransparency='true' height="100%" id="mainFrame" name="mainFrame" width="100%"></iframe>
+		<iframe src="publicNews-old.jsp" frameborder="0" allowTransparency='true' height="100%" id="mainFrame" name="mainFrame" width="100%"></iframe>
 	</div>
 </div>
 </body>
