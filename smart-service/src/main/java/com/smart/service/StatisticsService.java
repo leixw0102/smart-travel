@@ -34,7 +34,7 @@ public interface StatisticsService {
 
     ResponseBody getHotelMap(int type) throws Exception;
 
-    ResponseBody getLifeXy(Integer module) throws Exception;
+    ResponseBody getLifeXy(Integer module, Integer type) throws Exception;
 
     ResponseBody getTotal(Integer type) throws Exception;
 

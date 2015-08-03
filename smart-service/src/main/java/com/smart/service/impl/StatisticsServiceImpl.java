@@ -86,7 +86,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public ResponseBody getLifeXy(Integer module) throws Exception {
+    public ResponseBody getLifeXy(Integer module, Integer type) throws Exception {
         Page<XY> msg = new Page<XY>() {
             @Override
             protected String listAlias() {
@@ -95,7 +95,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         };
         List<String> x= Lists.newArrayList();
         List<String> y = Lists.newArrayList();
-        List<XYModel> models=statisticsDao.getLifeXY(module);
+        List<XYModel> models=statisticsDao.getLifeXY(module,type);
         for(XYModel model:models){
             x.add(model.getDay());
             y.add(model.getValue());

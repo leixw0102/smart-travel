@@ -79,7 +79,7 @@
             var myData = data.messages;
             $.each(myData, function(i, n) {
             	var trs = ""; 
-    			trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.title + "</td><td><img width='100' height='100' src='"+ n.picture+"'></td><td>" + n.abs + "</td><td>" + n.createTime + "</td><td>" + n.content + "</td></tr>";
+    			trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.title + "</td><td>" + n.abs + "</td><td>" + n.createTime + "</td><td>" + n.content + "</td></tr>";
     			tbody += trs; 
             });
             $(tbody).appendTo(".blackbor_table.listTable");
@@ -164,7 +164,7 @@
         <tr class="trup">
             <td width="10%">序号</td>
             <td width="10%">标题</td>
-            <td width="10%">图片</td>
+            <%--<td width="10%">图片</td>--%>
             <td width="20%">简介</td>
             <td width="15%" >创建日期</td>
             <td width="45%">内容 </td>

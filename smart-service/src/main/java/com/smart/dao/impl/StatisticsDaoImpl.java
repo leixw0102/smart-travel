@@ -77,9 +77,15 @@ public class StatisticsDaoImpl extends BaseDaoImpl implements StatisticsDao {
     }
 
     @Override
-    public List<XYModel> getLifeXY(Integer module) throws Exception {
-        logger.debug("select count(a.id) as total ,date(a.create_time) as time from pay_now_order  as a, life as b where b.id=a.where_id  and a.where_type_id =4 and b.life_type="+module+" and a.create_time>='"+getDay(-30)+"' group by date(a.create_time) desc ");
-        return super.getBySqlRowMapper("select count(a.id) as total ,date(a.create_time) as time from pay_now_order  as a, life as b where b.id=a.where_id  and a.where_type_id =4 and b.life_type="+module+" and a.create_time>='"+getDay(-30)+"' group by date(create_time) desc ",new RowMapper<XYModel>() {
+    public List<XYModel> getLifeXY(Integer module, Integer type) throws Exception {
+        String sql="";
+        if(module==1){
+            sql = "select count(a.id) as total ,date(a.create_time) as time from pay_now_order  as a, life as b where b.id=a.where_id  and a.where_type_id =4 and b.life_type="+type+" and a.create_time>='"+getDay(-30)+"' group by date(a.create_time) desc ";
+        } else if(module==2){
+            sql = "select sum(a.total_price) as total ,date(a.create_time) as time from pay_now_order  as a, life as b where b.id=a.where_id  and a.where_type_id =4 and b.life_type="+type+" and a.create_time>='"+getDay(-30)+"' group by date(a.create_time) desc ";
+        }
+        logger.debug(sql);
+        return super.getBySqlRowMapper(sql,new RowMapper<XYModel>() {
             @Override
             public XYModel mapRow(ResultSet rs, int rowNum) throws SQLException {
                 XYModel model = new XYModel();
@@ -149,8 +155,9 @@ public class StatisticsDaoImpl extends BaseDaoImpl implements StatisticsDao {
         if(type==1){
             sql="select count(a.id) as total ,date(a.create_time) as time from pay_now_order  as a, restaurant as b where b.id=a.where_id  and a.where_type_id =3 and a.create_time>='"+getDay(-30)+"' group by date(a.create_time) desc ";
         }else if(type==2){
-           sql = "select count(a.total_price) as total ,date(a.create_time) as time from pay_now_order  as a, restaurant as b where b.id=a.where_id  and a.where_type_id =3 and a.create_time>='"+getDay(-30)+"' group by date(a.create_time) desc ";
+           sql = "select sum(a.total_price) as total ,date(a.create_time) as time from pay_now_order  as a, restaurant as b where b.id=a.where_id  and a.where_type_id =3 and a.create_time>='"+getDay(-30)+"' group by date(a.create_time) desc ";
         }
+        logger.debug("sql="+sql);
         return super.getBySqlRowMapper(sql,new RowMapper<XYModel>() {
             @Override
             public XYModel mapRow(ResultSet rs, int rowNum) throws SQLException {

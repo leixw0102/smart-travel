@@ -36,7 +36,7 @@ public interface StatisticsDao {
 
     List<MapInfo> getHotelMap(int type) throws Exception;
 
-    List<XYModel> getLifeXY(Integer module) throws Exception;
+    List<XYModel> getLifeXY(Integer module, Integer type) throws Exception;
 
     String[] getTotal(Integer type) throws Exception;
 

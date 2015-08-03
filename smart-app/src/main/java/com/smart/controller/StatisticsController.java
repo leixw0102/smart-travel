@@ -111,7 +111,7 @@ public class StatisticsController extends BaseController {
     @ResponseBody
     public com.smart.common.ResponseBody getLifeXY(@PathVariable Integer module,@RequestParam(required = false)Integer type){
         try{
-            return statisticsService.getLifeXy(module);
+            return statisticsService.getLifeXy(module,type);
         }catch (Exception e){
             logger.error("error",e);
             return new ResponseMsg("2","查询出错");
