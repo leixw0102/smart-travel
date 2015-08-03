@@ -11,26 +11,48 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bridging.css"/>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
+    <%
+        Long id = Long.parseLong(request.getParameter("id"));
+    %>
 <script>
 function save(){
-	var newRow = $('<li class="bg2">'+
-    '<ul>'+
-    '<li ><input type="checkbox"/></li>'+
-    '<li class="ml20 secondName category-name"></li>'+
-    '<li class="del">删除</li>'+
-    '<li class="edi">编辑</li>'+
-'</ul>'+
-'</li>');
-	var second_item = $(window.top.frames["mainFrame"].that).closest(".bg1").find(".second-item");
-	newRow.appendTo(second_item);
-	newRow.find(".category-name").text($("#categoryName").val());
+//	var newRow = $('<li class="bg2">'+
+//    '<ul>'+
+//    '<li ><input type="checkbox"/></li>'+
+//    '<li class="ml20 secondName category-name"></li>'+
+//    '<li class="del">删除</li>'+
+//    '<li class="edi">编辑</li>'+
+//'</ul>'+
+//'</li>');
+//	var second_item = $(window.top.frames["mainFrame"].that).closest(".bg1").find(".second-item");
+//	newRow.appendTo(second_item);
+//	newRow.find(".category-name").text($("#categoryName").val());
+    $.ajax({
+
+        type: "Post",
+
+        url: "<%=request.getContextPath()%>/1.0/category/addCategory/"+<%=id%>,
+
+        data: $('#saveCategory').serialize(),
+
+        success: function(result){
+            if (result.code==0){
+                alert("修改成功")
+//                            InitData(1);
+            }else{
+                alert(result.message)
+            }
+
+        }
+
+    });
 }
    
 </script>
 </head>
 <body class="pad20">
 		<div class="body_main">
-		<form id="companyInfo">
+		<form id="saveCategory">
 		<!--filter start-->
 		<div class="fieldsContainer">
 			<ul class="fields search pdt0 pdb0">
@@ -38,7 +60,7 @@ function save(){
 					<ul>
 						<li class="text w60 fb c1">分类名称：</li>
 						<li class="value">
-							<input id="categoryName" name="categoryName" type="text" class="w300 h27 inputStyle"/>
+							<input id="categoryName" name="name" type="text" class="w300 h27 inputStyle"/>
 						</li>
 					</ul>
 				</li>

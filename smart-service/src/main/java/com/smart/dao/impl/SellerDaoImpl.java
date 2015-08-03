@@ -18,12 +18,10 @@ package com.smart.dao.impl;/*
  */
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.smart.common.ResponseMsg;
 import com.smart.dao.SellerDao;
-import com.smart.model.CompanyInfo;
-import com.smart.model.SellerInfo;
-import com.smart.model.TypeConfig;
+import com.smart.model.*;
 import com.smart.vo.SellerVo;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -373,6 +371,36 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
         return object;
     }
 
+    @Override
+    public List<TypeInfo> getTypes1() throws Exception {
+//        List<Type> configs=super.getBySqlRowMapper("select * from type_config",new RowMapper<TypeConfig>() {
+//            @Override
+//            public Type mapRow(ResultSet rs, int rowNum) throws SQLException {
+//                Type config = new Type();
+//                config.setId(rs.getInt("id"));
+//                config.setTypeId(rs.getInt("type_id"));
+//                config.setTypeName(rs.getString("type_name"));
+//                return config;  //To change body of implemented methods use File | Settings | File Templates.
+//            }
+//        });
+        List<TypeInfo> infos = Lists.newArrayList();
+        for(int i=1;i<=4;i++){
+            TypeInfo info = new TypeInfo();
+            info.setType(i);
+            info.setTypes(getTypesA(i));
+            infos.add(info);
+//            info.setName();
+        }
+
+        return infos;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    @Override
+    public boolean addCategory(Long id, String name, int i) throws Exception {
+        return super.update("insert into type_config(type_id,type_name,module,is_modify) values ("+i+",'"+name+"',"+id+",0)");  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+
     public String getTypeSql(int i){
         switch (i){
             case 2:
@@ -416,5 +444,20 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
             default:
                 return "0";
         }
+    }
+    @Override
+    public List<Type> getTypesA(Integer type) throws Exception {
+        List<Type> configs=super.getBySqlRowMapper("select * from type_config where module="+type +" order by type_id ",new RowMapper<Type>() {
+            @Override
+            public Type mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Type config = new Type();
+                config.setId(rs.getLong("id"));
+                config.setType(rs.getInt("type_id"));
+                config.setName(rs.getString("type_name"));
+//                config.setModify(rs.getInt(""));
+                return config;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+       return configs;
     }
 }

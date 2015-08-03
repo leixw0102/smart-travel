@@ -143,7 +143,7 @@ public class UserController extends BaseController {
                     }else if(type==2){
                         msg.setInfo("/1.0/news/list?page=1");
                     } else if(type==3){
-                        msg.setInfo("/1.0/finance/getHomeList/2/1");
+                        msg.setInfo("/finace-main.jsp");
                     }
                     return msg;
                 }

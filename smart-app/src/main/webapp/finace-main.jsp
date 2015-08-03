@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+﻿<%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -91,13 +91,13 @@ function logout(){
 	<div class="menu">
 		<div class="items">
 			<ul class="menu-items">
-				<li class="no-level finaAcount"><a href="<%=request.getContextPath()%>/1.0/user/getCashHome" target="mainFrame"></a></li>
-                <li class="no-level finaAcount"><a href="js-order.jsp" target="mainFrame"></a></li>
+				<li class="no-level finaAcount"><a href="<%=request.getContextPath()%>/finace.jsp" target="mainFrame"></a></li>
+                <li class="no-level jsOrder"><a href="<%=request.getContextPath()%>/js-order.jsp" target="mainFrame"></a></li>
 			</ul>
 		</div>
 	</div>
 	<div class="page">
-		<iframe src="<%=request.getContextPath()%>/1.0/user/getCashHome" frameborder="0" allowTransparency='true' height="100%" id="mainFrame" name="mainFrame" width="100%"></iframe>
+		<iframe src="<%=request.getContextPath()%>/finace.jsp" frameborder="0" allowTransparency='true' height="100%" id="mainFrame" name="mainFrame" width="100%"></iframe>
 	</div>
 </div>
 </body>

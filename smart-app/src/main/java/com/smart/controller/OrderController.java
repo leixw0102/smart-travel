@@ -66,6 +66,21 @@ public class OrderController extends BaseController {
             return new ResponseMsg("1004",e.getMessage());
         }
     }
+
+    @RequestMapping("getCompletedOrder/{type}/{orderType}/{page}")
+    @ResponseBody
+    public com.smart.common.ResponseBody getCompletedList(HttpServletRequest request,HttpServletResponse response,@PathVariable Integer type,@PathVariable Integer page,
+                                                 @RequestParam(required = false) String from,@RequestParam(required = false) String to,
+                                                 @RequestParam(required = false) String name,
+                                                 @PathVariable Integer orderType){
+        try{
+            return orderServie.search(page,from,to,type,orderType,name);
+        }catch (Exception e){
+            logger.info("e",e);
+            return new ResponseMsg("1004",e.getMessage());
+        }
+    }
+
     @RequestMapping("userHome")
     public String getUserOrderHome(){
         return "userAcountManager";

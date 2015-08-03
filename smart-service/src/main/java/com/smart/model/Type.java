@@ -1,4 +1,4 @@
-package com.smart.service;/*
+package com.smart.model;/*
  * Copyright 2015 Future TV, Inc.
  *
  * The contents of this file are subject to the terms
@@ -17,25 +17,48 @@ package com.smart.service;/*
  * under the License.
  */
 
-import com.smart.common.Page;
-import com.smart.common.ResponseBody;
-import com.smart.model.UserClientInfo;
-
 /**
  * Created by leixw
  * <p/>
  * Author: leixw
- * Date: 2015/07/19
- * Time: 16:49
+ * Date: 2015/08/03
+ * Time: 09:11
  */
-public interface OrderServie {
-    Page search(Long id, Integer page, String from, String to, Integer type, Integer orderType) throws Exception;
+public class Type {
+    private Long id;
+    private int type;
+    private String name;
+    private int isModify;
 
-    Page<UserClientInfo> getClientUsers(Integer page) throws Exception;
+    public int getModify() {
+        return isModify;
+    }
 
-    boolean deleteClientUserById(Long id) throws Exception;
+    public void setModify(int modify) {
+        isModify = modify;
+    }
 
-    ResponseBody searchUserOrder(Long id, Integer page) throws Exception;
+    public Long getId() {
+        return id;
+    }
 
-    ResponseBody search(Integer page, String from, String to, Integer type, Integer orderType, String name) throws Exception;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 }

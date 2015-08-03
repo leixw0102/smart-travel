@@ -22,6 +22,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.smart.common.ResponseMsg;
 import com.smart.model.CompanyInfo;
 import com.smart.model.SellerInfo;
+import com.smart.model.Type;
+import com.smart.model.TypeInfo;
 import com.smart.vo.SellerVo;
 
 import java.util.List;
@@ -37,7 +39,7 @@ import java.util.Map;
 public interface SellerDao {
     public List<SellerInfo> getSeller(Integer pageNumber,Integer pageSize) throws Exception;
     public Long count()throws Exception;
-
+    public List<Type> getTypesA(Integer type) throws Exception;
     Map<Integer,Map<Integer,String>> getTypes() throws Exception;
    Map<Integer,String> getTypes(Integer type) throws Exception;
     Long addSeller(SellerVo info) throws Exception;
@@ -61,4 +63,8 @@ public interface SellerDao {
     boolean updateCategory(Long id, String name) throws Exception;
 
     JSONObject getCode(Long id) throws Exception;
+
+    List<TypeInfo> getTypes1() throws Exception;
+
+    boolean addCategory(Long id, String name, int i) throws Exception;
 }

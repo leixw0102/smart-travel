@@ -23,6 +23,8 @@ import com.smart.common.ResponseMsg;
 import com.smart.dao.SellerDao;
 import com.smart.model.CompanyInfo;
 import com.smart.model.SellerInfo;
+import com.smart.model.Type;
+import com.smart.model.TypeInfo;
 import com.smart.service.SellerService;
 import com.smart.vo.SellerVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,8 +63,16 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public Map<Integer, Map<Integer, String>> getTypes() throws Exception {
-        return sellerDao.getTypes();  //To change body of implemented methods use File | Settings | File Templates.
+    public Page getTypes() throws Exception {
+        Page<TypeInfo> page = new Page<TypeInfo>() {
+            @Override
+            protected String listAlias() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+        List<TypeInfo> infos=sellerDao.getTypes1();//To change body of implemented methods use File | Settings | File Templates.
+        page.setMessages(infos);
+        return page;
     }
 
     @Override
@@ -120,5 +130,12 @@ public class SellerServiceImpl implements SellerService {
     @Override
     public JSONObject getCode(Long id) throws Exception {
         return sellerDao.getCode(id);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean addCategory(Long id, String name) throws Exception {
+        List<Type> types = sellerDao.getTypesA(id.intValue());
+        int typeId=  types.get(types.size()-1).getType()+1;
+        return sellerDao.addCategory(id,name,typeId);  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

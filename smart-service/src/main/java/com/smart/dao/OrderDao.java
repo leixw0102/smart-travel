@@ -49,4 +49,8 @@ public interface OrderDao {
     Long count(Long id, String[] times, int type, int type1, int orderType) throws Exception;
 
     List<OrderInfo> search(Long id, Integer page, String[] times, int type, int type1, int orderType) throws Exception;
+
+    Long count(String from, String to, Integer type, Integer orderType, String name) throws Exception;
+
+    List<OrderInfo> search(Integer page, String from, String to, Integer type, Integer orderType, String name) throws Exception;
 }

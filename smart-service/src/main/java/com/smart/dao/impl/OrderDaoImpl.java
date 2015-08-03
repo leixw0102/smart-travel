@@ -102,7 +102,7 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
             case 5:
                 return "已退款";
             default:
-                return "";
+                return "其他";
         }
     }
 
@@ -222,5 +222,63 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
                 return info;  //To change body of implemented methods use File | Settings | File Templates.
             }
         });  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Long count(String from, String to, Integer type, Integer orderType, String name) throws Exception {
+        String cause="";
+        if(!Strings.isNullOrEmpty(from) && !Strings.isNullOrEmpty(to)){
+            cause+=" and a.create_time >='"+from+"' and a.create_time<='"+to+"'";
+        }
+        if(!Strings.isNullOrEmpty(name)){
+            cause+=" and b.name like '%"+name+"%'";
+        }
+        logger.info("select count(*) "+ getOrderSql(type) +" where 1=1 "+cause+" and a.order_pay_type_id in (3,4)");
+        return super.getJdbcTemplate().queryForLong("select count(*) "+ getOrderSql(type) +" where 1=1 "+cause+" and a.order_pay_type_id in (3,4)  and a.seller_id=b.user_id" ); //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<OrderInfo> search(Integer page, String from, String to, Integer type, Integer orderType, String name) throws Exception {
+        String cause="";
+        if(!Strings.isNullOrEmpty(from) && !Strings.isNullOrEmpty(to)){
+            cause+=" and a.create_time >='"+from+"' and a.create_time<='"+to+"'";
+        }
+        if(!Strings.isNullOrEmpty(name)){
+            cause+=" and b.name like '%"+name+"%'";
+        }
+        logger.info(getSqlForCompleted(type)+" where 1=1 "+cause+" and a.order_pay_type_id in (3,4) and a.seller_id=b.user_id");
+        final String sql = getSqlForCompleted(type)+" where 1=1 "+cause+" and a.order_pay_type_id in (3,4) and a.seller_id=b.user_id limit "+(page-1)*15+",15";
+        return super.getBySqlRowMapper(sql,new RowMapper<OrderInfo>() {
+            @Override
+            public OrderInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                OrderInfo info = new OrderInfo();
+                info.setId(rs.getLong("id"));
+                if(rs.getTimestamp("time")!=null){
+                    info.setCreateTime(new DateTime(rs.getTimestamp("time").getTime()).toString("yyyy-MM-dd HH:mm:ss"));
+                }
+                info.setName(rs.getString("name"));
+                info.setOrderId(rs.getLong("order_id"));
+                info.setStatus(getOrderStatus(rs.getInt("order_status_id")));
+                info.setMoney(rs.getFloat("total_price"));
+                info.setContactName(rs.getString("contact_name"));
+                info.setPhoneNumber(rs.getString("phone_number"));
+                return info;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public String getSqlForCompleted(Integer type){
+        switch (type){
+            case 2:
+                return "select a.total_price,b.phone_number,b.contact_name, a.order_id,a.id,a.use_time as time,b.name,a.order_status_id from hotel_order as a,hotel as b ";
+            case 4:
+                return "select a.total_price,b.phone_number,b.contact_name, a.order_id,a.id,a.pay_time as time,b.name,a.order_status_id from pay_now_order as a,restaurant b ";
+            case 5:
+                return "select a.total_price,b.phone_number,b.contact_name, a.order_id,a.id,a.pay_time as time,b.name,a.order_status_id from view_spot_order as a,view_spot as b ";
+            case 6:
+                return "select a.total_price,b.phone_number,b.contact_name, a.order_id,a.id,a.pay_time as time,b.name,a.order_status_id from pay_now_order as a ,life as b";
+            default:
+                return "  " ;
+        }
     }
 }

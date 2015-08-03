@@ -30,6 +30,33 @@ public class OrderInfo {
     private String status;
     private String createTime;
     private Long id;
+    private String contactName;
+    private String phoneNumber;
+    private float money;
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public float getMoney() {
+        return money;
+    }
+
+    public void setMoney(float money) {
+        this.money = money;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getCreateTime() {
         return createTime;

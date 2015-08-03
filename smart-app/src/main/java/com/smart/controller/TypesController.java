@@ -17,9 +17,11 @@ package com.smart.controller;/*
  * under the License.
  */
 
+import com.alibaba.fastjson.JSON;
 import com.smart.common.ResponseMsg;
 import com.smart.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,23 +38,32 @@ import java.util.Map;
  * Date: 2015/07/28
  * Time: 14:55
  */
-@RequestMapping("/1.0/category/")
-public class CategoryController extends BaseController {
+//@Controller
+@RequestMapping("/1.0/c/")
+public class TypesController extends BaseController {
     @Autowired
     private SellerService sellerService;
-    @RequestMapping("typies")
-    public String getCategory( HttpServletRequest request,HttpServletResponse response){
+    @RequestMapping("typesA")
+    @ResponseBody
+    public ResponseMsg getCategoryAB( HttpServletRequest request,HttpServletResponse response){
         try {
-            Map<Integer,Map<Integer,String>> type=sellerService.getTypes();
-            request.setAttribute("typeies-abc",type);
+//            Map<Integer,Map<Integer,String>> type=sellerService.getTypes();
+//            request.setAttribute("typeies-abc",type);
+            ResponseMsg msg = new ResponseMsg();
+//            msg.setInfo(type);
+            logger.info(JSON.toJSONString(msg));
+            return msg;
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            return new ResponseMsg("10","查询出错");
         }
-        return "category-m";
+//        return "category-m";
     }
-    @RequestMapping("delete/{id}")
+
+//    public String
+    @RequestMapping("deleteA/{id}")
     @ResponseBody
-    public ResponseMsg deleteCategoty(@PathVariable Long id){
+    public ResponseMsg deleteCategotyAB(@PathVariable Long id){
 
         try{
             if(sellerService.deleteCategory(id)){
@@ -64,9 +75,9 @@ public class CategoryController extends BaseController {
         }
 
     }
-    @RequestMapping("update/{id}")
+    @RequestMapping("updateA/{id}")
     @ResponseBody
-    public ResponseMsg updateCategory(@PathVariable Long id,@RequestParam(required = true) String name){
+    public ResponseMsg updateCategoryAB(@PathVariable Long id,@RequestParam(required = true) String name){
 
         try{
             if(sellerService.updateCategory(id,name)){

@@ -1,6 +1,3 @@
-<%@ page import="com.smart.model.Apply" %>
-<%@ page import="com.smart.common.Page" %>
-<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -25,7 +22,7 @@
             response.sendRedirect("login.jsp");
 
         }
-        Long id=Long.parseLong(request.getAttribute("userId").toString());
+
     %>
 
     <script>
@@ -34,17 +31,25 @@
     var pageSize = 10 ;
     $(function(){
     	//初始化请求数据列表
-    	queryThis('<%=id%>',2,1,'','',1);
+//    	queryThis('2',2,1,'','',1);
 
 	})
-	function queryThis(id,type,orderType,from,to,page){
+	function queryThis(type,orderType,from,to,name,page){
     	var param = {
     		"from":from,
-    		"to":to
+    		"to":to,
+            "name":name
     	};
-    	callAPI("<%=request.getContextPath()%>/1.0/order/getOrderLists/"+id+"/"+type+"/"+orderType+"/"+page,param,queryThis_callback);
+    	callAPI("<%=request.getContextPath()%>/1.0/order/getCompletedOrder/"+type+"/"+orderType+"/"+page,param,queryThis_callback);
     };
-    
+    function getfinish(exp){
+        if (!exp && typeof(exp)=="undefined" && exp!=0)
+        {
+            return "";
+        }else{
+            return exp;
+        }
+    }
     function queryThis_callback(data){
         total_page = Math.ceil(data.count/data.pageSize);
         current_page = data.pageNumber;
@@ -54,7 +59,7 @@
 		var myData = data.messages;
 		$.each(myData, function(i, n) {
 			var trs = ""; 
-			trs += "<tr><td align='center'>" +(++i) + "</td><td align='center'>" + n.orderId + "</td><td>" + n.name + "</td><td>" + n.status + "</td><td>" + n.createTime + "</td></tr>";
+			trs += "<tr><td align='center'>" +(++i) + "</td><td align='center'>" + n.orderId + "</td><td>" + n.name + "</td><td>" + n.contactName + "</td><td>" + n.money + "</td><td>" +getfinish(n.createTime) + "</td><td></td></tr>";
 			tbody += trs; 
 		}); 
 		$(tbody).appendTo(".blackbor_table.listTable"); 
@@ -73,21 +78,23 @@
     	
     }
     //翻页回调
-	function page_callback(id,type,orderType,from,to,page, jq){
+	function page_callback(page, jq){
    		current_page = page + 1;
    		var param = {
-   				"from":from,
-   				"to":to};
-   		callAPI("<%=request.getContextPath()%>/1.0/order/getOrderLists/"+id+"/"+type+"/"+orderType+"/"+page,param,queryThis_callback);
+   				"from":$('#from-abc').val(),
+   				"to":$('#to-abc').val(),
+            "name":$('#shopName').val()
+        };
+   		callAPI("<%=request.getContextPath()%>/1.0/order/getCompletedOrder/"+$('#type-abc').val()+"/1/"+current_page,param,queryThis_callback);
 	}
 		
 			
     </script>
     <script type="text/javascript">
 
-        function search(id){
+        function search(){
             <%--alert('${#type-abc}'.val())--%>
-            queryThis(id,$('#type-abc').val(),$('#orderType-abc').val(),$('#from-abc').val(),$('#to-abc').val(),1)
+            queryThis($('#type-abc').val(),1,$('#from-abc').val(),$('#to-abc').val(),$('#shopName').val(),1)
         }
     </script>
 </head>
@@ -117,7 +124,7 @@
 										<ul>
 											<li class="text w60 fb c1 pb0">商家名字</li>
 											<li class="value pb0">
-												<input type="text" class="w60 h27 inputStyle"/>
+												<input id="shopName" name="shopName" type="text" class="w60 h27 inputStyle"/>
 											</li>
 										</ul>
 									</li>
@@ -135,7 +142,7 @@
 									</li>
 								</ul>
 							</div>
-							<div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="search('<%=id%>')"><div class="text c1 pdl0">查询</div></div>
+							<div class="bt_icon bt_icon_b3 fr r10 pr bd0" onclick="search()"><div class="text c1 pdl0">查询</div></div>
 						</td>
 					</tr>
 				
@@ -144,7 +151,7 @@
 				<tr class="trup">
 					<td width="5%">序号</td>
                     <td width="15%" >订单号</td>
-                    <td width="20%" >联系人</td>
+                    <td width="20%" >商家店名</td>
                     <td width="10%" >联系人手机号</td>
                     <td width="10%" >订单金额</td>
                     <td width="10%" >结算日期</td>

@@ -98,4 +98,21 @@ public class OrderServiceImpl implements OrderServie {
         return infos;
     }
 
+    @Override
+    public ResponseBody search(Integer page, String from, String to, Integer type, Integer orderType, String name) throws Exception {
+        Page<OrderInfo> infos = new Page<OrderInfo>() {
+            @Override
+            protected String listAlias() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+        Long total=orderDao.count(from,to,type,orderType,name);
+        infos.setPageSize(5);
+        infos.setPageNumber(page);
+        infos.setCount(total);
+        List<OrderInfo> orders=orderDao.search(page,from,to,type,orderType,name);
+        infos.setMessages(orders);
+        return infos;
+    }
+
 }
