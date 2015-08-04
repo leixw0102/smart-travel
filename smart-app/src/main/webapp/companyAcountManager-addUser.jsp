@@ -35,30 +35,29 @@
             if(!checkSubmitMobil()){
                 return false;
             } else{
-                alert(1);
-                <%--$.ajax({--%>
+                $.ajax({
 
-                    <%--type: "GET",--%>
+                    type: "GET",
 
-                    <%--url: "<%=request.getContextPath()%>/1.0/seller/addUser",--%>
+                    url: "<%=request.getContextPath()%>/1.0/seller/addUser",
 
-                    <%--data: {--%>
-                        <%--"userName":$("#userName").val(),--%>
-                        <%--"pwd":$("#pwd").val(),--%>
-                        <%--"pwd2":$("#pwd2").val(),--%>
-                        <%--"type":$("#type").val(),--%>
-                        <%--"remark":$("#to").val()--%>
-                    <%--},--%>
-                    <%--success: function(result){--%>
-                        <%--if (result.code==0){--%>
-                            <%--location.href="<%=request.getContextPath()%>/1.0/seller/addCompanyPage";--%>
-                        <%--}else{--%>
-                            <%--alert(result.message)--%>
-                        <%--}--%>
+                    data: {
+                        "userName":$("#userName").val(),
+                        "pwd":$("#pwd").val(),
+                        "pwd2":$("#pwd2").val(),
+                        "type":$("#type").val(),
+                        "remark":$("#to").val()
+                    },
+                    success: function(result){
+                        if (result.code==0){
+                            location.href="<%=request.getContextPath()%>/1.0/seller/addCompanyPage";
+                        }else{
+                            alert(result.message)
+                        }
 
-                    <%--}--%>
+                    }
 
-                <%--});--%>
+                });
             }
         }
 
