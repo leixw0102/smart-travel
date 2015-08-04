@@ -184,5 +184,11 @@ public class UserServiceImpl  implements UserService {
         return userDao.update(join,title,content,abs,id);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public boolean deleteNewsById(Long id) throws Exception {
+
+        return userDao.deleteNewsById(id);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
 
 }

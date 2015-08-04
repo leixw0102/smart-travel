@@ -53,6 +53,20 @@ public class NewsController extends BaseController {
             return new ResponseMsg("100"," 预览失败"+e.getMessage());
         }
     }
+
+    @RequestMapping("delete/{id}")
+    @ResponseBody
+    public ResponseMsg delete(@PathVariable Long id,HttpServletRequest request,HttpServletResponse response) {
+        try{
+            if(userService.deleteNewsById(id)){
+                return new ResponseMsg();
+            };
+            return new ResponseMsg("102","删除失败");
+        }catch (Exception e){
+            logger.error("er",e);
+            return new ResponseMsg("100"," 删除失败"+e.getMessage());
+        }
+    }
     @RequestMapping(value = "update")
     @ResponseBody
     public ResponseMsg updateNews(HttpServletRequest request,HttpServletResponse response) {

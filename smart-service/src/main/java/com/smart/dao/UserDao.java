@@ -1,6 +1,7 @@
 package com.smart.dao;
 
 import com.smart.common.Page;
+import com.smart.common.ResponseMsg;
 import com.smart.model.CashUserInfo;
 import com.smart.model.NewsUserInfo;
 import com.smart.model.UserInfo;
@@ -52,4 +53,6 @@ public interface UserDao {
     NewsInfo view(Long id) throws Exception;
 
     boolean update(String join, String title, String content, String abs, Long id) throws Exception;
+
+    boolean deleteNewsById(Long id) throws Exception;
 }

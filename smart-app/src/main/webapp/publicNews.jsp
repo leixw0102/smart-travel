@@ -20,10 +20,10 @@
     <script src="<%=request.getContextPath()%>/js/plugins/popWin/js/jquery.window.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/function.js" ></script>
     <%   Object user = session.getAttribute("userSessionId");
-    if(null == user ){
-    response.sendRedirect("login.jsp");
+        if(null == user ){
+            response.sendRedirect("login.jsp");
 
-    } %>
+        } %>
     <%--Page<NewsInfo> pag1= (Page<NewsInfo>) request.getAttribute("msgs");%>--%>
     <script>
         var total_page = 0;
@@ -78,13 +78,14 @@
             $(".blackbor_table.listTable tr:gt(0)").remove();
             var myData = data.messages;
             $.each(myData, function(i, n) {
-            	var trs = ""; 
-    			trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.title + "</td><td>" + n.abs + "</td><td>" + new Date(n.createTime).Format("yyyy-MM-dd hh:mm:ss") + "</td><td>" + n.content + "</td>" +
+                var trs = "";
+                trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.title + "</td><td>" + n.abs + "</td><td>" + new Date(n.createTime).Format("yyyy-MM-dd hh:mm:ss") + "</td><td>" + n.content + "</td>" +
                         '<td align="center">'+
                         '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="updateNews('+n.id+')"><div class="text c1 pdl0">编辑</div></div>'+
+                        '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="deleteNews('+n.id+')"><div class="text c1 pdl0">删除</div></div>'+
                         '</td>'
-                        "</tr>";
-    			tbody += trs; 
+                "</tr>";
+                tbody += trs;
             });
             $(tbody).appendTo(".blackbor_table.listTable");
 
@@ -120,6 +121,31 @@
                 url:"<%=request.getContextPath()%>/publicNews-edit.jsp"
             });
         }
+
+        function deleteNews(id){
+            if(confirm("确认删除?")){
+                $.ajax({
+
+                    type: "get",
+
+                    url: "<%=request.getContextPath()%>/1.0/news/delete/"+id,
+
+//                data: $('#userLogin').serialize(),
+
+                    success: function(result){
+                        if (result.code==0){
+                            alert("删除成功")
+                            queryThis(1);
+                        }else{
+                            alert(result.message)
+                        }
+
+                    }
+
+                });
+            }
+        }
+
         function updateNews(id){
             window.top.$.popWin({
                 title:"编辑发布新闻页",
@@ -134,12 +160,12 @@
 <body>
 <!--head-->
 <div class="head">
-	<div class="up">
-		<div class="logo"></div>
-		<div class="user-info">
+    <div class="up">
+        <div class="logo"></div>
+        <div class="user-info">
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 <div class="body_main">
     <div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">

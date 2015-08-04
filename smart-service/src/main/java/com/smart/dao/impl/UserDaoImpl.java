@@ -317,6 +317,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     public boolean update(String join, String title, String content, String abs, Long id) throws Exception {
         return super.update("update news set title='"+title+"',content='"+content+"',abs='"+abs+"',picture='"+join+"' where id="+id);  //To change body of implemented methods use File | Settings | File Templates.
     }
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    @Override
+    public boolean deleteNewsById(Long id) throws Exception {
+        return super.update("delete from news  where id="+id);  //To change body of implemented methods use File | Settings | File Templates.
+    }
 
     @Transactional(readOnly = false,rollbackFor = Exception.class)
     @Override

@@ -43,4 +43,6 @@ public interface UserService {
     ResponseMsg view(Long id) throws Exception;
 
     boolean update(String join, String title, String content, String abs, Long id) throws Exception;
+
+    boolean deleteNewsById(Long id) throws Exception;
 }
