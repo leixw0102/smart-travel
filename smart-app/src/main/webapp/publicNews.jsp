@@ -74,8 +74,8 @@
         function view(id){
             window.top.$.popWin({
                 title:"新闻预览",
-                width:800,
-                height:1000,
+                width:700,
+                height:600,
                 center:true,
                 url:"<%=request.getContextPath()%>/viewNews.jsp?id="+id
             });
