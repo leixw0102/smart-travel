@@ -174,7 +174,7 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
                 ps.setString(3,info.getUserName());
                 ps.setString(4,info.getPwd());
                 ps.setInt(5, get(Integer.parseInt(info.getType())));
-                ps.setDouble(6, info.getFree());
+                ps.setDouble(6, info.getFree()==null?0d:info.getFree());
                 ps.setString(7,info.getRemark());
                 ps.setString(8,"1");
                 return ps;
@@ -257,8 +257,9 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
     }
 
     @Override
-    public boolean findByPhone(String userName) throws Exception {
-        return super.getJdbcTemplate().query("select userId from user where username='" + userName + "'", new ResultSetExtractor<Boolean>() {
+    public boolean findByPhone(SellerVo userName) throws Exception {
+        logger.info("select userId from user where username='" + userName.getUserName() + "' and roletype="+get(Integer.parseInt(userName.getType())));
+        return super.getJdbcTemplate().query("select userId from user where username='" + userName.getUserName() + "' and roletype="+get(Integer.parseInt(userName.getType())), new ResultSetExtractor<Boolean>() {
             @Override
             public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                 return rs.next();  //To change body of implemented methods use File | Settings | File Templates.

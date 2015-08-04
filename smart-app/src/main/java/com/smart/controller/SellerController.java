@@ -119,7 +119,7 @@ public class SellerController extends BaseController{
 
 
         try{
-            if(sellerService.fingByPhone(info.getUserName())){
+            if(sellerService.fingByPhone(info)){
                 return  new ResponseMsg("1","该用户已经存在"+info.getUserName());
             };
             long id=sellerService.addSeller(info);

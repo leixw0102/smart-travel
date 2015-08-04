@@ -19,14 +19,21 @@
 	})
 	
 	function addCompanyInfo(){
+//        alert($("#type").val())
 		$.ajax({
 
 		   type: "GET",
-	
+
 		   url: "<%=request.getContextPath()%>/1.0/seller/addUser",
-	
-		   data: $('#companyInfo').serialize(),
-	
+
+		   data: {
+                 "userName":$("#userName").val(),
+                 "pwd":$("#pwd").val(),
+                  "pwd2":$("#pwd2").val(),
+                          "type":$("#type").val(),
+        "remark":$("#to").val()
+           },
+
 		   success: function(result){
                if (result.code==0){
                    location.href="<%=request.getContextPath()%>/1.0/seller/addCompanyPage";
@@ -35,7 +42,7 @@
                }
 
 		   }
-	
+
 		});
 	}
 	
@@ -52,7 +59,7 @@
 					<ul>
 						<li class="text w60 fb c1">手机号：</li>
 						<li class="value">
-							<input name="userName" type="text" class="w300 h27 inputStyle"/>
+							<input id="userName" name="userName" type="text" class="w300 h27 inputStyle"/>
 						</li>
 					</ul>
 				</li>
@@ -60,7 +67,7 @@
 					<ul>
 						<li class="text w60 fb c1">密码：</li>
 						<li class="value">
-							<input type="text" name="pwd" class="w300 h27 inputStyle"/>
+							<input id="pwd" type="text" name="pwd" class="w300 h27 inputStyle"/>
 						</li>
 					</ul>
 				</li>
@@ -68,7 +75,7 @@
 					<ul>
 						<li class="text w60 fb c1">确认密码：</li>
 						<li class="value">
-							<input type="text" name="pwd2" class="w300 h27 inputStyle"/>
+							<input id="pwd2" type="text" name="pwd2" class="w300 h27 inputStyle"/>
 						</li>
 					</ul>
 				</li>
@@ -76,8 +83,8 @@
 					<ul>
 						<li class="text w60 fb c1">商户类型：</li>
 						<li class="value">
-							<select name="type" class="w300">
-								<option value="1">酒店</option>
+							<select id="type" name="type" class="w300">
+								<option selected="true" value="1">酒店</option>
                                 <option value="2">景点</option>
                                 <option value="3">生活</option>
                                 <option value="4">美食</option>
@@ -87,9 +94,9 @@
 				</li>
 				<li class="pr9">
 					<ul>
-						<li class="text w60 fb c1">服务比例：</li>
+						<!--<li class="text w60 fb c1">服务比例：</li>  -->
 						<li class="value">
-							<input type="text" name="free" class="w300 h27 inputStyle"/>
+							<input type="hidden"  name="free" class="w300 h27 inputStyle"/>
 						</li>
 					</ul>
 				</li>

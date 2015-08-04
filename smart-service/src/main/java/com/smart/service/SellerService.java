@@ -45,7 +45,7 @@ public interface SellerService {
 
     long addCompany(CompanyInfo info) throws Exception;
 
-    boolean fingByPhone(String userName) throws Exception;
+    boolean fingByPhone(SellerVo userName) throws Exception;
 
     SellerVo getUserById(Long id) throws Exception;
 
