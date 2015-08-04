@@ -96,9 +96,9 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
             case 2:
                 return 5;
             case 3:
-                return 6;
-            case 4:
                 return 4;
+            case 4:
+                return 6;
             default:
                 return 0;
         }
