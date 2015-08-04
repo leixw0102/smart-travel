@@ -196,7 +196,7 @@
                                             <option selected="true" value="2">酒店</option>
                                             <option  value="4">美食</option>
                                             <option value="5">景点</option>
-                                            <option  value="6">美食</option>
+                                            <option  value="6">生活</option>
                                         </select>
                                     </li>
                                 </ul>

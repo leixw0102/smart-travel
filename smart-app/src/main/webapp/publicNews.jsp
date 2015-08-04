@@ -70,6 +70,17 @@
                 return new Date(exp).Format("yyyy-MM-dd hh:mm:ss")
             }
         }
+
+        function view(id){
+            window.top.$.popWin({
+                title:"新闻预览",
+                width:800,
+                height:1000,
+                center:true,
+                url:"<%=request.getContextPath()%>/viewNews.jsp?id="+id
+            });
+        }
+
         function queryThis_callback(data){
             total_page = Math.ceil(data.count/data.pageSize);
             current_page = data.pageNumber;
@@ -79,7 +90,7 @@
             var myData = data.messages;
             $.each(myData, function(i, n) {
                 var trs = "";
-                trs += "<tr><td align='center'>" + (++i) + "</td><td align='center'>" + n.title + "</td><td>" + n.abs + "</td><td>" + new Date(n.createTime).Format("yyyy-MM-dd hh:mm:ss") + "</td><td>" + n.content + "</td>" +
+                trs += "<tr><td align='center'>" + (++i) + "</td><td class='list-link' style='cursor:pointer' align='center' onclick='view("+ n.id+")'>" + n.title + "</td><td>" + n.abs + "</td><td>" + new Date(n.createTime).Format("yyyy-MM-dd hh:mm:ss") + "</td><td>" + n.content + "</td>" +
                         '<td align="center">'+
                         '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="updateNews('+n.id+')"><div class="text c1 pdl0">编辑</div></div>'+
                         '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="deleteNews('+n.id+')"><div class="text c1 pdl0">删除</div></div>'+
