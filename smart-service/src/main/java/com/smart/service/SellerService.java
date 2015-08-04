@@ -59,7 +59,7 @@ public interface SellerService {
 
     boolean updateCategory(Long id, String name) throws Exception;
 
-    JSONObject getCode(Long id) throws Exception;
+    JSONObject getCode(Long id, Integer type) throws Exception;
 
     boolean addCategory(Long id, String name) throws Exception;
 }

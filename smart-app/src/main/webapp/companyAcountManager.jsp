@@ -76,8 +76,8 @@ function editUserInfo(id){
 		url:"<%=request.getContextPath()%>/1.0/seller/editSeller/"+id
 	});
 }
-function seeCode(id){
-    window.location.href="<%=request.getContextPath()%>/1.0/seller/code/"+id;
+function seeCode(id,type){
+    window.location.href="<%=request.getContextPath()%>/1.0/seller/code/"+id+"/"+type;
 }
 function editCompanyInfo(id,type){
     editCompany_win=window.top.$.popWin({
@@ -132,7 +132,7 @@ function editCompanyInfo(id,type){
                         <td><%=new DateTime(info.getCreateTime()).toString("yyyy-MM-dd HH:mm:ss")%></td>
                         <td><%=info.getRemark()%></td>
                         <td><div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="editCompanyInfo(<%=info.getId()%>,<%=info.getT()%>)"><div class="text c1 pdl0">修改商户信息</div></div>
-                            <div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="seeCode(<%=info.getId()%>)"><div class="text c1 pdl0">查看二维码</div></div></td>
+                            <div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="seeCode(<%=info.getId()%>,<%=info.getT()%>)"><div class="text c1 pdl0">查看二维码</div></div></td>
                     </tr>
                     <%
                             } }

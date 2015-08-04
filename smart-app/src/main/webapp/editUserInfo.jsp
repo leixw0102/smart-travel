@@ -30,7 +30,7 @@
             return true;
         }
         function updateSeller(){
-            if(checkSubmitMobil()){
+            if(!checkSubmitMobil()){
                 return false;
             } else{
                 $.ajax({
@@ -70,7 +70,7 @@
                     <ul>
                         <li class="text w60 fb c1">手机号：</li>
                         <li class="value">
-                            <input name="userName" type="text" value="${userName}" class="w300 h27 inputStyle"/>
+                            <input id="userName" name="userName" type="text" value="${userName}" class="w300 h27 inputStyle"/>
                         </li>
                     </ul>
                 </li>

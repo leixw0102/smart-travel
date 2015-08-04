@@ -199,10 +199,10 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
             case 2:
 //                return "insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
                 return "insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values(?,?,?,?,?)";
-            case 3:
+            case 4:
 //                return "insert into life(user_id,contact_name,life_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
                 return "insert into life(user_id,contact_name,life_type,name,grade) values(?,?,?,?,?)";
-            case 4:
+            case 3:
 //                return "insert into restaurant(user_id,contact_name,rt_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
                 return "insert into restaurant(user_id,contact_name,rt_type,name,grade) values(?,?,?,?,?)";
             default:
@@ -217,10 +217,10 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
             case 2:
 //                return "insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
                 return "update view_spot set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',view_spot_type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();//set user_id,contact_name,view_spot_type,name,grade) ";
-            case 3:
+            case 4:
 //                return "insert into life(user_id,contact_name,life_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
                 return "update life set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',life_type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();
-            case 4:
+            case 3:
 //                return "insert into restaurant(user_id,contact_name,rt_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
                 return "update restaurant set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',rt_type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();
             default:
@@ -306,7 +306,36 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
     public long updateSeller(SellerVo info) throws Exception {
         final String usekey =Token.getToken(info.getUserName(), String.valueOf(get(Integer.parseInt(info.getType()))), "1");
         super.update("update user set Mac='1',UserKey='"+usekey+"',username='"+info.getUserName()+"',password='"+info.getPwd()+"',roleType="+get(Integer.parseInt(info.getType()))+",servicefee_level="+info.getFree()+",mark='"+info.getRemark()+"',level='1' where userId= "+info.getId());  //To change body of implemented methods use File | Settings | File Templates.
+        logger.info(getSelectObjSql(Integer.parseInt(info.getType()),info.getId()));
+        boolean flag= super.getJdbcTemplate().query(getSelectObjSql(Integer.parseInt(info.getType()),info.getId()), new ResultSetExtractor<Boolean>() {
+            @Override
+            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                return rs.next();  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        }) ;
+        if(!flag){
+            super.update(getAddObjSql(Integer.parseInt(info.getType()),info.getId()));
+        }
         return info.getId();
+    }
+
+    private String getAddObjSql(int type,long id){
+        switch (type){
+            case 1:
+//                return "insert into hotel(user_id,contact_name,type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "insert into hotel(user_id) values("+id+")";//set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();
+            case 2:
+//                return "insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "insert into view_spot(user_id) values("+id+")";// set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',view_spot_type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();//set user_id,contact_name,view_spot_type,name,grade) ";
+            case 4:
+//                return "insert into life(user_id,contact_name,life_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "insert into  life (user_id) values("+id+")";//set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',life_type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();
+            case 3:
+//                return "insert into restaurant(user_id,contact_name,rt_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "insert into  restaurant (user_id) values("+id+")";//set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',rt_type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();
+            default:
+                return "";
+        }
     }
 
     @Override
@@ -332,10 +361,60 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
     }
     @Transactional(readOnly = false,rollbackFor = Exception.class)
     @Override
-    public Long updateCompany(CompanyInfo info) throws Exception {
-       super.update(updateCSql(info.getType(),info));  //To change body of implemented methods use File | Settings | File Templates.
-        return info.getId();
+    public Long updateCompany(final CompanyInfo info) throws Exception {
+//        boolean flag= super.getJdbcTemplate().query(getSelectSql(info.getType(),info.getId()), new ResultSetExtractor<Boolean>() {
+//            @Override
+//            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+//                return rs.next();  //To change body of implemented methods use File | Settings | File Templates.
+//            }
+//        }) ;
+//        if(flag){
+            super.update(updateCSql(info.getType(),info));  //To change body of implemented methods use File | Settings | File Templates.
+            return info.getId();
+//        }else {
+//            final String sql = updateSql(info.getType());
+//            KeyHolder keyHolder = new GeneratedKeyHolder();
+//            super.getJdbcTemplate().update(new PreparedStatementCreator() {
+//
+//                @Override
+//                public PreparedStatement createPreparedStatement(Connection con)
+//                        throws SQLException {
+//                    PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+//                    ps.setLong(1, info.getUserId());
+//                    ps.setString(2,info.getContactName());
+//                    ps.setLong(3, info.getSecondaryType() == null ? 1 : info.getSecondaryType());
+//                    ps.setString(4,info.getName()==null?"":info.getName());
+//                    ps.setDouble(5,info.getGrade()==null?4.0:info.getGrade());
+////                ps.setDouble(6, info.getFree());
+////                ps.setString(7,info.getRemark());
+////                ps.setString(8,"1");
+//                    return ps;
+//                }
+//            }, keyHolder);
+//            return keyHolder.getKey().longValue();
+//        }
     }
+
+
+    private String getSelectObjSql(int type,Long id){
+        switch (type){
+            case 1:
+//                return "insert into hotel(user_id,contact_name,type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select * from hotel where user_id="+id;//set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();
+            case 2:
+//                return "insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select * from view_spot where user_id="+id;// set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',view_spot_type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();//set user_id,contact_name,view_spot_type,name,grade) ";
+            case 4:
+//                return "insert into life(user_id,contact_name,life_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select * from  life where user_id="+id;//set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',life_type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();
+            case 3:
+//                return "insert into restaurant(user_id,contact_name,rt_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select * from  restaurant where user_id="+id;//set user_id="+info.getUserId()+",contact_name='"+info.getContactName()+"',rt_type="+info.getSecondaryType()+",name='"+info.getName()+"',grade="+info.getGrade()+" where id="+info.getId();
+            default:
+                return "";
+        }
+    }
+
     @Transactional(readOnly = false,rollbackFor = Exception.class)
     @Override
     public boolean deleteCategory(Long typeId) throws Exception {
@@ -348,23 +427,24 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
     }
 
     @Override
-    public JSONObject getCode(Long id) throws Exception {
+    public JSONObject getCode(Long id, Integer type) throws Exception {
         JSONObject object=super.getJdbcTemplate().query("select a.userId,a.roletype from user as a where userid="+id,new ResultSetExtractor<JSONObject>() {
-             @Override
-             public JSONObject extractData(ResultSet rs) throws SQLException, DataAccessException {
-                 if(rs.next()){
+            @Override
+            public JSONObject extractData(ResultSet rs) throws SQLException, DataAccessException {
+                if(rs.next()){
 
-                     JSONObject object = new JSONObject();
-                     object.put("sellerId",rs.getLong("userid"));
-                     object.put("sellerType",rs.getInt("roletype"));
-                     return object;
-                 }
-                 return null;  //To change body of implemented methods use File | Settings | File Templates.
-             }
-         });  //To change body of implemented methods use File | Settings | File Templates.
+                    JSONObject object = new JSONObject();
+                    object.put("sellerId",rs.getLong("userid"));
+                    object.put("sellerType",rs.getInt("roletype"));
+                    return object;
+                }
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });  //To change body of implemented methods use File | Settings | File Templates.
         if(null ==object)  {
             return null;
         }
+        logger.info("select id from "+getTypeSql(object.getInteger("sellerType")) +" where user_id="+id);
         long whereId=super.getJdbcTemplate().queryForLong("select id from "+getTypeSql(object.getInteger("sellerType")) +" where user_id="+id);
         object.put("whereId",whereId);
         String v=object.remove("sellerType").toString();
@@ -459,6 +539,6 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
                 return config;  //To change body of implemented methods use File | Settings | File Templates.
             }
         });
-       return configs;
+        return configs;
     }
 }

@@ -62,7 +62,7 @@ public interface SellerDao {
 
     boolean updateCategory(Long id, String name) throws Exception;
 
-    JSONObject getCode(Long id) throws Exception;
+    JSONObject getCode(Long id, Integer type) throws Exception;
 
     List<TypeInfo> getTypes1() throws Exception;
 

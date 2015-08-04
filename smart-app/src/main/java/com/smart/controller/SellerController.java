@@ -50,11 +50,11 @@ public class SellerController extends BaseController{
     @Autowired
     private SellerService sellerService;
 
-    @RequestMapping("code/{id}")
-    public String getCode(HttpServletRequest request,HttpServletResponse response,@PathVariable Long id){
+    @RequestMapping("code/{id}/{type}")
+    public String getCode(HttpServletRequest request,HttpServletResponse response,@PathVariable Long id,@PathVariable Integer type){
 
         try {
-            JSONObject ob = sellerService.getCode(id);
+            JSONObject ob = sellerService.getCode(id,type);
             request.setAttribute("abcd",ob.toJSONString());
         } catch (Exception e) {
             logger.error("error1",e);
