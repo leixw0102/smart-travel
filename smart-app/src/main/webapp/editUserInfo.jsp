@@ -23,7 +23,7 @@
                 return false;
             }
 
-            if (!$("#userName").val().match(/^(((13[0-9]{1})|159|153)+\d{8})$/)) {
+            if (!$("#userName").val().match(/^((1[0-9]{2})+\d{8})$/)) {
                 alert("手机号码格式不正确！");
                 return false;
             }
