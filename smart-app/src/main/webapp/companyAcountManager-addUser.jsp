@@ -101,8 +101,8 @@
                             <select id="type" name="type" class="w300">
                                 <option selected="true" value="1">酒店</option>
                                 <option value="2">景点</option>
-                                <option value="3">生活</option>
-                                <option value="4">美食</option>
+                                <option value="4">生活</option>
+                                <option value="3">美食</option>
                             </select>
                         </li>
                     </ul>

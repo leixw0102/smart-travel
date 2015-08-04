@@ -101,29 +101,29 @@
                                 %>
                                 <option selected="true" value="1">酒店</option>
                                 <option value="2">景点</option>
-                                <option value="3">生活</option>
-                                <option value="4">美食</option>
+                                <option value="4">生活</option>
+                                <option value="3">美食</option>
                                 <%
                                 } else if(type.equals("2")){
                                 %>
                                 <option value="1">酒店</option>
                                 <option selected="true" value="2">景点</option>
-                                <option value="3">生活</option>
-                                <option value="4">美食</option>
-                                <%
-                                } else if(type.equals("3")){
-                                %>
-                                <option value="1">酒店</option>
-                                <option  value="2">景点</option>
-                                <option selected="true" value="3">生活</option>
-                                <option value="4">美食</option>
+                                <option value="4">生活</option>
+                                <option value="3">美食</option>
                                 <%
                                 } else if(type.equals("4")){
                                 %>
                                 <option value="1">酒店</option>
                                 <option  value="2">景点</option>
-                                <option  value="3">生活</option>
-                                <option selected="true" value="4">美食</option>
+                                <option selected="true" value="4">生活</option>
+                                <option value="3">美食</option>
+                                <%
+                                } else if(type.equals("3")){
+                                %>
+                                <option value="1">酒店</option>
+                                <option  value="2">景点</option>
+                                <option  value="4">生活</option>
+                                <option selected="true" value="3">美食</option>
                                 <%
                                     }
                                 %>
@@ -133,12 +133,12 @@
                     </ul>
                 </li>
                 <li class="pr9">
-                    <ul>
-                        <li class="text w60 fb c1">服务费比例：</li>
-                        <li class="value">
-                            <input type="text" value="${free}" name="free" class="w300 h27 inputStyle"/>
-                        </li>
-                    </ul>
+                    <%--<ul>--%>
+                        <%--<li class="text w60 fb c1">服务费比例：</li>--%>
+                        <%--<li class="value">--%>
+                            <input type="hidden" value="${free}" name="free" class="w300 h27 inputStyle"/>
+                        <%--</li>--%>
+                    <%--</ul>--%>
                 </li>
                 <li class="pr9">
                     <ul>
