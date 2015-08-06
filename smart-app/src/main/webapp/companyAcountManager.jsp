@@ -126,7 +126,7 @@ function editCompanyInfo(id,type){
                         <td class="list-link" style="cursor:pointer" onclick="editUserInfo('<%=info.getId()%>')"><%=info.getUserName()%></td>
                         <td><%=info.getPwd()%></td>
                         <td><%=info.getType()%></td>
-                        <%--<td ><%=info.getSellerName()%></td>--%>
+                       <%-- <td ><%=info.getSellerName()%></td>--%>
                         <%--<td ><%=info.getContactName()%></td>--%>
                         <%--<td><%=info.getFree()%></td>--%>
                         <td><%=new DateTime(info.getCreateTime()).toString("yyyy-MM-dd HH:mm:ss")%></td>

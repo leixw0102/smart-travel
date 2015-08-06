@@ -67,4 +67,8 @@ public interface SellerDao {
     List<TypeInfo> getTypes1() throws Exception;
 
     boolean addCategory(Long id, String name, int i) throws Exception;
+
+    Long count(String name) throws Exception;
+
+    List<SellerInfo> getSeller(Integer pageNumber, String name, Integer pageSize) throws Exception;
 }

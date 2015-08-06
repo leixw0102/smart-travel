@@ -137,4 +137,21 @@ public class SellerServiceImpl implements SellerService {
         int typeId=  types.get(types.size()-1).getType()+1;
         return sellerDao.addCategory(id,name,typeId);  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    @Override
+    public Page getSellers(Integer pageNumber, String name) throws Exception {
+        Page<SellerInfo> page = new Page<SellerInfo>() {
+            @Override
+            protected String listAlias() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+        page.setPageNumber(pageNumber);
+        page.setPageSize(10);
+        Long total = sellerDao.count(name);
+        List<SellerInfo> list = sellerDao.getSeller(pageNumber,name,page.getPageSize());
+        page.setCount(total);
+        page.setMessages(list);
+        return page;
+    }
 }

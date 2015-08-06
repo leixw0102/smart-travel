@@ -68,13 +68,14 @@ public class SellerController extends BaseController{
         request.setAttribute("msgs",sellerService.getSellers(page));
         return "companyAcountManager";
     }
-    @RequestMapping("page")
+    @RequestMapping("query/{page}")
     @ResponseBody
-    public Page get(){
+    public com.smart.common.ResponseBody get(@PathVariable Integer page,@RequestParam(required = false) String name ){
         try {
-            return sellerService.getSellers(1);
+            return sellerService.getSellers(page,name);
         } catch (Exception e) {
-            return null;
+            logger.error("error!,",e);
+            return new ResponseMsg("12","error!"+e.getLocalizedMessage());
         }
     }
 

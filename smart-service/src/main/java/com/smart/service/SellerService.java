@@ -62,4 +62,6 @@ public interface SellerService {
     JSONObject getCode(Long id, Integer type) throws Exception;
 
     boolean addCategory(Long id, String name) throws Exception;
+
+    Page getSellers(Integer page, String name) throws Exception;
 }
