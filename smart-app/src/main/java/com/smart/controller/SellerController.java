@@ -70,7 +70,7 @@ public class SellerController extends BaseController{
     }
     @RequestMapping("query/{page}")
     @ResponseBody
-    public com.smart.common.ResponseBody get(@PathVariable Integer page,@RequestParam(required = false) String name ){
+    public com.smart.common.ResponseBody get(@PathVariable Integer page,@RequestParam(required = false) String name){
         try {
             return sellerService.getSellers(page,name);
         } catch (Exception e) {

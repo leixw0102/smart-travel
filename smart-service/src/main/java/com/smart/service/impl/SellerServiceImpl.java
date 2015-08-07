@@ -19,6 +19,7 @@ package com.smart.service.impl;/*
 
 import com.alibaba.fastjson.JSONObject;
 import com.smart.common.Page;
+import com.smart.common.ResponseBody;
 import com.smart.dao.SellerDao;
 import com.smart.model.CompanyInfo;
 import com.smart.model.SellerInfo;
@@ -88,7 +89,9 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public long addCompany(CompanyInfo info) throws Exception {
-        return sellerDao.addCompany(info);  //To change body of implemented methods use File | Settings | File Templates.
+        long id= sellerDao.addCompany(info);  //To change body of implemented methods use File | Settings | File Templates.
+        sellerDao.updateSeller(info.getName(),info.getUserId());
+        return id;
     }
 
     @Override
@@ -113,7 +116,9 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public Long updateCompany(CompanyInfo info) throws Exception {
-        return sellerDao.updateCompany(info);  //To change body of implemented methods use File | Settings | File Templates.
+        long id= sellerDao.updateCompany(info);  //To change body of implemented methods use File | Settings | File Templates.
+        sellerDao.updateSeller(info.getName(),info.getUserId());
+        return id;
     }
 
     @Override
@@ -150,6 +155,23 @@ public class SellerServiceImpl implements SellerService {
         page.setPageSize(10);
         Long total = sellerDao.count(name);
         List<SellerInfo> list = sellerDao.getSeller(pageNumber,name,page.getPageSize());
+        page.setCount(total);
+        page.setMessages(list);
+        return page;
+    }
+
+    @Override
+    public ResponseBody getSellers(Integer pageNumber, String name, Integer type) throws Exception {
+        Page<SellerInfo> page = new Page<SellerInfo>() {
+            @Override
+            protected String listAlias() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+        page.setPageNumber(pageNumber);
+        page.setPageSize(10);
+        Long total = sellerDao.count(name,type);
+        List<SellerInfo> list = sellerDao.getSeller(pageNumber,name,page.getPageSize(),type);
         page.setCount(total);
         page.setMessages(list);
         return page;

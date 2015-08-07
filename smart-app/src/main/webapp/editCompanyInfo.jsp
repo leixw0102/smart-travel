@@ -40,6 +40,7 @@
                     if (result.code==0){
                         alert("修改成功")
                         window.top.frames['mainFrame'].editCompany_win.closeWin();
+                        window.top.frames['mainFrame'].queryThis(1);
                     }else{
                         alert(result.message)
                     }

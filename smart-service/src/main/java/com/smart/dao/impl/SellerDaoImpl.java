@@ -346,7 +346,9 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
     @Override
     public CompanyInfo getCompanyByUserId(final Long id, final Integer type) throws Exception {
 //        String sql = get
-        return super.getJdbcTemplate().query(getSelectSql(type, id), new ResultSetExtractor<CompanyInfo>() {
+        String sql=getSelectSql(type, id);
+        logger.debug(sql);
+        return super.getJdbcTemplate().query(sql, new ResultSetExtractor<CompanyInfo>() {
             @Override
             public CompanyInfo extractData(ResultSet rs) throws SQLException, DataAccessException {
                 if (rs.next()) {
@@ -495,8 +497,7 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
            logger.info("select count(*) from user where roleType in (2,4,5,6)");
            return super.getJdbcTemplate().queryForObject("select count(*) from user where roleType in (2,4,5,6)", Long.class);
        }else {
-           logger.info("select count(*) from user where roleType in (2,4,5,6) and username like '%"+name+"'%");
-           return super.getJdbcTemplate().queryForObject("select count(*) from user where roleType in (2,4,5,6) and username like '%"+name+"%'", Long.class);
+           return super.getJdbcTemplate().queryForObject("select count(*) from user where roleType in (2,4,5,6) and seller_name like '%"+name+"%'", Long.class);
        }
     }
 
@@ -506,8 +507,8 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
         if (Strings.isNullOrEmpty(name)) {
             sql = "select * from user where roletype in (2,4,5,6) order by createtime desc limit " + (pageNumber - 1) * pageSize + "," + pageSize;
         } else {
-            sql = "select * from user where roletype in (2,4,5,6) and username like '%" + name + "%'  order by " +
-                    "createtime desc " +
+            sql = "select * from user where roletype in (2,4,5,6) and seller_name like '%" + name + "%'  order by " +
+                    " createtime desc " +
                     " limit " + (pageNumber - 1) * pageSize + "," + pageSize;
         }
         logger.info(sql);
@@ -530,6 +531,24 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
                 return info;  //To change body of implemented methods use File | Settings | File Templates.
             }
         });  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Long count(String name, Integer type) throws Exception {
+        return null;
+    }
+
+    @Override
+    public List<SellerInfo> getSeller(Integer pageNumber, String name, Integer pageSize, Integer type) throws Exception {
+        return null;
+    }
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
+    @Override
+    public boolean updateSeller(String name,Long id) throws Exception {
+        if(Strings.isNullOrEmpty(name) ){
+            name="";
+        }
+        return super.update("update user set seller_name='"+name+"' where userid="+id);
     }
 
 
@@ -555,9 +574,9 @@ public class SellerDaoImpl extends BaseDaoImpl implements SellerDao {
             case 2:
                 return "select a.id,  a.name,a.grade ,a.contact_name, a.view_spot_type as type  from  view_spot as a where user_id=" + id;//"insert into view_spot(user_id,contact_name,view_spot_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
             case 3:
-                return "select a.id,  a.name,a.grade ,a.contact_name, a.life_type as type from  restaurant as a where user_id=" + id;//"insert into life(user_id,contact_name,life_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select a.id,  a.name,a.grade ,a.contact_name,a.rt_type as type  from restaurant  as a where user_id=" + id;//"insert into life(user_id,contact_name,life_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
             case 4:
-                return "select a.id,  a.name,a.grade ,a.contact_name, a.rt_type as type from  life as a where user_id=" + id;//"insert into restaurant(user_id,contact_name,rt_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
+                return "select a.id,  a.name,a.grade ,a.contact_name,a.life_type as type  from  life as a where user_id=" + id;//"insert into restaurant(user_id,contact_name,rt_type,name,grade) values("+info.getUserId()+",'"+info.getContactName()+"',"+info.getSecondaryType()+",'"+info.getName()+"',"+info.getGrade()+")";
             default:
                 return "";
         }

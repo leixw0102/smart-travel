@@ -45,6 +45,7 @@
                         if (result.code==0){
                             alert("修改成功")
                             window.top.frames['mainFrame'].editSellerUser_win.closeWin();
+                            window.top.frames['mainFrame'].queryThis(1);
 //                        window.top.frames['mainFrame'].editSellerUser_win.
                             <%--href="<%=request.getContextPath()%>/1.0/seller/getAccountLists?page=1";--%>
                         }else{

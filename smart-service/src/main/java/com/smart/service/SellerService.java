@@ -19,6 +19,7 @@ package com.smart.service;/*
 
 import com.alibaba.fastjson.JSONObject;
 import com.smart.common.Page;
+import com.smart.common.ResponseBody;
 import com.smart.common.ResponseMsg;
 import com.smart.model.CompanyInfo;
 import com.smart.model.TypeInfo;
@@ -64,4 +65,6 @@ public interface SellerService {
     boolean addCategory(Long id, String name) throws Exception;
 
     Page getSellers(Integer page, String name) throws Exception;
+
+    ResponseBody getSellers(Integer page, String name, Integer type) throws Exception;
 }

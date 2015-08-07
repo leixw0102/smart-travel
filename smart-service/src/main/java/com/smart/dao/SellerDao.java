@@ -71,4 +71,10 @@ public interface SellerDao {
     Long count(String name) throws Exception;
 
     List<SellerInfo> getSeller(Integer pageNumber, String name, Integer pageSize) throws Exception;
+
+    Long count(String name, Integer type) throws Exception;
+
+    List<SellerInfo> getSeller(Integer pageNumber, String name, Integer pageSize, Integer type) throws Exception;
+
+    boolean updateSeller(String name,Long id) throws Exception;
 }

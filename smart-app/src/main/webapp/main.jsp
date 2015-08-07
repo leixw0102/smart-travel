@@ -92,7 +92,7 @@ function logout(){
 		<div class="items">
 			<ul class="menu-items">
 				<li class="no-level flgl"><a href="<%=request.getContextPath()%>/category-m.jsp" target="mainFrame"></a></li>
-				<li class="no-level companyAcount"><a href="<%=request.getContextPath()%>/1.0/seller/getAccountLists?page=1" target="mainFrame"></a></li>
+				<li class="no-level companyAcount"><a href="<%=request.getContextPath()%>/companyAcountManager.jsp" target="mainFrame"></a></li>
 				<li class="no-level yy-userAcount"><a href="<%=request.getContextPath()%>/1.0/order/userHome" target="mainFrame"></a></li>
 				<li class="no-level finaAcount"><a href="<%=request.getContextPath()%>/1.0/user/getCashHome" target="mainFrame"></a></li>
                 <li class="no-level news"><a href="<%=request.getContextPath()%>/newsAcountManager.jsp" target="mainFrame"></a></li>
