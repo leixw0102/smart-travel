@@ -158,7 +158,7 @@
 
 <div class="body_main">
     <div class="list-item-c1 h40 lh40 ti20 fwb bl1 br1 bt1">
-        <span class="titleSpan fl">已发布新闻</span>
+        <span class="titleSpan fl">商户信息</span>
         <div class="bt_icon bt_icon_b2 fr pd10 r10 pr t8" onClick="popCompanyInfo()"><div class="text clfff pdl0">增加账户</div></div>
     </div>
     <table class="blackbor_table bt0 bb0"  cellspacing="0" cellpadding="0">
