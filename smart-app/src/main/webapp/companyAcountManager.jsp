@@ -35,7 +35,22 @@
             //初始化请求数据列表
             queryThis(1);
         })
-
+        function formatDate(date,format) {
+        	  var o = {
+        	    "M+" : date.getMonth()+1, //month
+        	    "d+" : date.getDate(),    //day
+        	    "h+" : date.getHours(),   //hour
+        	    "m+" : date.getMinutes(), //minute
+        	    "s+" : date.getSeconds(), //second
+        	    "q+" : Math.floor((date.getMonth()+3)/3),  //quarter
+        	    "S" : date.getMilliseconds() //millisecond
+        	  }
+        	  if(/(y+)/.test(format)) format=format.replace(RegExp.$1,(date.getFullYear()+"").substr(4 - RegExp.$1.length));
+        	  for(var k in o) if(new RegExp("("+ k +")").test(format))
+        	      format = format.replace(RegExp.$1,
+        	      RegExp.$1.length==1 ? o[k] :("00"+ o[k]).substr((""+ o[k]).length));
+        	  return format;
+        	}
         Date.prototype.Format = function(fmt)
         { //author: meizz
             var o = {
@@ -83,7 +98,7 @@
             var myData = data.messages;
             $.each(myData, function(i, n) {
                 var trs = "";
-                trs += "<tr><td align='center'>" + (++i) + "</td><td class='list-link' style='cursor:pointer' align='center' onclick='editUserInfo("+ n.id+")'>" + n.userName + "</td><td>" + n.pwd + "</td><td>" +n.type + "</td><td>" +n.sellerName + "</td><td>" +new Date(getfinish(n.createTime)).Format("yyyy-MM-dd hh:mm:ss") + "</td><td>" + n.remark + "</td>" +
+                trs += "<tr><td align='center'>" + (++i) + "</td><td class='list-link' style='cursor:pointer' align='center' onclick='editUserInfo("+ n.id+")'>" + n.userName + "</td><td>" + n.pwd + "</td><td>" +n.type + "</td><td>" +n.sellerName + "</td><td>" +getfinish(n.createTime) + "</td><td>" + n.remark + "</td>" +
                         '<td align="center">'+
                         '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="editCompanyInfo('+n.id+','+n.t+')"><div class="text c1 pdl0">修改商户信息</div></div>'+
                         '<div class="bt_icon bt_icon_b3 r10 pr bd0" style="display:inline-block" onClick="seeCode('+n.id+','+n.t+')"><div class="text c1 pdl0">查看二维码</div></div>'+
