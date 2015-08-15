@@ -192,11 +192,11 @@
                             <ul>
                                 <li class="text w60 fb c1 pb0">发布日期：</li>
                                 <li class="value pb0">
-                                    <input id="from-bcd" type="text" class="w300 h27 inputStyle"/>
+                                    <input id="from-bcd" type="text" class="w300 h27 inputStyle" onfocus="WdatePicker()"/>
                                 </li>
                                 <li class="text pb0">-</li>
                                 <li class="value pb0">
-                                    <input id="to-bcd" type="text" class="w300 h27 inputStyle"/>
+                                    <input id="to-bcd" type="text" class="w300 h27 inputStyle" onfocus="WdatePicker()"/>
                                 </li>
                             </ul>
                         </li>

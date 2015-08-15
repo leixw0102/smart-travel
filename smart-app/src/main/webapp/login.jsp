@@ -59,7 +59,7 @@
 			<div class="bt-border-s1 fl">关于</div>
 			<div class="bt-border-s1 fl">服务</div>
 			<div class="bt-border-s1 fl">客服</div>
-			<div class="fl" onclick="window.location.href='<%=request.getContextPath()%>/info.jsp'">说明</div>
+
 
 			<%--<div class="bt-border-s1 fr">中文</div>--%>
 		</div>

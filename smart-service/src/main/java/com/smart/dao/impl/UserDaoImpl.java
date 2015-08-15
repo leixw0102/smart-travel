@@ -118,8 +118,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     @Override
     public Long count(String time, String to) throws Exception {
         String where ="";
-        if(!Strings.isNullOrEmpty(time) && Strings.isNullOrEmpty(to)){
-            where+="date(create_time)>='"+time+"' and date(create_time)<="+to+"'";
+        if(!Strings.isNullOrEmpty(time) && !Strings.isNullOrEmpty(to)){
+            where+=" and date(create_time)>='"+time+"' and date(create_time)<='"+to+"'";
         }
         return super.getJdbcTemplate().queryForObject("select count(*) from news where del=0 "+where, Long.class);  //To change body of implemented methods use File | Settings | File Templates.
 
@@ -268,8 +268,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     @Override
     public List<NewsInfo> userNewsList(Long page1, int i, String time,String to) throws Exception {
         String where ="";
-        if(!Strings.isNullOrEmpty(time) && Strings.isNullOrEmpty(to)){
-            where+="date(create_time)>='"+time+"' and date(create_time)<="+to+"'";
+        if(!Strings.isNullOrEmpty(time) && !Strings.isNullOrEmpty(to)){
+            where+="and date(create_time)>='"+time+"' and date(create_time)<='"+to+"'";
         }
         String sql="select * from news where del=0 "+where+"  order by create_time desc limit "+(page1-1)*i+","+i ;
         logger.debug(sql);
